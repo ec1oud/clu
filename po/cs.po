@@ -1,0 +1,1738 @@
+# translation of xlog.po to czech.
+# This file is distributed under the same license as the xlog package.
+# Copyright (C) 2007 Joop Stakenborg <pg4i@amsat.org>.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: xlog 1.8.1\n"
+"Report-Msgid-Bugs-To: Andy Stewart <kb1oiq@arrl.net>\n"
+"POT-Creation-Date: 2024-09-16 10:53-0400\n"
+"PO-Revision-Date: 2009-02-01 10:25+0100\n"
+"Last-Translator: Martin Krato�ka, OK1RR <martin@ok1rr.com>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SourceCharset: iso-8859-2\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: src/callbacks_mainwindow_menu.c:130 src/gui_saveasdialog.c:112
+#: src/gui_saveasdialog.c:142
+#, c-format
+msgid "Log saved to %s"
+msgstr "Den�k ulo�en do %s"
+
+#: src/callbacks_mainwindow_menu.c:198 src/callbacks_mainwindow_toolbar.c:408
+#: src/callbacks_mainwindow_toolbar.c:906 src/gui_mainwindow.c:611
+msgid "New QSO"
+msgstr "Nov� QSO"
+
+#: src/callbacks_mainwindow_menu.c:206 src/gui_dialogsdialog.c:146
+#: src/gui_dialogsdialog.c:247 src/gui_gtkprintdialog.c:733
+#: src/gui_scorewindow.c:420
+msgid "Locator"
+msgstr "Lok�tor"
+
+#: src/callbacks_mainwindow_menu.c:459 src/callbacks_mainwindow_menu.c:462
+#, c-format
+msgid "Could not read %s with your current locale"
+msgstr "Nemohu na��st %s s va�� st�vaj�c� lokalizac�"
+
+#: src/callbacks_mainwindow_menu.c:510 src/callbacks_mainwindow_menu.c:543
+msgid "Log sorted"
+msgstr "Den�k se�azen"
+
+#: src/callbacks_mainwindow_qsoframe.c:259
+#, c-format
+msgid "shmget failed: %s"
+msgstr "shmget selhalo: %s"
+
+#: src/callbacks_mainwindow_qsoframe.c:266
+#, c-format
+msgid "shmat failed: %s"
+msgstr "shmat selhalo: %s"
+
+#: src/callbacks_mainwindow_qsoframe.c:556
+msgid "Warning, remarks line to long!!"
+msgstr "Varov�n�, pozn�mka v ��dku je dlouh�!!"
+
+#: src/callbacks_mainwindow_toolbar.c:92 src/remote.c:152 src/remote.c:605
+msgid "Can not add QSO, log is read-only"
+msgstr "Nemohu p�idat QSO, den�k je pouze pro �ten�"
+
+#: src/callbacks_mainwindow_toolbar.c:393 src/remote.c:454 src/remote.c:792
+#, c-format
+msgid "QSO %s added to %s log, log saved"
+msgstr "QSO %s p�id�no do %s den�ku, den�k ulo�en"
+
+#: src/callbacks_mainwindow_toolbar.c:397
+#, c-format
+msgid "QSO %s added to %s log"
+msgstr "QSO %s p�id�no do den�ku %s "
+
+#: src/callbacks_mainwindow_toolbar.c:447
+msgid "Can not delete QSO, log is read-only"
+msgstr "Nemohu smazat QSO, den�k je pouze pro �ten�"
+
+#: src/callbacks_mainwindow_toolbar.c:454
+#, c-format
+msgid "QSO %s deleted, %s log renumbered"
+msgstr "QSO %s smaz�no, %s den�k p�e��slov�n"
+
+#: src/callbacks_mainwindow_toolbar.c:681
+msgid "Can not update QSO, log is read-only"
+msgstr "Nemohu aktualizovat QSO, den�k je pouze pro �ten�"
+
+#: src/callbacks_mainwindow_toolbar.c:1073
+#, c-format
+msgid "QSO %s updated in %s log, log saved"
+msgstr "QSO %s aktualizov�no v den�ku %s,den�k ulo�en"
+
+#: src/callbacks_mainwindow_toolbar.c:1082
+#, c-format
+msgid "QSO %s updated in %s log"
+msgstr "QSO %s aktualizov�no v den�ku %s"
+
+#: src/callbacks_preferencesdialog.c:330
+msgid "xlog - select a radio"
+msgstr "xlog - v�b�r radia"
+
+#: src/callbacks_preferencesdialog.c:352
+msgid "Model"
+msgstr "Model"
+
+#: src/callbacks_preferencesdialog.c:356
+msgid "Manufacturer"
+msgstr "V�robce"
+
+#: src/dxcc.c:477
+msgid "Unknown"
+msgstr ""
+
+#: src/dxcc.c:892
+#, c-format
+msgid "Timezone: %+1.1f"
+msgstr "�asov� z�na: %+1.1f"
+
+#: src/dxcc.c:895 src/gui_preferencesdialog.c:374
+msgid "N"
+msgstr "S"
+
+#: src/dxcc.c:896 src/gui_preferencesdialog.c:375
+msgid "S"
+msgstr "J"
+
+#: src/dxcc.c:897 src/gui_preferencesdialog.c:382
+msgid "E"
+msgstr "V"
+
+#: src/dxcc.c:898 src/gui_preferencesdialog.c:383
+msgid "W"
+msgstr "Z"
+
+#: src/dxcc.c:899 src/gui_preferencesdialog.c:360
+msgid "Location"
+msgstr "Poloha"
+
+#: src/gc.c:77
+#, c-format
+msgid ""
+"\n"
+"Short Path: %03.0f deg, %.0f %s\n"
+"Long Path: %03.0f deg, %.0f %s\n"
+msgstr ""
+"\n"
+"Kr�tkou cestou: %03.0f stup��, %.0f %s\n"
+"Dlouhou cestou: %03.0f stup��, %.0f %s\n"
+
+#: src/gui_aboutdialog.c:75 src/gui_aboutdialog.c:79
+msgid "logbook program for amateur radio operators"
+msgstr "stani�n� den�k pro amat�rsk� r�diov� oper�tory"
+
+#: src/gui_aboutdialog.c:76
+msgid "using cty.dat version"
+msgstr "pou��v� cty.dat verze"
+
+#: src/gui_awards_dxcc.c:45 src/gui_awards_dxcc.c:47
+msgid "xlog - DXCC award"
+msgstr "xlog - DXCC diplom"
+
+#: src/gui_awards_dxcc.c:46 src/gui_awards_iota.c:65
+#: src/gui_awards_locator.c:68 src/gui_awards_locator.c:536
+#: src/gui_awards_wac.c:43 src/gui_awards_was.c:43 src/gui_awards_waz.c:43
+msgid "Please enable the scoring window"
+msgstr "Zapn�te okno sk�re, pros�m"
+
+#: src/gui_awards_iota.c:64 src/gui_awards_iota.c:68 src/gui_awards_iota.c:73
+msgid "xlog - IOTA award"
+msgstr "xlog - diplom IOTA"
+
+#: src/gui_awards_iota.c:69
+msgid ""
+"You will need to enable IOTA scoring from the \"windows and dialogs\" dialog"
+msgstr "Je t�eba zapnout vyhodnocov�n� IOTA ve volb� \"Dialogy a okna\"."
+
+#: src/gui_awards_locator.c:67 src/gui_awards_locator.c:71
+#: src/gui_awards_locator.c:76
+msgid "xlog - locator list"
+msgstr "xlog - seznam lok�tor�"
+
+#: src/gui_awards_locator.c:72 src/gui_awards_locator.c:540
+msgid ""
+"You will need to enable locator scoring from the \"windows and dialogs\" "
+"dialog"
+msgstr "Je t�eba zapnout vyhodnocov�n� lok�tor� ve volb� \"Dialogy a okna\"."
+
+#: src/gui_awards_locator.c:535 src/gui_awards_locator.c:539
+#: src/gui_awards_locator.c:552
+msgid "xlog - locator map"
+msgstr "xlog - mapa lok�tor�"
+
+#: src/gui_awards_locator.c:560
+msgid "Select band (MHz) for locator scoring"
+msgstr "Zvolit p�smo (MHz) pro vyhodnocen� lok�tor�"
+
+#: src/gui_awards_locator.c:590
+msgid "All"
+msgstr "V�e"
+
+#: src/gui_awards_wac.c:42 src/gui_awards_wac.c:46 src/gui_awards_wac.c:51
+msgid "xlog - WAC award"
+msgstr "xlog - diplom WAC"
+
+#: src/gui_awards_wac.c:47
+msgid ""
+"You will need to enable WAC scoring from the \"windows and dialogs\" dialog"
+msgstr "Je t�eba zapnout vyhodnocov�n� WAC ve volb� \"Dialogy a okna\"."
+
+#: src/gui_awards_was.c:42 src/gui_awards_was.c:46 src/gui_awards_was.c:51
+msgid "xlog - WAS award"
+msgstr "xlog - diplom WAS"
+
+#: src/gui_awards_was.c:47
+msgid ""
+"You will need to enable WAS scoring from the \"windows and dialogs\" dialog"
+msgstr "Je t�eba zapnout vyhodnocov�n� WAS ve volb� \"Dialogy a okna\"."
+
+#: src/gui_awards_waz.c:42 src/gui_awards_waz.c:46 src/gui_awards_waz.c:51
+msgid "xlog - WAZ award"
+msgstr "xlog - diplom WAZ"
+
+#: src/gui_awards_waz.c:47
+msgid ""
+"You will need to enable WAZ scoring from the \"windows and dialogs\" dialog"
+msgstr "Je t�eba zapnout vyhodnocov�n� WAZ ve volb� \"Dialogy a okna\"."
+
+#: src/gui_b4window.c:165
+msgid "xlog - worked before"
+msgstr "xlog - p�edchoz� spojen�"
+
+#: src/gui_closedialog.c:58
+msgid "xlog - closing"
+msgstr "xlog - uzav�en�"
+
+#: src/gui_closedialog.c:69
+msgid "This log has not been saved, do you want to close it anyway?"
+msgstr "Tento den�k nen� ulo�en, chcete ho ur�it� zav��t?"
+
+#: src/gui_countrymap.c:140
+msgid "xlog - country map"
+msgstr "xlog - mapa zem�"
+
+#: src/gui_defaultsdialog.c:51
+msgid "xlog - defaults"
+msgstr "xlog - p�eddefinovan� hodnoty"
+
+#: src/gui_defaultsdialog.c:60
+msgid "Values to use for 'Click all' or Ctl+k"
+msgstr "Hodnoty pou�it� pro 'Vyplnit v�e' nebo Ctrl+k"
+
+#: src/gui_defaultsdialog.c:79 src/gui_dialogsdialog.c:116
+#: src/gui_dialogsdialog.c:214 src/gui_dupecheckdialog.c:181
+#: src/gui_gtkprintdialog.c:713 src/gui_logeditordialog.c:274
+msgid "Mode"
+msgstr "M�d"
+
+#: src/gui_defaultsdialog.c:106 src/gui_dialogsdialog.c:125
+#: src/gui_dialogsdialog.c:226 src/gui_dialogsdialog.c:479
+#: src/gui_gtkprintdialog.c:721 src/gui_logeditordialog.c:369
+#: src/gui_mainwindow.c:194
+msgid "Awards"
+msgstr "Diplomy"
+
+#: src/gui_defaultsdialog.c:115 src/gui_dialogsdialog.c:134
+#: src/gui_dialogsdialog.c:235 src/gui_gtkprintdialog.c:727
+#: src/gui_logeditordialog.c:399
+msgid "Power"
+msgstr "V�kon"
+
+#: src/gui_defaultsdialog.c:124 src/gui_gtkprintdialog.c:735
+msgid "Freefield1"
+msgstr "Libovoln�-1"
+
+#: src/gui_defaultsdialog.c:133 src/gui_gtkprintdialog.c:737
+msgid "Freefield2"
+msgstr "Libovoln�-2"
+
+#: src/gui_defaultsdialog.c:142 src/gui_dialogsdialog.c:155
+#: src/gui_dialogsdialog.c:256 src/gui_gtkprintdialog.c:739
+#: src/gui_logeditordialog.c:493
+msgid "Remarks"
+msgstr "Pozn�mka"
+
+#: src/gui_dialogsdialog.c:71
+msgid "xlog - dialogs and windows"
+msgstr "xlog - dialogy a okna"
+
+#: src/gui_dialogsdialog.c:81
+msgid "Columns to show in the 'Worked Before' dialog"
+msgstr "Polo�ky zobrazovan� v okn� 'P�edchoz� spojen�'"
+
+#: src/gui_dialogsdialog.c:92
+msgid "Logname"
+msgstr "N�zev den�ku"
+
+#: src/gui_dialogsdialog.c:95 src/gui_gtkprintdialog.c:701
+#: src/gui_logeditordialog.c:182
+msgid "QSO Number"
+msgstr "��slo QSO"
+
+#: src/gui_dialogsdialog.c:98 src/gui_dialogsdialog.c:199
+#: src/gui_gtkprintdialog.c:703 src/gui_logeditordialog.c:203
+msgid "Date"
+msgstr "Datum"
+
+#: src/gui_dialogsdialog.c:104 src/gui_dialogsdialog.c:205
+#: src/gui_gtkprintdialog.c:707
+msgid "UTC - end"
+msgstr "UTC - konec"
+
+#: src/gui_dialogsdialog.c:107 src/gui_dialogsdialog.c:208
+#: src/gui_gtkprintdialog.c:709 src/gui_logeditordialog.c:246
+msgid "Call"
+msgstr "Zna�ka"
+
+#: src/gui_dialogsdialog.c:110 src/gui_dialogsdialog.c:211
+#: src/gui_gtkprintdialog.c:711
+msgid "Frequency"
+msgstr "Kmito�et"
+
+#: src/gui_dialogsdialog.c:128 src/gui_dialogsdialog.c:229
+#: src/gui_gtkprintdialog.c:723
+msgid "Qsl Out"
+msgstr "QSL odesl�n"
+
+#: src/gui_dialogsdialog.c:131 src/gui_dialogsdialog.c:232
+#: src/gui_gtkprintdialog.c:725
+msgid "Qsl In"
+msgstr "QSL p�ijat"
+
+#: src/gui_dialogsdialog.c:140 src/gui_dialogsdialog.c:241
+#: src/gui_gtkprintdialog.c:729 src/gui_logeditordialog.c:414
+msgid "Name"
+msgstr "Jm�no"
+
+#: src/gui_dialogsdialog.c:162
+msgid "Options for the export dialog"
+msgstr "Volby pro okno exportu"
+
+#: src/gui_dialogsdialog.c:169
+msgid "When exporting to ADIF convert frequency to band"
+msgstr "P�i exportu do ADIF p�ev�zd kmito�et na p�smo"
+
+#: src/gui_dialogsdialog.c:178
+#, fuzzy
+msgid "When exporting to Cabrillo convert frequency to band"
+msgstr "P�i exportu do ADIF p�ev�zd kmito�et na p�smo"
+
+#: src/gui_dialogsdialog.c:189
+msgid "Fields to export when saving as TSV (Tab Separated Value) for gLabels"
+msgstr ""
+"Pole pro export jsou ukl�d�na jako TSV (hodnoty odd�len� tabul�torem) pro "
+"gLabels"
+
+#: src/gui_dialogsdialog.c:263
+msgid ""
+"Add calculated bearing and distance fields when the locator log field is used"
+msgstr "P�idat v�po�et azimutu a vzd�lenost�, pokud je lok�tor v den�ku pou�it"
+
+#: src/gui_dialogsdialog.c:271
+msgid "Sort by DXCC"
+msgstr "Se�adit podle DXCC"
+
+#: src/gui_dialogsdialog.c:280
+msgid "Group by call-sign"
+msgstr "Seskupit podle zna�ky"
+
+#: src/gui_dialogsdialog.c:292 src/gui_preferencesdialog.c:295
+msgid "Bands"
+msgstr "P�sma"
+
+#: src/gui_dialogsdialog.c:296
+msgid "Bands to include in the scoring window"
+msgstr "V okn� vyhodnocen� obsa�ena p�sma "
+
+#: src/gui_dialogsdialog.c:483
+msgid "Awards to add to the scoring window"
+msgstr "Diplomy, kter� maj� b�t v okn� statistik"
+
+#: src/gui_dialogsdialog.c:504 src/gui_mainwindow.c:233
+msgid "Worked Before"
+msgstr "P�edchoz� spojen�"
+
+#: src/gui_dialogsdialog.c:507
+msgid "Export"
+msgstr "Export"
+
+#: src/gui_dialogsdialog.c:510
+msgid "Scoring"
+msgstr "Vyhodnocen�"
+
+#: src/gui_dupecheckdialog.c:145
+msgid "xlog - dupecheck"
+msgstr "xlog - kontrola duplik�t�"
+
+#: src/gui_dupecheckdialog.c:154
+msgid "Select logs for dupe checking"
+msgstr "Vybat den�ky pro kontrolu duplicitn�ch QSO"
+
+#: src/gui_dupecheckdialog.c:163
+msgid "Check this log"
+msgstr "Kontrolovat tento den�k"
+
+#: src/gui_dupecheckdialog.c:169
+msgid "Check all logs"
+msgstr "Kontrolovat v�echny den�ky"
+
+#: src/gui_dupecheckdialog.c:172
+msgid "Items to exclude"
+msgstr "Nebrat v �vahu"
+
+#: src/gui_dupecheckdialog.c:184
+msgid "Band"
+msgstr "P�smo"
+
+#: src/gui_dupecheckdialog.c:229
+msgid "Searching..."
+msgstr "Hled�m..."
+
+#: src/gui_dupecheckdialog.c:260 src/gui_dupecheckdialog.c:568
+msgid "xlog - dupe results"
+msgstr "xlog duplicitn� QSO"
+
+#: src/gui_dupecheckdialog.c:274
+msgid "Select an entry to highlight the corresponding entry in the main window"
+msgstr "Klikni na polo�ku pro vysv�tlen� p��slu�n� polo�ky v hlavn�m okn�"
+
+#: src/gui_dupecheckdialog.c:363
+msgid "This window will not update when you modify QSO's"
+msgstr ""
+
+#: src/gui_dupecheckdialog.c:569
+msgid "No dupes found!"
+msgstr "Nenalezeny ��dn� duplik�ty!"
+
+#: src/gui_dxcclist.c:68
+msgid "xlog - DXCC list"
+msgstr "xlog - seznam DXCC"
+
+#: src/gui_dxcclist.c:90
+msgid "Nr"
+msgstr "�."
+
+#: src/gui_dxcclist.c:96
+msgid "Prefix"
+msgstr "Prefix"
+
+#: src/gui_dxcclist.c:101
+msgid "Country"
+msgstr "Zem�"
+
+#: src/gui_dxcclist.c:106
+msgid "Continent"
+msgstr "Kontinent"
+
+#: src/gui_dxcclist.c:121
+msgid "Latitude"
+msgstr "���ka"
+
+#: src/gui_dxcclist.c:127
+msgid "Longitude"
+msgstr "D�lka"
+
+#: src/gui_dxcclist.c:133
+msgid "Timezone"
+msgstr "�asov� z�na"
+
+#: src/gui_exportdialog.c:65
+msgid "xlog - export"
+msgstr "xlog - export"
+
+#: src/gui_exportdialog.c:74
+msgid "Type of log:"
+msgstr "Form�t den�ku:"
+
+#: src/gui_exportdialog.c:84
+msgid "Export QSO:"
+msgstr "Export QSO:"
+
+#: src/gui_exportdialog.c:89 src/gui_saveasdialog.c:74
+msgid "to"
+msgstr "do"
+
+#: src/gui_exportdialog.c:141 src/gui_exportdialog.c:166
+msgid "Cannot export log: invalid entry for first and/or last QSO"
+msgstr "Nelze ulo�it den�k: �patn� hodnota pro prvn� nebo posledn� QSO"
+
+#: src/gui_exportdialog.c:145 src/gui_exportdialog.c:170
+#, c-format
+msgid "Log exported to %s"
+msgstr "Den�k exportov�n do %s"
+
+#: src/gui_exportdialog.c:150
+msgid "xlog - exporting"
+msgstr "xlog - exportov�n�"
+
+#: src/gui_exportdialog.c:154
+#, fuzzy, c-format
+msgid "%s already exists, do you want to overwrite it?"
+msgstr "%s u� existuje, chcete ho p�epsat?"
+
+#: src/gui_fontselectiondialog.c:49
+msgid "xlog - select Font"
+msgstr "xlog - v�b�r p�sma"
+
+#: src/gui_fontselectiondialog.c:63
+msgid "How about this font?"
+msgstr "Co takhle toto p�smo?"
+
+#: src/gui_gtkprintdialog.c:644
+#, c-format
+msgid "Log \"%s\" printed on %s by %s version %s"
+msgstr "Den�k %s vytisknut dne %s pomoc� %s verze %s"
+
+#: src/gui_gtkprintdialog.c:922
+msgid "Columns"
+msgstr "Sloupce"
+
+#: src/gui_importdialog.c:115
+msgid "xlog - select a log for import"
+msgstr "xlog - v�b�r den�ku pro import"
+
+#: src/gui_importdialog.c:192 src/gui_newlogdialog.c:131
+#: src/gui_openlogdialog.c:127
+msgid "A log with the same name is already open"
+msgstr "Den�k se stejn�m n�zvem je ji� otev�en"
+
+#: src/gui_importdialog.c:247 src/gui_importdialog.c:280
+#, c-format
+msgid "%d QSO's imported"
+msgstr "%d QSO importov�na"
+
+#: src/gui_importdialog.c:309
+msgid "xlog - import"
+msgstr "xlog - import"
+
+#: src/gui_importdialog.c:313
+msgid ""
+"These pages will help you import your log. Formats supported are ADIF, EDI "
+"( Electronic Data Interchange) and cabrillo, together with editest, oh1aa, "
+"tlf, trlog and twlog native logbook formats."
+msgstr ""
+"N�pov�da importu den�ku: podporovan� form�ty jsou ADIF, EDI ( Electronic "
+"Data Interchange) a Cabrillo, d�le pak form�ty editest, OH1AA, tlf, trlog."
+
+#: src/gui_importdialog.c:318
+msgid "Welcome"
+msgstr "V�tejte"
+
+#: src/gui_importdialog.c:326
+msgid "Step 1"
+msgstr "Krok 1"
+
+#: src/gui_importdialog.c:330
+msgid ""
+"Select a log by clicking on the \"Open\" button. The logtype can be chosen "
+"with the combobox."
+msgstr ""
+"Vyberte den�k kliknut�m na tla��tko \"Otev��t\". Typ den�ku lze zvolit "
+"pomoc� combo boxu."
+
+#: src/gui_importdialog.c:361
+msgid "Step 2"
+msgstr "Krok 2"
+
+#: src/gui_importdialog.c:365
+msgid "Select the type of import"
+msgstr "Vyberte typ importu"
+
+#: src/gui_importdialog.c:370
+msgid "Import as new log"
+msgstr "Importovat jako nov� den�k"
+
+#: src/gui_importdialog.c:376
+msgid "Import into current log"
+msgstr "Import do aktu�ln�ho den�ku"
+
+#: src/gui_importdialog.c:382
+msgid "Step 3"
+msgstr "Krok 3"
+
+#: src/gui_importdialog.c:386
+msgid ""
+"When importing from cabrillo add the following remark. Leave empty if you "
+"don't want to have a remark added."
+msgstr ""
+"P�i importu form�tu Cabrillo p�idat n�sleduj�c� pozn�mku. Nechcete-li p�idat "
+"pozn�mku, nechte pr�zdn�."
+
+#: src/gui_importdialog.c:400
+msgid ""
+"Clicking apply will now import your log. In case you import into an existing "
+"log, you should use xlog's sorting capabilties to sort the log. You can also "
+"use the log-editor to hide columns."
+msgstr ""
+"Kliknut�m na tla��tko \"Pou��t\" bude soubor importov�n. Pokud importujete "
+"do existuj�c�ho den�ku, vyu�ijte mo�nodti t��d�n� xlogu. Ke skryt� rubrik "
+"m��ete rovn� pou��t editor den�ku."
+
+#: src/gui_importdialog.c:408
+msgid "End"
+msgstr "Konec"
+
+#: src/gui_keys.c:80
+msgid "Key"
+msgstr "Kl�vesa"
+
+#: src/gui_keys.c:85
+msgid "Usage"
+msgstr "Pou�it�"
+
+#: src/gui_logeditordialog.c:152
+msgid "xlog - logeditor"
+msgstr "xlog - editor den�ku"
+
+#: src/gui_logeditordialog.c:169 src/gui_logeditordialog.c:356
+msgid "Fieldname"
+msgstr "N�zev polo�ky"
+
+#: src/gui_logeditordialog.c:171 src/gui_logeditordialog.c:358
+msgid ""
+"Show / Hide\n"
+"-This log-"
+msgstr ""
+"Zobrazit / Skr�t\n"
+" -Tento den�k-"
+
+#: src/gui_logeditordialog.c:173 src/gui_logeditordialog.c:360
+msgid ""
+"Width (Pixels)\n"
+"-All logs-"
+msgstr ""
+"   ���ka (bod�)\n"
+"-V�echny den�ky-"
+
+#: src/gui_logeditordialog.c:184 src/gui_logeditordialog.c:205
+#: src/gui_logeditordialog.c:219 src/gui_logeditordialog.c:234
+#: src/gui_logeditordialog.c:248 src/gui_logeditordialog.c:262
+#: src/gui_logeditordialog.c:276 src/gui_logeditordialog.c:310
+#: src/gui_logeditordialog.c:344 src/gui_logeditordialog.c:373
+#: src/gui_logeditordialog.c:388 src/gui_logeditordialog.c:403
+#: src/gui_logeditordialog.c:418 src/gui_logeditordialog.c:433
+#: src/gui_logeditordialog.c:448 src/gui_logeditordialog.c:465
+#: src/gui_logeditordialog.c:482 src/gui_logeditordialog.c:497
+msgid "Show"
+msgstr "Zobrazit"
+
+#: src/gui_logeditordialog.c:230
+msgid "Endtime (UTC)"
+msgstr "�as ukon�en� (UTC)"
+
+#: src/gui_logeditordialog.c:235 src/gui_logeditordialog.c:311
+#: src/gui_logeditordialog.c:345 src/gui_logeditordialog.c:374
+#: src/gui_logeditordialog.c:389 src/gui_logeditordialog.c:404
+#: src/gui_logeditordialog.c:419 src/gui_logeditordialog.c:434
+#: src/gui_logeditordialog.c:449 src/gui_logeditordialog.c:466
+#: src/gui_logeditordialog.c:483 src/gui_logeditordialog.c:498
+msgid "Hide"
+msgstr "Skr�t"
+
+#: src/gui_logeditordialog.c:306
+msgid "TX(RST)"
+msgstr ""
+
+#: src/gui_logeditordialog.c:340
+msgid "RX(RST)"
+msgstr ""
+
+#: src/gui_logeditordialog.c:384
+msgid "QSL out/in"
+msgstr "QSL odeslan�/p�ijat�"
+
+#: src/gui_logeditordialog.c:444
+msgid "QTH Locator"
+msgstr "QTH Lok�tor"
+
+#: src/gui_mainwindow.c:148
+msgid "Log"
+msgstr "Den�k"
+
+#: src/gui_mainwindow.c:149
+msgid "Edit"
+msgstr "Editovat"
+
+#: src/gui_mainwindow.c:150
+msgid "Options"
+msgstr "P�edvolby"
+
+#: src/gui_mainwindow.c:151
+msgid "Tools"
+msgstr "N�stroje"
+
+#: src/gui_mainwindow.c:152
+msgid "Page"
+msgstr "Strana"
+
+#: src/gui_mainwindow.c:153 src/gui_preferencesdialog.c:441
+msgid "Settings"
+msgstr "Nastaven�"
+
+#: src/gui_mainwindow.c:154
+msgid "Help"
+msgstr "N�pov�da"
+
+#: src/gui_mainwindow.c:156
+msgid "New..."
+msgstr "Nov�..."
+
+#: src/gui_mainwindow.c:157
+msgid "Open"
+msgstr "Otev��t"
+
+#: src/gui_mainwindow.c:158
+msgid "Print"
+msgstr "Tisk"
+
+#: src/gui_mainwindow.c:159
+msgid "Page Setup"
+msgstr "Nastaven� str�nky"
+
+#: src/gui_mainwindow.c:160
+msgid "Save"
+msgstr "Ulo�it"
+
+#: src/gui_mainwindow.c:161
+msgid "Save As..."
+msgstr "Ulo�it jako..."
+
+#: src/gui_mainwindow.c:162
+msgid "Close"
+msgstr "Zav��t"
+
+#: src/gui_mainwindow.c:163
+msgid "Export..."
+msgstr "Export..."
+
+#: src/gui_mainwindow.c:164
+msgid "Import..."
+msgstr "Import..."
+
+#: src/gui_mainwindow.c:165
+msgid "Merge"
+msgstr "Slou�it"
+
+#: src/gui_mainwindow.c:166
+msgid "Quit"
+msgstr "Konec"
+
+#: src/gui_mainwindow.c:168
+msgid "Write"
+msgstr "Zapsat"
+
+#: src/gui_mainwindow.c:169
+msgid "Write a QSO to the log [Ctrl-W]"
+msgstr "Zapsat nov� QSO do den�ku [Ctrl-A]"
+
+#: src/gui_mainwindow.c:170
+msgid "Clear All"
+msgstr "Smazat v�e"
+
+#: src/gui_mainwindow.c:172
+msgid "Click All"
+msgstr "Vyplnit v�e"
+
+#: src/gui_mainwindow.c:174
+msgid "Write and Click All"
+msgstr "Zapsat a kliknout - v�e"
+
+#: src/gui_mainwindow.c:176
+msgid "Delete"
+msgstr "Smazat"
+
+#: src/gui_mainwindow.c:177
+msgid "Delete a selected log entry [Ctrl-D]"
+msgstr "Smazat ozna�en� polo�ky den�ku [Ctrl-D]"
+
+#: src/gui_mainwindow.c:178
+msgid "Find"
+msgstr "Naj�t"
+
+#: src/gui_mainwindow.c:180
+msgid "Update"
+msgstr "Aktualizace"
+
+#: src/gui_mainwindow.c:181
+msgid "Update a modified log entry [Ctrl-U]"
+msgstr "Aktualizovat zm�n�nou polo�ku den�ku [Ctrl-U]"
+
+#: src/gui_mainwindow.c:183
+msgid "Country Map"
+msgstr "Mapa zem�"
+
+#: src/gui_mainwindow.c:185 src/gui_preferencesdialog.c:415
+msgid "Keyer"
+msgstr "Kl��ov�n�"
+
+#: src/gui_mainwindow.c:188
+msgid "Find unknown countries..."
+msgstr ""
+
+#: src/gui_mainwindow.c:189
+msgid "Dupe Check..."
+msgstr "Kontrola duplik�t�..."
+
+#: src/gui_mainwindow.c:190
+msgid "Log Editor"
+msgstr "Editor den�ku"
+
+#: src/gui_mainwindow.c:191
+msgid "Trace Hamlib"
+msgstr "Trasovat Hamlib"
+
+#: src/gui_mainwindow.c:192
+msgid "Sort by Date"
+msgstr "Se�adit podle data"
+
+#: src/gui_mainwindow.c:193
+#, fuzzy
+msgid "Sort by Callsign"
+msgstr "Va�e zna�ka"
+
+#: src/gui_mainwindow.c:200
+msgid "Locator List"
+msgstr "Seznam lok�tor�"
+
+#: src/gui_mainwindow.c:201
+msgid "Locator Map"
+msgstr "Mapa lok�tor�"
+
+#: src/gui_mainwindow.c:203
+msgid "Defaults"
+msgstr "P�ednastaven� hodnoty"
+
+#: src/gui_mainwindow.c:204
+msgid "Dialogs and Windows"
+msgstr "Dialogy a okna"
+
+#: src/gui_mainwindow.c:205
+msgid "Preferences..."
+msgstr "Mo�nosti..."
+
+#: src/gui_mainwindow.c:207
+msgid "Documentation"
+msgstr "Dokumentace"
+
+#: src/gui_mainwindow.c:208
+msgid "DXCC list"
+msgstr "Seznam DXCC"
+
+#: src/gui_mainwindow.c:209
+msgid "Keys"
+msgstr "Kl�vesy"
+
+#: src/gui_mainwindow.c:210
+msgid "Manual"
+msgstr "Manu�l"
+
+#: src/gui_mainwindow.c:211
+msgid "About..."
+msgstr "O programu..."
+
+#: src/gui_mainwindow.c:213
+msgid "Bugs"
+msgstr "Chyby"
+
+#: src/gui_mainwindow.c:214
+msgid "Changelog"
+msgstr "Seznam zm�n"
+
+#: src/gui_mainwindow.c:215
+msgid "Todo"
+msgstr "Pl�n v�voje"
+
+#: src/gui_mainwindow.c:231
+msgid "Scoring Window"
+msgstr "Okno vyhodnocen�"
+
+#: src/gui_mainwindow.c:232
+msgid "Show Toolbar"
+msgstr "Zobrazit panel n�stroj�"
+
+#: src/gui_mainwindow.c:415
+msgid "_Date"
+msgstr "_Datum"
+
+#: src/gui_mainwindow.c:433
+msgid "_End (UTC )"
+msgstr "_Konec (UTC)"
+
+#: src/gui_mainwindow.c:442
+msgid "_Call"
+msgstr "_Zna�ka"
+
+#: src/gui_mainwindow.c:472 src/gui_mainwindow.c:475
+msgid "M_ode"
+msgstr "M_�d"
+
+#: src/gui_mainwindow.c:511
+msgid "_QSL out"
+msgstr "_QSL odesl�n"
+
+#: src/gui_mainwindow.c:513
+msgid "Q_SL in"
+msgstr "Q_SL p�ijat"
+
+#: src/gui_mainwindow.c:518
+msgid "_Awards"
+msgstr "_Diplomy"
+
+#: src/gui_mainwindow.c:530 src/gui_mainwindow.c:533
+msgid "_Power"
+msgstr "_V�kon"
+
+#: src/gui_mainwindow.c:543
+msgid "_Name"
+msgstr "_Jm�no"
+
+#: src/gui_mainwindow.c:563
+msgid "_Locator"
+msgstr "_Lok�tor"
+
+#: src/gui_mainwindow.c:595
+msgid "Remar_ks"
+msgstr "Pozn�m_ka"
+
+#: src/gui_mergedialog.c:56
+msgid "xlog - select a log"
+msgstr "xlog - v�b�r den�ku"
+
+#: src/gui_mergedialog.c:97
+msgid "xlog - merge logs"
+msgstr "xlog - slou�it den�ky"
+
+#: src/gui_mergedialog.c:100
+msgid "_Merge"
+msgstr "Spo_jit"
+
+#: src/gui_mergedialog.c:106
+msgid "Select first log for merging"
+msgstr "Vyber prvn� den�k pro slou�en�"
+
+#: src/gui_mergedialog.c:118
+msgid "Select second log for merging"
+msgstr "Vyber druh� den�k pro slou�en�"
+
+#: src/gui_mergedialog.c:174
+#, c-format
+msgid "%d QSO's merged, the log may need sorting"
+msgstr "%d QSO slou�en�ch, den�k bude t�eba se�adit"
+
+#: src/gui_netkeyer.c:157 src/gui_netkeyer.c:284
+msgid "Send to keyer has failed"
+msgstr "Odesl�n� na kl��ov�n� selhalo"
+
+#: src/gui_netkeyer.c:331
+msgid "xlog - keyer"
+msgstr "xlog - kl��ov�n�"
+
+#: src/gui_netkeyer.c:448
+msgid "Auto exchange message in CQ mode"
+msgstr "Automatiky odes�lan� zpr�va v CQ m�du"
+
+#: src/gui_netkeyer.c:450
+msgid "Auto exchange message in S&P mode"
+msgstr "Automaticky odes�lan� zpr�va v S&P m�du"
+
+#: src/gui_netkeyer.c:514
+msgid "gethostbyname for keyer failed"
+msgstr "gethostbyname pro kl��ov�n� selhalo"
+
+#: src/gui_netkeyer.c:519
+msgid "creation of socket for keyer failed"
+msgstr "Vytvo�en� socketu pro kl��ov�n� selhalo"
+
+#: src/gui_newlogdialog.c:92
+msgid "xlog - new log"
+msgstr "xlog - nov� den�k"
+
+#: src/gui_newlogdialog.c:100
+msgid "Enter a name for this log (a-z, A-Z, 0-9, dash(-) and underscore(_))"
+msgstr ""
+"Zadejte n�zev pro tento den�k (a-z, A-Z, 0-9 poml�ka(-) a podtr��tko(_))"
+
+#: src/gui_newlogdialog.c:155
+msgid "A log with this name already exists"
+msgstr "Den�k s t�mto n�zvem ji� existuje"
+
+#: src/gui_newlogdialog.c:190 src/gui_openlogdialog.c:73
+#: src/gui_openlogdialog.c:186 src/main.c:612
+msgid "xlog - open log"
+msgstr "xlog - otev��t den�k"
+
+#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187 src/main.c:613
+msgid ""
+"There were some errors converting from your locale to UTF8, which is used by "
+"GTK+ internally. It is best if you start xlog from a terminal and see what "
+"the errors are. Please check your language settings and your log fields!"
+msgstr ""
+"Vyskytlo se n�kolik chyb p�i konverzi z pou�it� lokalizace do UTF-8, kter� "
+"je pou�it� p��mo v GTK+. Nejlep�� bude, kdy� spust�te xlog z termin�lu a "
+"pod�v�te se, co je to za chyby. Pros�m, zkontrolujte nastaven� jazyka "
+"(internacionalizace) a polo�ky den�ku!"
+
+#: src/gui_openlogdialog.c:90
+msgid "Open log read-only"
+msgstr "Den�k otev�en pouze pro �ten�"
+
+#: src/gui_openlogdialog.c:175 src/main.c:420
+#, c-format
+msgid "%d QSO's loaded"
+msgstr "%d na�ten�ch QSO"
+
+#: src/gui_pathselectiondialog.c:48
+msgid "xlog - select a directory"
+msgstr "xlog - v�b�r adres��e"
+
+#: src/gui_preferencesdialog.c:226
+msgid "xlog - preferences"
+msgstr "xlog - mo�nosti"
+
+#: src/gui_preferencesdialog.c:237 src/gui_preferencesdialog.c:263
+msgid "General"
+msgstr "Hlavn�"
+
+#: src/gui_preferencesdialog.c:242
+msgid "Enable clock on statusbar"
+msgstr "Zapnout hodiny ve stavov�m panelu"
+
+#: src/gui_preferencesdialog.c:245
+msgid "Enable type and find"
+msgstr "Zapnout vyhled�v�n� p�i psan�"
+
+#: src/gui_preferencesdialog.c:249
+msgid ""
+"Search all the logs for a callsign match and when found, fill in name, QTH, "
+"locator and remarks like in the previous QSO when these fields are empty"
+msgstr ""
+"Hledat ve v�ech den�c�ch zna�ku a p�i shod� vyplnit jm�no, QTH, lok�tor a "
+"pozn�mky z p�edchoz�ho QSO, pokud jsou tyto polo�ky pr�zdn�"
+
+#: src/gui_preferencesdialog.c:253
+msgid "Use free fields (when present) to add distance and azimuth to the log"
+msgstr "Pou��t voln� pole k p�id�n� vzd�lenosti a azimutu do den�ku"
+
+#: src/gui_preferencesdialog.c:259
+msgid "Confirm exit via dialog box"
+msgstr ""
+
+#: src/gui_preferencesdialog.c:261
+msgid " Display the \"Are you sure?\" dialog when exiting "
+msgstr ""
+
+#: src/gui_preferencesdialog.c:268
+msgid "Modes"
+msgstr "M�dy"
+
+#: src/gui_preferencesdialog.c:274 src/gui_preferencesdialog.c:301
+msgid "Use Editbox"
+msgstr "Pou��t editovac� box"
+
+#: src/gui_preferencesdialog.c:280 src/gui_preferencesdialog.c:307
+msgid "Use Optionmenu"
+msgstr "Pou��t nab�dku Volby"
+
+#: src/gui_preferencesdialog.c:287
+msgid "Comma separated list of modes"
+msgstr "��rkami odd�len� seznam m�d�"
+
+#: src/gui_preferencesdialog.c:314
+msgid "Comma separated list of bands"
+msgstr "��rkami odd�len� seznam p�sem"
+
+#: src/gui_preferencesdialog.c:322
+msgid "Remote data"
+msgstr "P��choz� data"
+
+#: src/gui_preferencesdialog.c:327
+#, fuzzy
+msgid ""
+"When receiving data from another application (gmfsk, ktrack, fldigi, wsjt-x):"
+msgstr "Po p�ijet� dat z jin� aplikace (gmfsk, ktrack):"
+
+#: src/gui_preferencesdialog.c:335
+msgid "Add data directly to the log"
+msgstr "P�idat data p��mo do den�ku"
+
+#: src/gui_preferencesdialog.c:341
+msgid "Add data to the QSO frame"
+msgstr "P�idat data do QSO okna"
+
+#: src/gui_preferencesdialog.c:349
+msgid "Callsign"
+msgstr "Zna�ka"
+
+#: src/gui_preferencesdialog.c:353
+msgid "Your Callsign"
+msgstr "Va�e zna�ka"
+
+#: src/gui_preferencesdialog.c:364
+msgid "Your location (ddd.mm)"
+msgstr "Va�e poloha (sss.mm)"
+
+#: src/gui_preferencesdialog.c:386
+msgid "QTH locator"
+msgstr "QTH lok�tor"
+
+#: src/gui_preferencesdialog.c:392
+msgid "Units"
+msgstr "Jednotky"
+
+#: src/gui_preferencesdialog.c:396
+msgid "Display distance in"
+msgstr "Zobrazovat vzd�lenost v"
+
+#: src/gui_preferencesdialog.c:400
+msgid "Kilometers"
+msgstr "Kilometry"
+
+#: src/gui_preferencesdialog.c:401
+msgid "Miles"
+msgstr "M�le"
+
+#: src/gui_preferencesdialog.c:402
+msgid "Lookup"
+msgstr "N�hled"
+
+#: src/gui_preferencesdialog.c:407
+msgid ""
+"When clicking the \"?\" next to the callsign you can use your internet "
+"browser to look it up. \"<call>\" in the lookup-URL will be replaced by the "
+"callsign"
+msgstr ""
+"Kliknete-li na \"?\" vedle zna�ky, lze si prohl�dnout detaily pomoc� va�eho "
+"internetov�ho prohl��e�e. \"<call>\" v URL n�hledu bude nahrazena zna�kou"
+
+#: src/gui_preferencesdialog.c:420
+msgid "Initial exchange to use for \"~\" (see the manual for details)"
+msgstr "V�choz� sout�n� k�d, pou�it� pro \"~\" (dal�� info viz manu�l)"
+
+#: src/gui_preferencesdialog.c:427
+msgid "Info"
+msgstr "Informace"
+
+#: src/gui_preferencesdialog.c:437
+msgid "Enable hamlib support"
+msgstr "Zapnout podporu hamlib"
+
+#: src/gui_preferencesdialog.c:451
+msgid "_Select a Radio"
+msgstr "_V�b�r radia"
+
+#: src/gui_preferencesdialog.c:458
+msgid "Attach to Device"
+msgstr "P�ipojen� k za��zen�"
+
+#: src/gui_preferencesdialog.c:503
+msgid "Comma separated list of commands for configuring your hamlib port"
+msgstr "��rkami odd�len� seznam p��kaz� pro nastaven� hamlib portu"
+
+#: src/gui_preferencesdialog.c:511
+msgid "example: rts_state=ON,timeout=600,serial_speed=19200"
+msgstr "p��klad: rts_state=ON,timeout=600,serial_speed=19200"
+
+#: src/gui_preferencesdialog.c:518
+msgid "Use FCC emission designators for modes (e.g. A1A, J3E, etc.)"
+msgstr "Pou��t FCC ozna�en� vys�l�n� pro m�dy (nap�. A1A, J3E, atd.)"
+
+#: src/gui_preferencesdialog.c:527
+msgid "Enable polling"
+msgstr "Zapnout dotazov�n�"
+
+#: src/gui_preferencesdialog.c:535
+msgid "Poll rig every"
+msgstr "��dat RIG o odpov�� ka�d�ch"
+
+#: src/gui_preferencesdialog.c:554
+msgid "milliseconds"
+msgstr "milisekundy"
+
+#: src/gui_preferencesdialog.c:558
+msgid "Show S-meter on statusbar"
+msgstr "Zobrazit S-metr ve stavov�m panelu"
+
+#: src/gui_preferencesdialog.c:562
+msgid "Show frequency on statusbar"
+msgstr "Zobrazit kmito�et ve stavov�m panelu"
+
+#: src/gui_preferencesdialog.c:571
+msgid "Round frequency at digit"
+msgstr "Zaokrouhlit kmito�et na"
+
+#: src/gui_preferencesdialog.c:598
+msgid "Changing settings in the Logs section of this page requires a restart!"
+msgstr "Zm�na nastaven� v sekci Den�ky na t�to stran� vy�aduje restart!"
+
+#: src/gui_preferencesdialog.c:601 src/gui_preferencesdialog.c:738
+msgid "Logs"
+msgstr "Den�ky"
+
+#: src/gui_preferencesdialog.c:605
+msgid "Directory where the logs will be saved"
+msgstr "Adres��, do kter�ho se budou ukl�dat den�ky"
+
+#: src/gui_preferencesdialog.c:617 src/gui_preferencesdialog.c:718
+msgid "Click here to change the path"
+msgstr "Zm�nit cestu"
+
+#: src/gui_preferencesdialog.c:623
+msgid "Comma separated list of logs to load at startup"
+msgstr "��rkami odd�len� seznam den�k�, na��tan�ch p�i startu"
+
+#: src/gui_preferencesdialog.c:637
+msgid "Load logs by"
+msgstr "Na��st den�ky podle"
+
+#: src/gui_preferencesdialog.c:642
+msgid "Time of last modification"
+msgstr "�as posledn� �pravy"
+
+#: src/gui_preferencesdialog.c:643
+msgid "Alphabet"
+msgstr "Abeceda"
+
+#: src/gui_preferencesdialog.c:649
+msgid "Saving"
+msgstr "Ukl�d�n�"
+
+#: src/gui_preferencesdialog.c:654
+msgid "Save with every log change"
+msgstr "Ukl�dat p�i ka�d� zm�n� den�ku"
+
+#: src/gui_preferencesdialog.c:660
+msgid "Enable autosave"
+msgstr "Zapnout automatick� ukl�d�n�"
+
+#: src/gui_preferencesdialog.c:669
+msgid "Autosave logs every"
+msgstr "Automaticky ukl�dat den�k ka�d�ch"
+
+#: src/gui_preferencesdialog.c:688
+msgid "minutes"
+msgstr "minuty"
+
+#: src/gui_preferencesdialog.c:691
+msgid "Backup"
+msgstr "Z�loha"
+
+#: src/gui_preferencesdialog.c:697
+msgid "Use standard backup procedure"
+msgstr "Pou��t b�n� postup z�lohov�n�"
+
+#: src/gui_preferencesdialog.c:703
+msgid "Copy logs to a safe location"
+msgstr "Kop�rovat den�ky na bezpe�n� m�sto"
+
+#: src/gui_preferencesdialog.c:720
+msgid "Font"
+msgstr "P�smo"
+
+#: src/gui_preferencesdialog.c:724
+msgid "Font to use for the log"
+msgstr "P�smo pro pou�it� v den�ku"
+
+#: src/gui_saveasdialog.c:60
+msgid "xlog - save as"
+msgstr "xlog - ulo�it jako"
+
+#: src/gui_saveasdialog.c:69
+msgid "Save QSO:"
+msgstr "Ulo�it QSO:"
+
+#: src/gui_saveasdialog.c:108 src/gui_saveasdialog.c:138
+msgid "Cannot save log: invalid entry for first and/or last QSO"
+msgstr "Nelze ulo�it den�k: nespr�vn� hodnota pro prvn� a/nebo posledn� QSO"
+
+#: src/gui_saveasdialog.c:118 src/gui_savedialog.c:42
+msgid "xlog - saving"
+msgstr "xlog - ukl�d�n�"
+
+#: src/gui_saveasdialog.c:123
+#, c-format
+msgid "%s already exist, do want to overwrite it?"
+msgstr "%s u� existuje, chcete ho p�epsat?"
+
+#: src/gui_savedialog.c:53
+msgid "One of your logs has not been saved, do you want to quit anyway?"
+msgstr "Jeden z den�k� nen� ulo�en, i p�esto chcete skon�it?"
+
+#: src/gui_savedialog.c:75
+#, fuzzy
+msgid "xlog - exiting"
+msgstr "xlog - exportov�n�"
+
+#: src/gui_savedialog.c:86
+msgid "Are you sure you want to exit xlog?"
+msgstr ""
+
+#: src/gui_scorewindow.c:400
+msgid "xlog - scoring"
+msgstr "xlog - vyhodnocov�n�"
+
+#: src/gui_searchdialog.c:190
+msgid "xlog - searchresult"
+msgstr "xlog - v�sledek hled�n�"
+
+#: src/gui_searchdialog.c:193
+#, c-format
+msgid "'%s' was not found"
+msgstr "'%s' nebyl nalezen"
+
+#: src/gui_searchdialog.c:240
+msgid "xlog - search"
+msgstr "xlog - hled�n�"
+
+#: src/gui_searchdialog.c:254
+msgid "Search this log"
+msgstr "Prohledat tento den�k"
+
+#: src/gui_searchdialog.c:259
+msgid "Search all logs"
+msgstr "Prohledat v�echny den�ky"
+
+#: src/gui_searchdialog.c:269
+msgid "Search callsign field"
+msgstr "Hledat v poli pro zna�ku"
+
+#: src/gui_searchdialog.c:274
+msgid "Search all fields"
+msgstr "Hledat ve v�ech pol�ch"
+
+#: src/gui_setupdialog.c:45
+msgid "xlog - setup"
+msgstr "xlog - nastaven�"
+
+#: src/gui_setupdialog.c:55
+#, fuzzy, c-format
+msgid ""
+"Xlog has created %s, this is the directory where your log will be saved. You "
+"can change the default path for your logs in the preferences dialog.\n"
+"\n"
+"Now select Log -> New from the menu to create a log.\n"
+"\n"
+"Before you start logging, you should read the handbook by selecting Help -> "
+"Manual from the menu!"
+msgstr ""
+"Xlog vytvo�il %s, do tohoto adres��e se budou ukl�dat den�ky. Tuto cestuje "
+"m�n� zm�nit v nastaven�ch."
+
+#: src/gui_tracedialog.c:143
+msgid "Please enable hamlib from the Preferences -> Settings dialog"
+msgstr "Pros�m zapn�te podporu hamlib v okn� Mo�nosti ->Nastaven�"
+
+#: src/gui_tracedialog.c:150
+msgid "xlog - trace hamlib"
+msgstr "xlog - trasov�n� hamlib"
+
+#: src/gui_tracedialog.c:177
+#, c-format
+msgid "Saving to %s"
+msgstr "Ukl�d�m do %s"
+
+#: src/hamlib-utils.c:171
+#, c-format
+msgid "Hamlib config parameter error: %s"
+msgstr "Chyba parametru konfigurace hamlib: %s"
+
+#: src/hamlib-utils.c:182
+#, c-format
+msgid "An error occurred while opening port %s: %s"
+msgstr "Chyba p�i otv�r�n� portu %s: %s"
+
+#: src/hamlib-utils.c:291
+#, c-format
+msgid "Hamlib error %d: %s"
+msgstr "Chyba hamlib %d: %s"
+
+#: src/hamlib-utils.c:299
+msgid ""
+"There was an error while communicating with your rig, hamlib has stopped"
+msgstr "P�i komunikaci s transceiverem do�lo k chyb�, hamlib zastaven"
+
+#: src/log.c:73
+#, c-format
+msgid "Backup to %s failed: %s"
+msgstr "Z�lohov�n� do %s selhalo: %s"
+
+#: src/log.c:131 src/log.c:171 src/log.c:188 src/log.c:208 src/log.c:225
+#: src/log.c:242 src/utils.c:525
+#, c-format
+msgid "Unable to convert '%s' to UTF-8: %s"
+msgstr "Nelze konvertovat '%s' do UTF-8: %s"
+
+#: src/log.c:266
+msgid "Reading..."
+msgstr "Na��t�m.."
+
+#: src/log.c:487
+#, c-format
+msgid "fork failed when saving log: %s"
+msgstr ""
+
+#: src/main.c:105
+#, c-format
+msgid "%s version %s\n"
+msgstr "%s verze %s\n"
+
+#: src/main.c:127
+#, c-format
+msgid "Creating ~%s directory."
+msgstr "Vytv���m adres�� ~%s."
+
+#: src/main.c:132
+#, c-format
+msgid "~%s is not a directory."
+msgstr "~%s nen� adres��"
+
+#: src/main.c:242
+msgid "xlog - startup"
+msgstr "xlog - spu�t�n�"
+
+#: src/main.c:243
+msgid "xlog needs at least version 2.12 of the GTK+ libraries"
+msgstr "xlog vy�aduje GTK+ knihovny verze nejm�n� 2.12"
+
+#: src/main.c:274
+msgid "Could not read dxcc table"
+msgstr "Nelze na��st dxcc p�ehled"
+
+#: src/main.c:277
+msgid "Could not read area table"
+msgstr "Nelze na��st tabulku zem�"
+
+#: src/main.c:390
+#, c-format
+msgid "Can not open log \"%s\""
+msgstr "Nemohu otev��t den�k %s"
+
+#: src/main.c:458
+#, c-format
+msgid "Msgget failed: %s"
+msgstr "Msgget selhalo: %s"
+
+#: src/main.c:471
+#, fuzzy, c-format
+msgid "Socket setup UDP Port 7311 failed: %s"
+msgstr "Sokety nastaven�  selhaly: %s"
+
+#: src/main.c:486
+#, fuzzy, c-format
+msgid "Socket setup UDP Port 2333 failed: %s"
+msgstr "Sokety nastaven�  selhaly: %s"
+
+#: src/main.c:620 src/remote.c:141 src/remote.c:594
+msgid "xlog - error"
+msgstr "xlog - chyba"
+
+#: src/main.c:621
+msgid ""
+"There was an error while loading one of your logs, you may want to start "
+"xlog from a terminal to see what the errors are."
+msgstr ""
+"Vyskytla se chyba p�i na��t�n� jednoho z den�k�, mo�n� byste m�l spustit "
+"xlog z termin�lu a sledovat o jak� chyby se jedn�."
+
+#: src/netkeyer.c:77
+msgid "closing of socket failed"
+msgstr "uzav�en� slotu selhalo"
+
+#: src/remote.c:142 src/remote.c:595
+msgid "No log open while receiving remote data"
+msgstr "Neotev�rat den�k, pokud jsou p�ij�m�na vzd�len� data"
+
+#: src/remote.c:458
+#, c-format
+msgid "Remote data received from %s (#%d), QSO %s added"
+msgstr "P�ijaty vzd�len� data od %s (#%d), QSO %s p�id�no"
+
+#: src/remote.c:549
+#, c-format
+msgid "Remote data received from %s (#%d)"
+msgstr "P�ijaty vzd�len� data od %s (#%d)"
+
+#: src/remote.c:552 src/remote.c:890
+msgid "Warning: No hamlib support for remote data"
+msgstr "Varov�n�: Nen� podpora pro p��choz� data"
+
+#: src/remote.c:796
+#, fuzzy, c-format
+msgid "Remote data received from UDP Port 2333 (#%d), QSO %s added"
+msgstr "P�ijaty vzd�len� data od %s (#%d), QSO %s p�id�no"
+
+#: src/remote.c:887
+#, fuzzy, c-format
+msgid "Remote data received from UDP Port 2333 (#%d)"
+msgstr "P�ijaty vzd�len� data od %s (#%d)"
+
+#: src/remote.c:988
+#, fuzzy
+msgid "Unable to accept new connection at Port 7311"
+msgstr "Nelze akceptovat nov� spojen�"
+
+#: src/support.c:48
+#, c-format
+msgid "Widget not found: %s"
+msgstr "Widget nenalezen: %s"
+
+#: src/support.c:94 src/support.c:117
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Nelze nal�zd pixmap: %s"
+
+#: src/support.c:124
+#, c-format
+msgid "Failed to load pixbuf file: %s: %s\n"
+msgstr "Selhalo na�ten� obr�zku ze souboru: %s: %s\n"
+
+#: src/utils.c:320
+msgid "Ready."
+msgstr "P�ipraven"
+
+#: src/utils.c:636
+msgid "Log(s) autosaved"
+msgstr "Den�k(y) automaticky ulo�en�"
+
+#: src/logfile/flog.c:81 src/logfile/flog.c:88
+#, c-format
+msgid "The header of log %s is corrupted."
+msgstr "Hlavi�ka den�ku %s je po�kozen�."
+
+#: src/logfile/flog.c:82
+#, fuzzy
+msgid "It's length is smaller than 75."
+msgstr "Jej� d�lka je men�� ne� 80."
+
+#: src/logfile/flog.c:83 src/logfile/flog.c:90
+msgid "This does not look like an xlog file."
+msgstr "Toto nevypad� jako soubor xlog-u."
+
+#: src/logfile/flog.c:89
+msgid "It does not start with DATE."
+msgstr "Neza��n� polo�kou DATE."
+
+#, fuzzy
+#~ msgid "Unable to accept new connection UDP Port 2333"
+#~ msgstr "Nelze akceptovat nov� spojen�"
+
+#~ msgid "Add"
+#~ msgstr "P�idat"
+
+#, fuzzy
+#~ msgid "xlog - IOTA awards"
+#~ msgstr "xlog - DXCC diplom"
+
+#, fuzzy
+#~ msgid "xlog - WAC awards"
+#~ msgstr "xlog - DXCC diplom"
+
+#, fuzzy
+#~ msgid "xlog - WAS awards"
+#~ msgstr "xlog - DXCC diplom"
+
+#, fuzzy
+#~ msgid "xlog - WAZ awards"
+#~ msgstr "xlog - DXCC diplom"
+
+#~ msgid "Distance: %d km, azimuth: %d deg"
+#~ msgstr "Vzd�lenost: %d km, azimut: %d stup��"
+
+#~ msgid "Distance: %d m, azimuth: %d deg"
+#~ msgstr "Vzd�lenost: %d m, azimut: %d stup��"
+
+#~ msgid "empty preferences file"
+#~ msgstr "soubor nastaven� je pr�zdn�"
+
+#~ msgid "document of the wrong type, root node is not xlog"
+#~ msgstr "nespr�vn� typ dokumentu, ko�enov� uzel nen� z xlog-u"
+
+#~ msgid "_Import"
+#~ msgstr "_Import"
+
+#~ msgid "characters"
+#~ msgstr "znak�"
+
+#~ msgid ""
+#~ "Select or enter a callsign (or part of a callsign) to search for in the "
+#~ "log"
+#~ msgstr ""
+#~ "Vyberte nebo napi�te zna�ku (nebo ��st zna�ky) pro vyhled�v�n� v den�ku"
+
+#~ msgid "Keep this dialog open"
+#~ msgstr "Ponechat toto okno otev�en�"
+
+#~ msgid "No columns selected, printing cancelled..."
+#~ msgstr "Nejsou vybr�ny sloupce, tisk zru�en..."
+
+#~ msgid "portrait"
+#~ msgstr "na v��ku"
+
+#~ msgid "Cannot get printer configuration, aborting..."
+#~ msgstr "Nemohu z�skat konfiguraci tisk�rny, ru��m..."
+
+#~ msgid "Error while getting print environment"
+#~ msgstr "Chyba p�i z�sk�v�n� informac� o tisku"
+
+#~ msgid "Printing to %s%slog.ps"
+#~ msgstr "Tisknu do %s%slog.ps"
+
+#~ msgid "Printing log in the background"
+#~ msgstr "Tisknu den�k na pozad�"
+
+#, fuzzy
+#~ msgid "%s: %1.2f%s %1.2f%s"
+#~ msgstr "Poloha: %+1.2f %+1.2f"
+
+#, fuzzy
+#~ msgid "Location: %1.2fN %1.2fE"
+#~ msgstr "Poloha: %+1.2f %+1.2f"
+
+#, fuzzy
+#~ msgid "Location: %1.2fS %1.2fW"
+#~ msgstr "Poloha: %+1.2f %+1.2f"
+
+#, fuzzy
+#~ msgid "Location: %1.2fS %1.2fE"
+#~ msgstr "Poloha: %+1.2f %+1.2f"
+
+#~ msgid "xlog - print"
+#~ msgstr "xlog - tisk"
+
+#~ msgid "Range"
+#~ msgstr "Rozsah"
+
+#~ msgid "Print all QSO's"
+#~ msgstr "Tisk v�ech QSO"
+
+#~ msgid "Print QSO"
+#~ msgstr "Tisk QSO"
+
+#~ msgid "To"
+#~ msgstr "a�"
+
+#~ msgid "Destination"
+#~ msgstr "C�l"
+
+#~ msgid "File"
+#~ msgstr "Soubor"
+
+#~ msgid "Paper"
+#~ msgstr "Pap�r"
+
+#~ msgid "Papersize"
+#~ msgstr "Velikost pap�ru"
+
+#~ msgid "Pointsize"
+#~ msgstr "Velikost bodu"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientace"
+
+#~ msgid "landscape"
+#~ msgstr "na ���ku"
+
+#~ msgid "Contests"
+#~ msgstr "Z�vody"
+
+#~ msgid "Add empty Multiplier and Points columns"
+#~ msgstr "P�idat pr�zdn� sloupce pro N�sobi�e a Body"
+
+#~ msgid "Latitude Out of Range (90N to 90S)"
+#~ msgstr "���ka mimo rozsah (90S a� 90J)"
+
+#~ msgid "Longitude Out of Range (180W to 180E)"
+#~ msgstr "D�lka mimo rozsah (180Z a� 180V)"
+
+#~ msgid "Minutes Out of Range (0 to 59)"
+#~ msgstr "Minuty mimo rozsah (0 a� 59)"
+
+#~ msgid "Faq"
+#~ msgstr "Faq"
+
+#~ msgid "Thanks"
+#~ msgstr "Pod�kov�n�"
+
+#~ msgid "%s: not a valid locator"
+#~ msgstr "%s:nespr�vn� lok�tor"
+
+#~ msgid "FAQ"
+#~ msgstr "FAQ"
+
+#~ msgid "MANUAL"
+#~ msgstr "MANUAL"
+
+#~ msgid "Dialogs"
+#~ msgstr "Okna"
+
+#~ msgid "Exceptions"
+#~ msgstr ""
+#~ "VyjÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­mky"
+
+#~ msgid "Clock"
+#~ msgstr "Hodiny"
+
+#~ msgid "Other"
+#~ msgstr "OstatnÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­"
+
+#~ msgid "_Log"
+#~ msgstr ""
+#~ "_DenÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­k"
+
+#~ msgid "_Settings"
+#~ msgstr "Na_stavenÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­"
+
+#~ msgid "Creating a new preferences file...\n"
+#~ msgstr ""
+#~ "VytvÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂÄÂÄšÄÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­"
+#~ "m novÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ "
+#~ "soubor s "
+#~ "nastavenÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­"
+#~ "m...\n"
+
+#~ msgid "preferences not parsed successfully"
+#~ msgstr ""
+#~ "nastavenÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­ "
+#~ "nebyli "
+#~ "ÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂĂĹĄĂÂĂÂĂÂÄÂĂÂspĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂÄÂÄšÄÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂnĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ "
+#~ "naĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂteny"
+
+#~ msgid "xlog - about"
+#~ msgstr "xlog - o programu"
+
+#~ msgid "Published under the GNU GPL License"
+#~ msgstr ""
+#~ "PublikovÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂno "
+#~ "pod GNU GPL "
+#~ "licencÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂÄÂĂÂÄÂĂÂĂÂĂÂÄÂĂÂ­"
