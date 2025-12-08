@@ -28,7 +28,7 @@
 #include "gui_warningdialog.h"
 #include "support.h"
 #include "dxcc.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "main.h"
 #include "cfg.h"
 

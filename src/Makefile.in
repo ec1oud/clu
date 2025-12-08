@@ -88,7 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = xlog$(EXEEXT)
+bin_PROGRAMS = clu$(EXEEXT)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -101,7 +101,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_xlog_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) \
+am_clu_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) \
 	gui_aboutdialog.$(OBJEXT) gui_b4window.$(OBJEXT) \
 	gui_closedialog.$(OBJEXT) gui_countrymap.$(OBJEXT) \
 	gui_defaultsdialog.$(OBJEXT) gui_dialogsdialog.$(OBJEXT) \
@@ -130,9 +130,9 @@ am_xlog_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) \
 	gui_awards_dxcc.$(OBJEXT) gui_awards_wac.$(OBJEXT) \
 	gui_awards_was.$(OBJEXT) gui_awards_waz.$(OBJEXT) \
 	gui_awards_iota.$(OBJEXT) gui_awards_locator.$(OBJEXT) \
-	xlog_enum.$(OBJEXT) awards_enum.$(OBJEXT)
-xlog_OBJECTS = $(am_xlog_OBJECTS)
-xlog_DEPENDENCIES = logfile/liblogfile.a
+	clu_enum.$(OBJEXT) awards_enum.$(OBJEXT)
+clu_OBJECTS = $(am_clu_OBJECTS)
+clu_DEPENDENCIES = logfile/liblogfile.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -184,7 +184,7 @@ am__depfiles_remade = ./$(DEPDIR)/awards_enum.Po \
 	./$(DEPDIR)/log.Po ./$(DEPDIR)/main.Po ./$(DEPDIR)/netkeyer.Po \
 	./$(DEPDIR)/remote.Po ./$(DEPDIR)/strptime.Po \
 	./$(DEPDIR)/support.Po ./$(DEPDIR)/utils.Po ./$(DEPDIR)/wwl.Po \
-	./$(DEPDIR)/xlog_enum.Po
+	./$(DEPDIR)/clu_enum.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -198,8 +198,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(xlog_SOURCES)
-DIST_SOURCES = $(xlog_SOURCES)
+SOURCES = $(clu_SOURCES)
+DIST_SOURCES = $(clu_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -403,11 +403,11 @@ AM_CPPFLAGS = \
 	@GTK_CFLAGS@ @HAMLIB_CFLAGS@ \
 	-DDATADIR=\""$(datadir)"\" \
 	-DXLOG_LOCALEDIR=\""$(datadir)/locale"\" \
-	-DXLOG_DATADIR=\""$(datadir)/xlog"\" \
+	-DXLOG_DATADIR=\""$(datadir)/clu"\" \
 	-DXLOG_DOCDIR=\""$(docdir)"\"
 
 CLEANFILES = *~
-xlog_SOURCES = \
+clu_SOURCES = \
 	main.c main.h \
 	support.c support.h \
 	gui_aboutdialog.c gui_aboutdialog.h \
@@ -463,10 +463,10 @@ xlog_SOURCES = \
 	gui_awards_waz.c gui_awards_waz.h \
 	gui_awards_iota.c gui_awards_iota.h \
 	gui_awards_locator.c gui_awards_locator.h \
-	xlog_enum.c xlog_enum.h \
+	clu_enum.c clu_enum.h \
 	awards_enum.c awards_enum.h
 
-xlog_LDADD = logfile/liblogfile.a \
+clu_LDADD = logfile/liblogfile.a \
 	@GTK_LIBS@ @HAMLIB_LIBS@ -lm
 
 all: all-recursive
@@ -545,9 +545,9 @@ uninstall-binPROGRAMS:
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 
-xlog$(EXEEXT): $(xlog_OBJECTS) $(xlog_DEPENDENCIES) $(EXTRA_xlog_DEPENDENCIES) 
-	@rm -f xlog$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(xlog_OBJECTS) $(xlog_LDADD) $(LIBS)
+clu$(EXEEXT): $(clu_OBJECTS) $(clu_DEPENDENCIES) $(EXTRA_clu_DEPENDENCIES) 
+	@rm -f clu$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(clu_OBJECTS) $(clu_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -612,7 +612,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/support.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utils.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wwl.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xlog_enum.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clu_enum.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -891,7 +891,7 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/support.Po
 	-rm -f ./$(DEPDIR)/utils.Po
 	-rm -f ./$(DEPDIR)/wwl.Po
-	-rm -f ./$(DEPDIR)/xlog_enum.Po
+	-rm -f ./$(DEPDIR)/clu_enum.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -994,7 +994,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/support.Po
 	-rm -f ./$(DEPDIR)/utils.Po
 	-rm -f ./$(DEPDIR)/wwl.Po
-	-rm -f ./$(DEPDIR)/xlog_enum.Po
+	-rm -f ./$(DEPDIR)/clu_enum.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

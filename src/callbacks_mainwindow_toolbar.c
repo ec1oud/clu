@@ -35,7 +35,7 @@
 #include "support.h"
 #include "cfg.h"
 #include "log.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "awards_enum.h"
 #include "utils.h"
 #include "main.h"

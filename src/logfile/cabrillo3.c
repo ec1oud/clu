@@ -41,7 +41,7 @@
 #include "../cfg.h"
 #include "../utils.h"
 #include "../main.h"
-#include "../xlog_enum.h"
+#include "../clu_enum.h"
 
 #ifndef HAVE_STRPTIME
 #include "strptime.h"

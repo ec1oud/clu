@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xlog-1.5\n"
 "Report-Msgid-Bugs-To: Andy Stewart <kb1oiq@arrl.net>\n"
-"POT-Creation-Date: 2024-09-16 10:53-0400\n"
+"POT-Creation-Date: 2025-12-08 22:12+0100\n"
 "PO-Revision-Date: 2009-01-20 13:52+0100\n"
 "Last-Translator: Martin Hautsch, DL5RMH <>\n"
 "Language-Team: German <de@li.org>\n"
@@ -991,11 +991,11 @@ msgid "A log with this name already exists"
 msgstr "Ein Log mit dem gleichen Namen existiert bereits"
 
 #: src/gui_newlogdialog.c:190 src/gui_openlogdialog.c:73
-#: src/gui_openlogdialog.c:186 src/main.c:612
+#: src/gui_openlogdialog.c:186
 msgid "xlog - open log"
 msgstr "xlog - Log öffnen"
 
-#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187 src/main.c:613
+#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187
 msgid ""
 "There were some errors converting from your locale to UTF8, which is used by "
 "GTK+ internally. It is best if you start xlog from a terminal and see what "
@@ -1010,7 +1010,7 @@ msgstr ""
 msgid "Open log read-only"
 msgstr "Schreibgeschützt öffnen"
 
-#: src/gui_openlogdialog.c:175 src/main.c:420
+#: src/gui_openlogdialog.c:175
 #, c-format
 msgid "%d QSO's loaded"
 msgstr "%d QSOs geladen"
@@ -1411,72 +1411,13 @@ msgstr "Lese..."
 msgid "fork failed when saving log: %s"
 msgstr ""
 
-#: src/main.c:105
-#, c-format
-msgid "%s version %s\n"
-msgstr "%s Version %s\n"
-
-#: src/main.c:127
-#, c-format
-msgid "Creating ~%s directory."
-msgstr "Erstelle Verzeichnis ~%s"
-
-#: src/main.c:132
-#, c-format
-msgid "~%s is not a directory."
-msgstr "~%s ist kein Verzeichnis"
-
-#: src/main.c:242
-msgid "xlog - startup"
-msgstr "xlog - Start"
-
-#: src/main.c:243
-msgid "xlog needs at least version 2.12 of the GTK+ libraries"
-msgstr "xlog benötigt mindestens die GTK+ Version 2.12 Bibliotheken"
-
-#: src/main.c:274
-msgid "Could not read dxcc table"
-msgstr "Konnte DXCC-Liste nicht lesen"
-
-#: src/main.c:277
-msgid "Could not read area table"
-msgstr "Konnte Tabelle mit Gebieten nicht lesen"
-
-#: src/main.c:390
-#, c-format
-msgid "Can not open log \"%s\""
-msgstr "Kann Log %s nicht öffnen"
-
-#: src/main.c:458
-#, c-format
-msgid "Msgget failed: %s"
-msgstr "Msgget-Fehler: %s"
-
-#: src/main.c:471
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 7311 failed: %s"
-msgstr "Socket-Fehler: %s"
-
-#: src/main.c:486
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 2333 failed: %s"
-msgstr "Socket-Fehler: %s"
-
-#: src/main.c:620 src/remote.c:141 src/remote.c:594
-msgid "xlog - error"
-msgstr "xlog - Fehler"
-
-#: src/main.c:621
-msgid ""
-"There was an error while loading one of your logs, you may want to start "
-"xlog from a terminal to see what the errors are."
-msgstr ""
-"Es ist ein Fehler beim Laden eines Logs aufgetreten. Um die Fehlermeldungen "
-"zu sehen sollte xlog von der Kommandozeile aus gestartet werden"
-
 #: src/netkeyer.c:77
 msgid "closing of socket failed"
 msgstr "Socket konnte nicht geschlossen werden"
+
+#: src/remote.c:141 src/remote.c:594
+msgid "xlog - error"
+msgstr "xlog - Fehler"
 
 #: src/remote.c:142 src/remote.c:595
 msgid "No log open while receiving remote data"
@@ -1551,6 +1492,54 @@ msgstr "Dies ist keine xlog-Datei."
 #: src/logfile/flog.c:89
 msgid "It does not start with DATE."
 msgstr "Es beginnt nicht mit DATE."
+
+#, c-format
+#~ msgid "%s version %s\n"
+#~ msgstr "%s Version %s\n"
+
+#, c-format
+#~ msgid "Creating ~%s directory."
+#~ msgstr "Erstelle Verzeichnis ~%s"
+
+#, c-format
+#~ msgid "~%s is not a directory."
+#~ msgstr "~%s ist kein Verzeichnis"
+
+#~ msgid "xlog - startup"
+#~ msgstr "xlog - Start"
+
+#~ msgid "xlog needs at least version 2.12 of the GTK+ libraries"
+#~ msgstr "xlog benötigt mindestens die GTK+ Version 2.12 Bibliotheken"
+
+#~ msgid "Could not read dxcc table"
+#~ msgstr "Konnte DXCC-Liste nicht lesen"
+
+#~ msgid "Could not read area table"
+#~ msgstr "Konnte Tabelle mit Gebieten nicht lesen"
+
+#, c-format
+#~ msgid "Can not open log \"%s\""
+#~ msgstr "Kann Log %s nicht öffnen"
+
+#, c-format
+#~ msgid "Msgget failed: %s"
+#~ msgstr "Msgget-Fehler: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 7311 failed: %s"
+#~ msgstr "Socket-Fehler: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 2333 failed: %s"
+#~ msgstr "Socket-Fehler: %s"
+
+#~ msgid ""
+#~ "There was an error while loading one of your logs, you may want to start "
+#~ "xlog from a terminal to see what the errors are."
+#~ msgstr ""
+#~ "Es ist ein Fehler beim Laden eines Logs aufgetreten. Um die "
+#~ "Fehlermeldungen zu sehen sollte xlog von der Kommandozeile aus gestartet "
+#~ "werden"
 
 #, fuzzy
 #~ msgid "Unable to accept new connection UDP Port 2333"

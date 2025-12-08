@@ -32,7 +32,7 @@
 #include "callbacks_mainwindow_qsoframe.h"
 #include "support.h"
 #include "cfg.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "gui_utils.h"
 #include "log.h"
 #include "main.h"

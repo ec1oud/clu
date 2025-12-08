@@ -22,7 +22,7 @@
 */
 
 /*
- * xlog_enum.c - enumeration functions
+ * clu_enum.c - enumeration functions
  */
 
 #include <gtk/gtk.h>
@@ -30,7 +30,7 @@
 #include <string.h>
 #include <math.h> 
 
-#include "xlog_enum.h"
+#include "clu_enum.h"
 
 /* translate enumerated band to a meaningful string */
 gchar *band_enum2char (guint band_enum)

@@ -36,7 +36,7 @@
 #include "gui_dupecheckdialog.h"
 #include "support.h"
 #include "log.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "main.h"
 #include "gui_warningdialog.h"
 

@@ -39,7 +39,7 @@
 #include "log.h"
 #include "utils.h"
 #include "callbacks_mainwindow_qsoframe.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "dxcc.h"
 
 extern preferencestype preferences;

@@ -43,7 +43,7 @@
 #include "logfile.h"
 #include "../cfg.h"
 #include "../utils.h"
-#include "../xlog_enum.h"
+#include "../clu_enum.h"
 
 #ifndef HAVE_STRPTIME
 #include "../strptime.h"

@@ -27,7 +27,7 @@
 #include "gui_awards_waz.h"
 #include "gui_warningdialog.h"
 #include "support.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "awards_enum.h"
 #include "cfg.h"
 

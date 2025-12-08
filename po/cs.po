@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xlog 1.8.1\n"
 "Report-Msgid-Bugs-To: Andy Stewart <kb1oiq@arrl.net>\n"
-"POT-Creation-Date: 2024-09-16 10:53-0400\n"
+"POT-Creation-Date: 2025-12-08 22:12+0100\n"
 "PO-Revision-Date: 2009-02-01 10:25+0100\n"
 "Last-Translator: Martin Krato¹ka, OK1RR <martin@ok1rr.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -989,11 +989,11 @@ msgid "A log with this name already exists"
 msgstr "Deník s tímto názvem ji¾ existuje"
 
 #: src/gui_newlogdialog.c:190 src/gui_openlogdialog.c:73
-#: src/gui_openlogdialog.c:186 src/main.c:612
+#: src/gui_openlogdialog.c:186
 msgid "xlog - open log"
 msgstr "xlog - otevøít deník"
 
-#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187 src/main.c:613
+#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187
 msgid ""
 "There were some errors converting from your locale to UTF8, which is used by "
 "GTK+ internally. It is best if you start xlog from a terminal and see what "
@@ -1008,7 +1008,7 @@ msgstr ""
 msgid "Open log read-only"
 msgstr "Deník otevøen pouze pro ètení"
 
-#: src/gui_openlogdialog.c:175 src/main.c:420
+#: src/gui_openlogdialog.c:175
 #, c-format
 msgid "%d QSO's loaded"
 msgstr "%d naètených QSO"
@@ -1402,72 +1402,13 @@ msgstr "Naèítám.."
 msgid "fork failed when saving log: %s"
 msgstr ""
 
-#: src/main.c:105
-#, c-format
-msgid "%s version %s\n"
-msgstr "%s verze %s\n"
-
-#: src/main.c:127
-#, c-format
-msgid "Creating ~%s directory."
-msgstr "Vytváøím adresáø ~%s."
-
-#: src/main.c:132
-#, c-format
-msgid "~%s is not a directory."
-msgstr "~%s není adresáø"
-
-#: src/main.c:242
-msgid "xlog - startup"
-msgstr "xlog - spu¹tìní"
-
-#: src/main.c:243
-msgid "xlog needs at least version 2.12 of the GTK+ libraries"
-msgstr "xlog vy¾aduje GTK+ knihovny verze nejménì 2.12"
-
-#: src/main.c:274
-msgid "Could not read dxcc table"
-msgstr "Nelze naèíst dxcc pøehled"
-
-#: src/main.c:277
-msgid "Could not read area table"
-msgstr "Nelze naèíst tabulku zemí"
-
-#: src/main.c:390
-#, c-format
-msgid "Can not open log \"%s\""
-msgstr "Nemohu otevøít deník %s"
-
-#: src/main.c:458
-#, c-format
-msgid "Msgget failed: %s"
-msgstr "Msgget selhalo: %s"
-
-#: src/main.c:471
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 7311 failed: %s"
-msgstr "Sokety nastavení  selhaly: %s"
-
-#: src/main.c:486
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 2333 failed: %s"
-msgstr "Sokety nastavení  selhaly: %s"
-
-#: src/main.c:620 src/remote.c:141 src/remote.c:594
-msgid "xlog - error"
-msgstr "xlog - chyba"
-
-#: src/main.c:621
-msgid ""
-"There was an error while loading one of your logs, you may want to start "
-"xlog from a terminal to see what the errors are."
-msgstr ""
-"Vyskytla se chyba pøi naèítání jednoho z deníkù, mo¾ná byste mìl spustit "
-"xlog z terminálu a sledovat o jaké chyby se jedná."
-
 #: src/netkeyer.c:77
 msgid "closing of socket failed"
 msgstr "uzavøení slotu selhalo"
+
+#: src/remote.c:141 src/remote.c:594
+msgid "xlog - error"
+msgstr "xlog - chyba"
 
 #: src/remote.c:142 src/remote.c:595
 msgid "No log open while receiving remote data"
@@ -1542,6 +1483,53 @@ msgstr "Toto nevypadá jako soubor xlog-u."
 #: src/logfile/flog.c:89
 msgid "It does not start with DATE."
 msgstr "Nezaèíná polo¾kou DATE."
+
+#, c-format
+#~ msgid "%s version %s\n"
+#~ msgstr "%s verze %s\n"
+
+#, c-format
+#~ msgid "Creating ~%s directory."
+#~ msgstr "Vytváøím adresáø ~%s."
+
+#, c-format
+#~ msgid "~%s is not a directory."
+#~ msgstr "~%s není adresáø"
+
+#~ msgid "xlog - startup"
+#~ msgstr "xlog - spu¹tìní"
+
+#~ msgid "xlog needs at least version 2.12 of the GTK+ libraries"
+#~ msgstr "xlog vy¾aduje GTK+ knihovny verze nejménì 2.12"
+
+#~ msgid "Could not read dxcc table"
+#~ msgstr "Nelze naèíst dxcc pøehled"
+
+#~ msgid "Could not read area table"
+#~ msgstr "Nelze naèíst tabulku zemí"
+
+#, c-format
+#~ msgid "Can not open log \"%s\""
+#~ msgstr "Nemohu otevøít deník %s"
+
+#, c-format
+#~ msgid "Msgget failed: %s"
+#~ msgstr "Msgget selhalo: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 7311 failed: %s"
+#~ msgstr "Sokety nastavení  selhaly: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 2333 failed: %s"
+#~ msgstr "Sokety nastavení  selhaly: %s"
+
+#~ msgid ""
+#~ "There was an error while loading one of your logs, you may want to start "
+#~ "xlog from a terminal to see what the errors are."
+#~ msgstr ""
+#~ "Vyskytla se chyba pøi naèítání jednoho z deníkù, mo¾ná byste mìl spustit "
+#~ "xlog z terminálu a sledovat o jaké chyby se jedná."
 
 #, fuzzy
 #~ msgid "Unable to accept new connection UDP Port 2333"

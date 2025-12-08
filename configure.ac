@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.71])
-AC_INIT([xlog],[2.0.25],[kb1oiq@arrl.net])
+AC_INIT([clu],[2.0.25],[kb1oiq@arrl.net])
 AC_CONFIG_SRCDIR([src/logfile/flog.c])
 AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
@@ -18,7 +18,7 @@ dnl check for win32 functions
 AC_FUNC_STRPTIME
 AC_CHECK_FUNCS(strchr index)
 
-dnl start - see xlog bug #60003 - AndyS 15-Feb-2021
+dnl start - see clu bug #60003 - AndyS 15-Feb-2021
 
 dnl if test "${ac_cv_c_compiler_gnu}" = "yes"; then
 dnl   CFLAGS="${CFLAGS} -Wno-deprecated-declarations -Wall -Wno-stringop-truncation -Wno-unused-but-set-variable -Werror"
@@ -30,7 +30,7 @@ AX_CHECK_COMPILE_FLAG([-Wall], [CFLAGS="$CFLAGS -Wall"], [], [])
 AX_CHECK_COMPILE_FLAG([-Wno-stringop-truncation], [CFLAGS="$CFLAGS -Wno-stringop-truncation"], [], [])
 AX_CHECK_COMPILE_FLAG([-Wno-unused-but-set-variable], [CFLAGS="$CFLAGS -Wno-unused-but-set-variable"], [], [])
 
-dnl end - see xlog bug #60003 - AndyS 15-Feb-2021
+dnl end - see clu bug #60003 - AndyS 15-Feb-2021
 
 PKG_CHECK_MODULES(GLIB, glib-2.0)
 PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.18.0)
@@ -45,7 +45,7 @@ AM_CONDITIONAL(HAVE_MIME, test x$UPDATE_MIME_DATABASE != xno)
 AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, update-desktop-database, no)
 AM_CONDITIONAL(HAVE_DESKTOP, test x$UPDATE_DESKTOP_DATABASE != xno)
 
-GETTEXT_PACKAGE=xlog
+GETTEXT_PACKAGE=clu
 AC_SUBST(GETTEXT_PACKAGE)
 dnl Add the languages which your application supports here.
 ALL_LINGUAS="cs de es fr it nl pl pt sk sv"
@@ -70,7 +70,7 @@ fi
 
 AC_CONFIG_FILES([po/Makefile.in
 Makefile
-data/man/xlog.1
+data/man/clu.1
 src/Makefile
 src/logfile/Makefile
 data/Makefile

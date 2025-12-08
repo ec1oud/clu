@@ -1,13 +1,13 @@
 # translation of sv.po to
 # Copyright (C) YEAR Joop Stakenborg <pg4i@amsat.org>
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Peter Landgren <peter.talken@telia.com>, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: sv\n"
 "Report-Msgid-Bugs-To: Andy Stewart <kb1oiq@arrl.net>\n"
-"POT-Creation-Date: 2024-09-16 10:53-0400\n"
+"POT-Creation-Date: 2025-12-08 22:12+0100\n"
 "PO-Revision-Date: 2010-07-17 15:46+0200\n"
 "Last-Translator: Peter Landgren <peter.talken@telia.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -992,11 +992,11 @@ msgid "A log with this name already exists"
 msgstr "En logg med detta namn finns redan"
 
 #: src/gui_newlogdialog.c:190 src/gui_openlogdialog.c:73
-#: src/gui_openlogdialog.c:186 src/main.c:612
+#: src/gui_openlogdialog.c:186
 msgid "xlog - open log"
 msgstr "xlog - öppna logg"
 
-#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187 src/main.c:613
+#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187
 msgid ""
 "There were some errors converting from your locale to UTF8, which is used by "
 "GTK+ internally. It is best if you start xlog from a terminal and see what "
@@ -1011,7 +1011,7 @@ msgstr ""
 msgid "Open log read-only"
 msgstr "Öppna logg som skrivskyddad"
 
-#: src/gui_openlogdialog.c:175 src/main.c:420
+#: src/gui_openlogdialog.c:175
 #, c-format
 msgid "%d QSO's loaded"
 msgstr "%d QSO:n laddade"
@@ -1414,72 +1414,13 @@ msgstr "Läser..."
 msgid "fork failed when saving log: %s"
 msgstr ""
 
-#: src/main.c:105
-#, c-format
-msgid "%s version %s\n"
-msgstr "%s version %s\n"
-
-#: src/main.c:127
-#, c-format
-msgid "Creating ~%s directory."
-msgstr "Skapar ~%s-mapp."
-
-#: src/main.c:132
-#, c-format
-msgid "~%s is not a directory."
-msgstr "~%s är ej en mapp."
-
-#: src/main.c:242
-msgid "xlog - startup"
-msgstr "xlog - start"
-
-#: src/main.c:243
-msgid "xlog needs at least version 2.12 of the GTK+ libraries"
-msgstr "xlog behöver minst version 2.12 av GTK+-biblioteken"
-
-#: src/main.c:274
-msgid "Could not read dxcc table"
-msgstr "Kunde inte läsa dxcc-tabell"
-
-#: src/main.c:277
-msgid "Could not read area table"
-msgstr "Kunde inte läsa area-tabell"
-
-#: src/main.c:390
-#, c-format
-msgid "Can not open log \"%s\""
-msgstr "Kan ej öppna logg \"%s\""
-
-#: src/main.c:458
-#, c-format
-msgid "Msgget failed: %s"
-msgstr "Msgget misslyckades: %s"
-
-#: src/main.c:471
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 7311 failed: %s"
-msgstr "Socket-inställning misslyckades: %s"
-
-#: src/main.c:486
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 2333 failed: %s"
-msgstr "Socket-inställning misslyckades: %s"
-
-#: src/main.c:620 src/remote.c:141 src/remote.c:594
-msgid "xlog - error"
-msgstr "xlog - fel"
-
-#: src/main.c:621
-msgid ""
-"There was an error while loading one of your logs, you may want to start "
-"xlog from a terminal to see what the errors are."
-msgstr ""
-"Det blev ett fel när en av dina loggar laddades, du kan starta xlog från en "
-"terminal för att se vilket felen var."
-
 #: src/netkeyer.c:77
 msgid "closing of socket failed"
 msgstr "stängning av \"socket\" misslyckades"
+
+#: src/remote.c:141 src/remote.c:594
+msgid "xlog - error"
+msgstr "xlog - fel"
 
 #: src/remote.c:142 src/remote.c:595
 msgid "No log open while receiving remote data"
@@ -1554,6 +1495,53 @@ msgstr "Detta liknar inte en xlog-fil."
 #: src/logfile/flog.c:89
 msgid "It does not start with DATE."
 msgstr "Den börjar ej med DATE."
+
+#, c-format
+#~ msgid "%s version %s\n"
+#~ msgstr "%s version %s\n"
+
+#, c-format
+#~ msgid "Creating ~%s directory."
+#~ msgstr "Skapar ~%s-mapp."
+
+#, c-format
+#~ msgid "~%s is not a directory."
+#~ msgstr "~%s är ej en mapp."
+
+#~ msgid "xlog - startup"
+#~ msgstr "xlog - start"
+
+#~ msgid "xlog needs at least version 2.12 of the GTK+ libraries"
+#~ msgstr "xlog behöver minst version 2.12 av GTK+-biblioteken"
+
+#~ msgid "Could not read dxcc table"
+#~ msgstr "Kunde inte läsa dxcc-tabell"
+
+#~ msgid "Could not read area table"
+#~ msgstr "Kunde inte läsa area-tabell"
+
+#, c-format
+#~ msgid "Can not open log \"%s\""
+#~ msgstr "Kan ej öppna logg \"%s\""
+
+#, c-format
+#~ msgid "Msgget failed: %s"
+#~ msgstr "Msgget misslyckades: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 7311 failed: %s"
+#~ msgstr "Socket-inställning misslyckades: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 2333 failed: %s"
+#~ msgstr "Socket-inställning misslyckades: %s"
+
+#~ msgid ""
+#~ "There was an error while loading one of your logs, you may want to start "
+#~ "xlog from a terminal to see what the errors are."
+#~ msgstr ""
+#~ "Det blev ett fel när en av dina loggar laddades, du kan starta xlog från "
+#~ "en terminal för att se vilket felen var."
 
 #, fuzzy
 #~ msgid "Unable to accept new connection UDP Port 2333"

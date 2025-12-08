@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xlog 2.0\n"
 "Report-Msgid-Bugs-To: Andy Stewart <kb1oiq@arrl.net>\n"
-"POT-Creation-Date: 2024-09-16 10:53-0400\n"
+"POT-Creation-Date: 2025-12-08 22:12+0100\n"
 "PO-Revision-Date: 2009-01-21 12:51+0100\n"
 "Last-Translator: Michal Karas <zoliqe@gmail.com>\n"
 "Language-Team: slovak <sk-i18n@lists.linux.sk>\n"
@@ -989,11 +989,11 @@ msgid "A log with this name already exists"
 msgstr "Denník s takýmto menom už existuje"
 
 #: src/gui_newlogdialog.c:190 src/gui_openlogdialog.c:73
-#: src/gui_openlogdialog.c:186 src/main.c:612
+#: src/gui_openlogdialog.c:186
 msgid "xlog - open log"
 msgstr "xlog - otvoriť denník"
 
-#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187 src/main.c:613
+#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187
 msgid ""
 "There were some errors converting from your locale to UTF8, which is used by "
 "GTK+ internally. It is best if you start xlog from a terminal and see what "
@@ -1008,7 +1008,7 @@ msgstr ""
 msgid "Open log read-only"
 msgstr "Otvoriť denník iba na čítanie"
 
-#: src/gui_openlogdialog.c:175 src/main.c:420
+#: src/gui_openlogdialog.c:175
 #, c-format
 msgid "%d QSO's loaded"
 msgstr "%d načítaných QSO"
@@ -1407,72 +1407,13 @@ msgstr "Načítavanie..."
 msgid "fork failed when saving log: %s"
 msgstr ""
 
-#: src/main.c:105
-#, c-format
-msgid "%s version %s\n"
-msgstr "%s verzia %s\n"
-
-#: src/main.c:127
-#, c-format
-msgid "Creating ~%s directory."
-msgstr "Vytváranie priečinku ~%s."
-
-#: src/main.c:132
-#, c-format
-msgid "~%s is not a directory."
-msgstr "~%s nie je priečinok."
-
-#: src/main.c:242
-msgid "xlog - startup"
-msgstr "xlog - štart"
-
-#: src/main.c:243
-msgid "xlog needs at least version 2.12 of the GTK+ libraries"
-msgstr "xlog vyžaduje GTK+ knižnice verzie najmenej 2.12"
-
-#: src/main.c:274
-msgid "Could not read dxcc table"
-msgstr "Nemožno načítať zoznam dxcc"
-
-#: src/main.c:277
-msgid "Could not read area table"
-msgstr "Nemožno načítať zoznam oblastí"
-
-#: src/main.c:390
-#, c-format
-msgid "Can not open log \"%s\""
-msgstr "Nemožno otvoriť denník \"%s\""
-
-#: src/main.c:458
-#, c-format
-msgid "Msgget failed: %s"
-msgstr "Msgget zlyhalo: %s"
-
-#: src/main.c:471
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 7311 failed: %s"
-msgstr "Nastavenie portu zlyhalo: %s"
-
-#: src/main.c:486
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 2333 failed: %s"
-msgstr "Nastavenie portu zlyhalo: %s"
-
-#: src/main.c:620 src/remote.c:141 src/remote.c:594
-msgid "xlog - error"
-msgstr "xlog - chyba"
-
-#: src/main.c:621
-msgid ""
-"There was an error while loading one of your logs, you may want to start "
-"xlog from a terminal to see what the errors are."
-msgstr ""
-"Vyskytla sa chyba pri načítavaní jedného z denníkov, možno by ste mali "
-"spustiť xlog z terminálu a sledovať o aké chyby sa jedná."
-
 #: src/netkeyer.c:77
 msgid "closing of socket failed"
 msgstr "Uzavretie spojenia zlyhalo"
+
+#: src/remote.c:141 src/remote.c:594
+msgid "xlog - error"
+msgstr "xlog - chyba"
 
 #: src/remote.c:142 src/remote.c:595
 msgid "No log open while receiving remote data"
@@ -1547,6 +1488,53 @@ msgstr "Toto nevyzerá ako súbor xlog-u."
 #: src/logfile/flog.c:89
 msgid "It does not start with DATE."
 msgstr "Nezačína položkou DATE."
+
+#, c-format
+#~ msgid "%s version %s\n"
+#~ msgstr "%s verzia %s\n"
+
+#, c-format
+#~ msgid "Creating ~%s directory."
+#~ msgstr "Vytváranie priečinku ~%s."
+
+#, c-format
+#~ msgid "~%s is not a directory."
+#~ msgstr "~%s nie je priečinok."
+
+#~ msgid "xlog - startup"
+#~ msgstr "xlog - štart"
+
+#~ msgid "xlog needs at least version 2.12 of the GTK+ libraries"
+#~ msgstr "xlog vyžaduje GTK+ knižnice verzie najmenej 2.12"
+
+#~ msgid "Could not read dxcc table"
+#~ msgstr "Nemožno načítať zoznam dxcc"
+
+#~ msgid "Could not read area table"
+#~ msgstr "Nemožno načítať zoznam oblastí"
+
+#, c-format
+#~ msgid "Can not open log \"%s\""
+#~ msgstr "Nemožno otvoriť denník \"%s\""
+
+#, c-format
+#~ msgid "Msgget failed: %s"
+#~ msgstr "Msgget zlyhalo: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 7311 failed: %s"
+#~ msgstr "Nastavenie portu zlyhalo: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 2333 failed: %s"
+#~ msgstr "Nastavenie portu zlyhalo: %s"
+
+#~ msgid ""
+#~ "There was an error while loading one of your logs, you may want to start "
+#~ "xlog from a terminal to see what the errors are."
+#~ msgstr ""
+#~ "Vyskytla sa chyba pri načítavaní jedného z denníkov, možno by ste mali "
+#~ "spustiť xlog z terminálu a sledovať o aké chyby sa jedná."
 
 #, fuzzy
 #~ msgid "Unable to accept new connection UDP Port 2333"

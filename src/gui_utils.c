@@ -30,7 +30,7 @@
 #include "cfg.h"
 #include "log.h"
 #include "support.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 
 extern GtkUIManager *ui_manager;
 extern GtkWidget *mainnotebook;

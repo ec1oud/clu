@@ -6,14 +6,14 @@ AM_CPPFLAGS = \
 	@GTK_CFLAGS@ @HAMLIB_CFLAGS@ \
 	-DDATADIR=\""$(datadir)"\" \
 	-DXLOG_LOCALEDIR=\""$(datadir)/locale"\" \
-	-DXLOG_DATADIR=\""$(datadir)/xlog"\" \
+	-DXLOG_DATADIR=\""$(datadir)/clu"\" \
 	-DXLOG_DOCDIR=\""$(docdir)"\"
 
 CLEANFILES = *~
 
-bin_PROGRAMS = xlog
+bin_PROGRAMS = clu
 
-xlog_SOURCES = \
+clu_SOURCES = \
 	main.c main.h \
 	support.c support.h \
 	gui_aboutdialog.c gui_aboutdialog.h \
@@ -69,9 +69,9 @@ xlog_SOURCES = \
 	gui_awards_waz.c gui_awards_waz.h \
 	gui_awards_iota.c gui_awards_iota.h \
 	gui_awards_locator.c gui_awards_locator.h \
-	xlog_enum.c xlog_enum.h \
+	clu_enum.c clu_enum.h \
 	awards_enum.c awards_enum.h
 
-xlog_LDADD = logfile/liblogfile.a \
+clu_LDADD = logfile/liblogfile.a \
 	@GTK_LIBS@ @HAMLIB_LIBS@ -lm
 

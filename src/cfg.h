@@ -28,7 +28,7 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include "xlog_enum.h"
+#include "clu_enum.h"
 
 /* preferences saved to ~/.xlog/xlog.cfg */
 typedef struct

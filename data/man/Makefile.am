@@ -1,7 +1,7 @@
-MAN_IN_FILES = xlog.1.in
+MAN_IN_FILES = clu.1.in
 MAN_FILES =$(MAN_IN_FILES:.1.in=.1)
 
-man_MANS = xlog.1
+man_MANS = clu.1
 
 EXTRA_DIST = $(MAN_IN_FILES)
 

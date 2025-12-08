@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xlog 1.5\n"
 "Report-Msgid-Bugs-To: Andy Stewart <kb1oiq@arrl.net>\n"
-"POT-Creation-Date: 2024-09-16 10:53-0400\n"
+"POT-Creation-Date: 2025-12-08 22:12+0100\n"
 "PO-Revision-Date: 2009-07-16 20:31+0200\n"
 "Last-Translator: Joop Stakenborg <pg4i@amsat.org>\n"
 "Language-Team: NL <nl@li.org>\n"
@@ -578,8 +578,9 @@ msgid ""
 "tlf, trlog and twlog native logbook formats."
 msgstr ""
 "Deze pagina's helpen je met het importeren van je log. Formaten die worden "
-"ondersteund zijn ADIF,·EDI·(·Electronic·Data·Interchange)·en·cabrillo,"
-"·samen·met·de formaten gebruikt door editest,·oh1aa,·tlf,·trlog·en·twlog.."
+"ondersteund zijn "
+"ADIF,·EDI·(·Electronic·Data·Interchange)·en·cabrillo,·samen·met·de formaten "
+"gebruikt door editest,·oh1aa,·tlf,·trlog·en·twlog.."
 
 #: src/gui_importdialog.c:318
 msgid "Welcome"
@@ -1058,11 +1059,11 @@ msgid "A log with this name already exists"
 msgstr "Er bestaat al een log met deze naam"
 
 #: src/gui_newlogdialog.c:190 src/gui_openlogdialog.c:73
-#: src/gui_openlogdialog.c:186 src/main.c:612
+#: src/gui_openlogdialog.c:186
 msgid "xlog - open log"
 msgstr "xlog - log openen"
 
-#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187 src/main.c:613
+#: src/gui_newlogdialog.c:191 src/gui_openlogdialog.c:187
 msgid ""
 "There were some errors converting from your locale to UTF8, which is used by "
 "GTK+ internally. It is best if you start xlog from a terminal and see what "
@@ -1077,7 +1078,7 @@ msgstr ""
 msgid "Open log read-only"
 msgstr "Log \"alleen lezen\" openen"
 
-#: src/gui_openlogdialog.c:175 src/main.c:420
+#: src/gui_openlogdialog.c:175
 #, c-format
 msgid "%d QSO's loaded"
 msgstr "%d QSO's geladen"
@@ -1500,72 +1501,13 @@ msgstr "Aan het lezen..."
 msgid "fork failed when saving log: %s"
 msgstr "fork heeft gefaald tijdens het opslaan van log %s"
 
-#: src/main.c:105
-#, c-format
-msgid "%s version %s\n"
-msgstr "%s versie %s\n"
-
-#: src/main.c:127
-#, c-format
-msgid "Creating ~%s directory."
-msgstr "Maken van directory ~%s."
-
-#: src/main.c:132
-#, c-format
-msgid "~%s is not a directory."
-msgstr "~%s is geen directory."
-
-#: src/main.c:242
-msgid "xlog - startup"
-msgstr "xlog - opstarten"
-
-#: src/main.c:243
-msgid "xlog needs at least version 2.12 of the GTK+ libraries"
-msgstr "xlog heeft minstens versie 2.12 van GTK+ nodig"
-
-#: src/main.c:274
-msgid "Could not read dxcc table"
-msgstr "Kon dxcc tabel niet lezen"
-
-#: src/main.c:277
-msgid "Could not read area table"
-msgstr "Kon area tabel niet lezen"
-
-#: src/main.c:390
-#, c-format
-msgid "Can not open log \"%s\""
-msgstr "Kan log \"%s\" niet openen"
-
-#: src/main.c:458
-#, c-format
-msgid "Msgget failed: %s"
-msgstr "Msgget heeft gefaald: %s"
-
-#: src/main.c:471
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 7311 failed: %s"
-msgstr "Het aanmaken van een socket heeft gefaald: %s"
-
-#: src/main.c:486
-#, fuzzy, c-format
-msgid "Socket setup UDP Port 2333 failed: %s"
-msgstr "Het aanmaken van een socket heeft gefaald: %s"
-
-#: src/main.c:620 src/remote.c:141 src/remote.c:594
-msgid "xlog - error"
-msgstr "xlog - fout"
-
-#: src/main.c:621
-msgid ""
-"There was an error while loading one of your logs, you may want to start "
-"xlog from a terminal to see what the errors are."
-msgstr ""
-"Er was een fout tijdens het laden van een van je logs, start xlog vanuit een "
-"terminal om te kijken wat de fouten zijn."
-
 #: src/netkeyer.c:77
 msgid "closing of socket failed"
 msgstr "Sluiten van de socket is mislukt"
+
+#: src/remote.c:141 src/remote.c:594
+msgid "xlog - error"
+msgstr "xlog - fout"
 
 #: src/remote.c:142 src/remote.c:595
 msgid "No log open while receiving remote data"
@@ -1640,6 +1582,53 @@ msgstr "Dit ziet er niet als een xlog bestand."
 #: src/logfile/flog.c:89
 msgid "It does not start with DATE."
 msgstr "Het start niet met DATE."
+
+#, c-format
+#~ msgid "%s version %s\n"
+#~ msgstr "%s versie %s\n"
+
+#, c-format
+#~ msgid "Creating ~%s directory."
+#~ msgstr "Maken van directory ~%s."
+
+#, c-format
+#~ msgid "~%s is not a directory."
+#~ msgstr "~%s is geen directory."
+
+#~ msgid "xlog - startup"
+#~ msgstr "xlog - opstarten"
+
+#~ msgid "xlog needs at least version 2.12 of the GTK+ libraries"
+#~ msgstr "xlog heeft minstens versie 2.12 van GTK+ nodig"
+
+#~ msgid "Could not read dxcc table"
+#~ msgstr "Kon dxcc tabel niet lezen"
+
+#~ msgid "Could not read area table"
+#~ msgstr "Kon area tabel niet lezen"
+
+#, c-format
+#~ msgid "Can not open log \"%s\""
+#~ msgstr "Kan log \"%s\" niet openen"
+
+#, c-format
+#~ msgid "Msgget failed: %s"
+#~ msgstr "Msgget heeft gefaald: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 7311 failed: %s"
+#~ msgstr "Het aanmaken van een socket heeft gefaald: %s"
+
+#, fuzzy, c-format
+#~ msgid "Socket setup UDP Port 2333 failed: %s"
+#~ msgstr "Het aanmaken van een socket heeft gefaald: %s"
+
+#~ msgid ""
+#~ "There was an error while loading one of your logs, you may want to start "
+#~ "xlog from a terminal to see what the errors are."
+#~ msgstr ""
+#~ "Er was een fout tijdens het laden van een van je logs, start xlog vanuit "
+#~ "een terminal om te kijken wat de fouten zijn."
 
 #, fuzzy
 #~ msgid "Unable to accept new connection UDP Port 2333"

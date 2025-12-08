@@ -55,9 +55,9 @@ src/strptime.c
 src/support.c
 src/utils.c
 src/wwl.c
-src/xlog_enum.c
-src/logfile/adif.c
-src/logfile/cabrillo.c
+src/clu_enum.c
+src/logfile/adif3.c
+src/logfile/cabrillo3.c
 src/logfile/edi.c
 src/logfile/editest.c
 src/logfile/flog.c

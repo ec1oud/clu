@@ -36,7 +36,7 @@
 #include "gui_scorewindow.h"
 #include "support.h"
 #include "cfg.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "dxcc.h"
 
 extern GtkWidget *mainwindow;

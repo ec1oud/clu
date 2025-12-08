@@ -44,7 +44,7 @@
 #include "utils.h"
 #include "log.h"
 #include "hamlib-utils.h"
-#include "xlog_enum.h"
+#include "clu_enum.h"
 #include "dxcc.h"
 
 #ifndef HAVE_STRPTIME
