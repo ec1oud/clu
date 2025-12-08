@@ -52,9 +52,7 @@
 #  define localtime_r my_localtime_r
 static struct tm *localtime_r __P ((const time_t *, struct tm *));
 static struct tm *
-localtime_r (t, tp)
-     const time_t *t;
-     struct tm *tp;
+localtime_r (const time_t *t, struct tm *tp)
 {
   struct tm *l = localtime (t);
   if (! l)
@@ -254,12 +252,7 @@ static char *
 #ifdef _LIBC
 internal_function
 #endif
-strptime_internal (rp, fmt, tm, decided, era_cnt)
-     const char *rp;
-     const char *fmt;
-     struct tm *tm;
-     enum locale_status *decided;
-     int era_cnt;
+strptime_internal (const char *rp, const char *fmt, struct tm *tm, enum locale_status *decided, int era_cnt)
 {
   const char *rp_backup;
   int cnt;
@@ -988,10 +981,7 @@ strptime_internal (rp, fmt, tm, decided, era_cnt)
 
 
 char *
-mystrptime (buf, format, tm)
-     const char *buf;
-     const char *format;
-     struct tm *tm;
+mystrptime (const char *buf, const char *format, struct tm *tm)
 {
   enum locale_status decided;
 
