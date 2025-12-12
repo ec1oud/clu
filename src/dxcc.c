@@ -72,10 +72,7 @@
 
 #include "dxcc.h"
 #include "gc.h"
-#include "cfg.h"
-#include "clu_enum.h"
 #include "awards_enum.h"
-#include "utils.h"
 
 static const char *cty_location = "/usr/share/xlog/dxcc/cty.dat";
 static const char *area_location = "/usr/share/xlog/dxcc/area.dat";
@@ -83,46 +80,12 @@ static const char *area_location = "/usr/share/xlog/dxcc/area.dat";
 typedef struct
 {
 	int countries;         /* number of countries loaded */
-	int qsos;              /* number of qso's read from the logs */
-	bool controlkey;    /* control key is pressed */
-	long long rigfrequency; /* frequency read from the rig */
-	uint rigmode;          /* mode read from the rig */
-	gchar *rigrst;          /* signal strength read from rig */
-	uint rigpower;         /* rf power */
-	int scounter;          /* counter for s-levels stored in array */
-	int hlcounter;         /* counter for hamlib */
-	bool tx;            /* transmitting or receiving */
-	bool statustimer;   /* 'ready' timer for the statusbar */
-	int shmid;             /* id for shared memory */
-	int logwindows;        /* number of logwindows */
-	gchar *searchstr;       /* array with logs/qsos seached */
-	int dupecheck;         /* dupe check this log or all logs */
-	bool notdupecheckmode;  /* exclude bands from dupecheck */
-	bool notdupecheckband;  /* exclude modes from dupecheck */
-	bool utf8error;     /* error in utf-8 conversion when reading the log */
-	gchar *importremark;	/* remark added when importing from trlog or cabrillo */
-	gchar *px;              /* prefix lookup used for countrymap */
-	bool warning_nologopen;	/* No log open while receiving remote data warning dialog */
 } programstatetype;
 
 programstatetype programstate;
 GPtrArray *dxcc, *area;
 GHashTable *prefixes, *full_callsign_exceptions;
 int excitu, exccq;
-
-/* ushort: 0 - 65534, one extra element for all bands scoring */
-ushort dxcc_w[400][MAX_BANDS + 1];
-ushort dxcc_c[400][MAX_BANDS + 1];
-ushort waz_w[MAX_ZONES][MAX_BANDS + 1];
-ushort waz_c[MAX_ZONES][MAX_BANDS + 1];
-ushort wac_w[MAX_CONTINENTS][MAX_BANDS + 1];
-ushort wac_c[MAX_CONTINENTS][MAX_BANDS + 1];
-ushort was_w[MAX_STATES][MAX_BANDS + 1];
-ushort was_c[MAX_STATES][MAX_BANDS + 1];
-GHashTable *iota_w[MAX_BANDS + 1];
-GHashTable *iota_c[MAX_BANDS + 1];
-GHashTable *loc_w[MAX_BANDS + 1];
-GHashTable *loc_c[MAX_BANDS + 1];
 
 /* free memory used by the dxcc array */
 void
@@ -145,14 +108,6 @@ cleanup_dxcc (void)
     }
   if (prefixes) g_hash_table_destroy (prefixes);
   if (full_callsign_exceptions) g_hash_table_destroy (full_callsign_exceptions);
-
-  for (i = 0; i < MAX_BANDS; i++)
-    {
-      if (iota_w[i]) g_hash_table_destroy (iota_w[i]);
-      if (iota_c[i]) g_hash_table_destroy (iota_c[i]);
-      if (loc_w[i]) g_hash_table_destroy (loc_w[i]);
-      if (loc_c[i]) g_hash_table_destroy (loc_c[i]);
-    }
 }
 
 /* free memory used by the area array */
@@ -674,114 +629,4 @@ char *loc_norm(const char *locator)
   loc4[4] = '\0';
 
   return loc4;
-}
-
-void loc_new_qso(const char *locator, int f, gboolean qslconfirmed)
-{
-  char *loc4;
-
-  if (!locator || strlen(locator) < 4) return;
-  loc4 = loc_norm(locator);
-  if (!loc4) return;
-
-  hash_inc(loc_w[f], loc4);
-  hash_inc(loc_w[MAX_BANDS], loc4);
-
-  if (qslconfirmed)
-    {
-      hash_inc(loc_c[f], loc4);
-      hash_inc(loc_c[MAX_BANDS], loc4);
-    }
-
-  g_free(loc4);
-}
-
-void loc_del_qso(const char *locator, int f, gboolean qslconfirmed)
-{
-  char *loc4;
-
-  if (!locator || strlen(locator) < 4) return;
-  loc4 = loc_norm(locator);
-  if (!loc4) return;
-
-  hash_dec(loc_w[f], loc4);
-  hash_dec(loc_w[MAX_BANDS], loc4);
-
-  if (qslconfirmed)
-    {
-      hash_dec(loc_c[f], loc4);
-      hash_dec(loc_c[MAX_BANDS], loc4);
-    }
-}
-
-void iota_new_qso(uint iota, int f, gboolean qslconfirmed)
-{
-  const char *iotastr = num_to_iota(iota);
-  if (!iotastr)
-    return;
-
-  hash_inc(iota_w[f], iotastr);
-  hash_inc(iota_w[MAX_BANDS], iotastr);
-
-  if (qslconfirmed)
-    {
-      hash_inc(iota_c[f], iotastr);
-      hash_inc(iota_c[MAX_BANDS], iotastr);
-    }
-}
-
-void iota_del_qso(uint iota, int f, gboolean qslconfirmed)
-{
-  const char *iotastr = num_to_iota(iota);
-  if (!iotastr)
-    return;
-
-  hash_dec(iota_w[f], iotastr);
-  hash_dec(iota_w[MAX_BANDS], iotastr);
-
-  if (qslconfirmed)
-    {
-      hash_dec(iota_c[f], iotastr);
-      hash_dec(iota_c[MAX_BANDS], iotastr);
-    }
-}
-
-static void init_scoring (void)
-{
-  int i, j;
-
-  for (i = 0; i <= programstate.countries; i++)
-    for (j = 0; j <= MAX_BANDS; j++)
-      {
-	dxcc_w[i][j] = 0;
-	dxcc_c[i][j] = 0;
-      }
-  for (i = 0; i < MAX_CONTINENTS; i++)
-    for (j = 0; j <= MAX_BANDS; j++)
-      {
-	wac_w[i][j] = 0;
-	wac_c[i][j] = 0;
-      }
-  for (i = 0; i < MAX_STATES; i++)
-    for (j = 0; j <= MAX_BANDS; j++)
-      {
-	was_w[i][j] = 0;
-	was_c[i][j] = 0;
-      }
-  for (i = 0; i < MAX_ZONES; i++)
-    for (j = 0; j <= MAX_BANDS; j++)
-      {
-	waz_w[i][j] = 0;
-	waz_c[i][j] = 0;
-      }
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      iota_w[j] = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-      iota_c[j] = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-    }
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      loc_w[j] = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-      loc_c[j] = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-    }
 }
