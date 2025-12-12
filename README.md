@@ -13,10 +13,7 @@ This could be incorporated into something else (like I'm doing).
 But if you need a command-line utility, just build it and then e.g.
 ```
 $ clu LB2JK
-cty version 20240914
-looking up LB2JK
-country is Norway lat 6100 lon -900 px LA exc LA,LB,LC,LD,LE,LF,LG,LH,LI,LJ,LK,LL,LM,LN
-got country 197 cq 14 itu 18 continent 4
+country 197 'Norway' cq 14 itu 18 continent 4 lat 6100 lon -900 prefix LA exceptions: LA,LB,LC,LD,LE,LF,LG,LH,LI,LJ,LK,LL,LM,LN
 ```
 assuming for now that cty.dat is in the same place where xlog would have it
 (e.g. you can install xlog from your system package manager to get that):

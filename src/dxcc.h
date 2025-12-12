@@ -34,18 +34,18 @@
 /* struct for dxcc information from cty.dat */
 typedef struct
 {
-	char* countryname;
+	const char *countryname;
+	uint country;
 	uchar cq; /* uchar max=255 */
 	uchar itu;
 	uchar continent;
 	int latitude;
 	int longitude;
 	short timezone;
-	char* px;
-	char* exceptions;
-	uint worked;
-	uint confirmed;
-} dxcc_data;
+	const char *px;
+	const char *exceptions;
+}
+dxcc_data;
 
 /* struct for dxcc information from area.dat */
 typedef struct
@@ -80,8 +80,7 @@ void update_wazscoring(void);
 void update_iotascoring(void);
 void update_locscoring(void);
 void fill_scoring_arrays(void);
-struct info lookupcountry_by_callsign(char* callsign);
-struct info lookupcountry_by_prefix(char* px);
+dxcc_data lookupcountry_by_callsign(const char* callsign);
 
 void hash_inc(GHashTable* hash_table, const char* key);
 void hash_dec(GHashTable* hash_table, const char* key);

@@ -59,6 +59,7 @@ int main(int argc, char* argv[])
 		return -1;
 	readctydata();
 	//~ readareadata();
-	struct info ci = lookupcountry_by_callsign(argv[1]);
-	printf("got country %d cq %d itu %d continent %d\n", ci.country, ci.cq, ci.itu, ci.continent);
+	dxcc_data ci = lookupcountry_by_callsign(argv[1]);
+	printf("got country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
+		ci.country, ci.countryname, ci.cq, ci.itu, ci.continent, ci.latitude, ci.longitude, ci.px, ci.exceptions);
 }

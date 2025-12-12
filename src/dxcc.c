@@ -94,9 +94,9 @@ void cleanup_dxcc(void)
 	if (dxcc) {
 		for (i = 0; i < dxcc->len; i++) {
 			dxcc_data* d = g_ptr_array_index(dxcc, i);
-			g_free(d->countryname);
-			g_free(d->px);
-			g_free(d->exceptions);
+			g_free((char *)d->countryname);
+			g_free((char *)d->px);
+			g_free((char *)d->exceptions);
 			g_free(d);
 		}
 		g_ptr_array_free(dxcc, TRUE);
@@ -178,8 +178,7 @@ change_area(char* callsign, int area)
    - skip /mm, /am and /qrp
    - return string after slash if it is shorter than string before
  */
-static char*
-getpx(char* checkcall)
+static char* getpx(const char* checkcall)
 {
 
 	char *pxstr = NULL, **split;
@@ -270,46 +269,41 @@ lookupcountry_by_prefix(char* px)
 	return lookup;
 }
 
-/*
- * go through the hashtable with the current callsign and return the country number
- * cq zone and itu zone - this also goes through the exceptionlist
+/*!
+	Look up information related to the given \a callsign.
+	Note: strings in the returned struct are static constants;
+	copy them if you need to keep them independently.
  */
-struct info
-lookupcountry_by_callsign(char* callsign)
+dxcc_data lookupcountry_by_callsign(const char * callsign)
 {
 	int ipx, iexc;
 	char* px;
 	char **excsplit, *exc;
 	char* searchpx = NULL;
-	struct info lookup;
-
-	lookup.country = 0;
+	uint country_i = 0;
 
 	/* first check complete callsign exceptions list*/
-	lookup.country = GPOINTER_TO_INT(g_hash_table_lookup(full_callsign_exceptions, callsign));
+	country_i = GPOINTER_TO_INT(g_hash_table_lookup(full_callsign_exceptions, callsign));
 
-	if (lookup.country == 0) {
+	if (country_i == 0) {
 		/* Next, check the list of prefixes */
-		lookup.country = GPOINTER_TO_INT(g_hash_table_lookup(prefixes, callsign));
+		country_i = GPOINTER_TO_INT(g_hash_table_lookup(prefixes, callsign));
 	}
 
-	if (lookup.country == 0 && (px = getpx(callsign))) { /* start with full callsign and truncate it until a correct lookup */
+	if (country_i == 0 && (px = getpx(callsign))) { /* start with full callsign and truncate it until a correct lookup */
 		for (ipx = strlen(px); ipx > 0; ipx--) {
 			searchpx = g_strndup(px, ipx);
-			lookup.country = GPOINTER_TO_INT(g_hash_table_lookup(prefixes, searchpx));
-			if (lookup.country > 0)
+			country_i = GPOINTER_TO_INT(g_hash_table_lookup(prefixes, searchpx));
+			if (country_i > 0)
 				break;
 		}
 		g_free(px);
 	} else
 		searchpx = g_strdup(callsign);
 
-	dxcc_data* d = g_ptr_array_index(dxcc, lookup.country);
-	lookup.itu = d->itu;
-	lookup.cq = d->cq;
-	lookup.continent = d->continent;
-
-	printf("country is %s lat %d lon %d px %s exc %s\n", d->countryname, d->latitude, d->longitude, d->px, d->exceptions);
+	dxcc_data* d = g_ptr_array_index(dxcc, country_i);
+	dxcc_data ret = *d;
+	ret.country = country_i;
 
 	/* look for CQ/ITU zone exceptions */
 	if (strchr(d->exceptions, '(') || strchr(d->exceptions, '[')) {
@@ -320,15 +314,15 @@ lookupcountry_by_callsign(char* callsign)
 			exc = findexc(excsplit[iexc]);
 			if (g_ascii_strcasecmp(searchpx, exc) == 0) {
 				if (excitu > 0)
-					lookup.itu = excitu;
+					ret.itu = excitu;
 				if (exccq > 0)
-					lookup.cq = exccq;
+					ret.cq = exccq;
 			}
 		}
 		g_strfreev(excsplit);
 	}
 	g_free(searchpx); // Bug #60022
-	return lookup;
+	return ret;
 }
 
 /* add an item from cty.dat to the dxcc array */
