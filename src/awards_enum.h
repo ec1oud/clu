@@ -112,13 +112,13 @@ enum /* IOTA continents */
 #define NOT_A_LOCATOR 181900
 
 uint cont_to_enum (char *str);
-char *enum_to_cont (uint cont);
+const char *enum_to_cont (uint cont);
 uint state_to_enum (char *str);
-char *enum_to_state (uint st);
+const char *enum_to_state (uint st);
 uint iota_to_num (char *str);
-char *num_to_iota (uint st);
+const char *num_to_iota (uint st);
 int locator_to_num (char *str);
-char *num_to_locator (int num);
+const char *num_to_locator (int num);
 
 /* DXCC, WAZ, WAC, WAS, IOTA, LOCATOR */
 #define NB_AWARDS 6

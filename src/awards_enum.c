@@ -24,8 +24,9 @@
  * awards_enum.c
  */
 
-#include <gtk/gtk.h>
+#include <ctype.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "awards_enum.h"
@@ -52,18 +53,18 @@ uint cont_to_enum (char *str)
 	return 99;
 }
 
-char *enum_to_cont (uint cont)
+const char *enum_to_cont (uint cont)
 {
 	switch (cont)
 	{
-		case CONTINENT_NA: return g_strdup("NA");
-		case CONTINENT_SA: return g_strdup("SA");
-		case CONTINENT_OC: return g_strdup("OC");
-		case CONTINENT_AS: return g_strdup("AS");
-		case CONTINENT_EU: return g_strdup("EU");
-		case CONTINENT_AF: return g_strdup("AF");
+		case CONTINENT_NA: return "NA";
+		case CONTINENT_SA: return "SA";
+		case CONTINENT_OC: return "OC";
+		case CONTINENT_AS: return "AS";
+		case CONTINENT_EU: return "EU";
+		case CONTINENT_AF: return "AF";
 	}
-	return g_strdup("--");
+	return "--";
 }
 
 uint state_to_enum (char *str)
@@ -281,10 +282,10 @@ static const char *usa_states[MAX_STATES] = {
 	"WY"
 };
 
-char *enum_to_state (uint st)
+const char *enum_to_state (uint st)
 {
 	if (st < MAX_STATES)
-		return g_strdup(usa_states[st]);
+		return usa_states[st];
 
 	return NULL;
 }
@@ -316,9 +317,16 @@ uint iota_to_num (char *str)
 	return cont*1000 + (atoi(str+3)%1000);
 }
 
-char *num_to_iota (uint num)
+/*!
+	Note: you get the same buffer each time you call this, so
+	1) don't call it from more than one thread, and
+	2) don't use the returned pointer outside the scope of the calling function.
+	Call strdup() if you need to keep the string for a longer time.
+*/
+const char *num_to_iota (uint num)
 {
 	const char *cont;
+	static char buf[8];
 
 	if (num == NOT_AN_IOTA) return NULL;
 	switch (num/1000)
@@ -332,7 +340,8 @@ char *num_to_iota (uint num)
 		case IOTA_CONTINENT_SA: cont = "SA"; break;
 		default: return NULL;
 	}
-	return g_strdup_printf("%s-%03u", cont, num%1000);
+	snprintf(buf, sizeof(buf), "%s-%03u", cont, num % 1000);
+	return buf;
 }
 
 /* locator runs from AA00 to RR99 and returns 010100 to 181899 */
@@ -341,22 +350,28 @@ int locator_to_num (char *str)
 	if (!str || strlen (str) < 4) return NOT_A_LOCATOR;
 
 	int first;
-	if (g_ascii_islower(str[0]))
+	if (islower(str[0]))
 		first = str[0] - 96;
 	else
 		first = str[0] - 64;
 	int second;
-	if (g_ascii_islower(str[1]))
+	if (islower(str[1]))
 		second = str[1] - 96;
 	else
 		second = str[1] - 64;
-	
+
 	return first*10000 + second*100 + (str[2]-48)*10 + str[3]-48;
 }
 
-char *num_to_locator (int num)
+/*!
+	Note: you get the same buffer each time you call this, so
+	1) don't call it from more than one thread, and
+	2) don't use the returned pointer outside the scope of the calling function.
+	Call strdup() if you need to keep the string for a longer time.
+*/
+const char *num_to_locator (int num)
 {
-	char *locator = g_new0 (char, 4);
+	static char locator[5];
 
 	int first = num/10000;
 	num = num - first * 10000;
@@ -365,10 +380,11 @@ char *num_to_locator (int num)
 	int third = num/10;
 	num = num - third * 10;
 
-	locator[0] = first + 96;
-	locator[1] = second + 96;
-	locator[2] = third + 48;
-	locator[3] = num + 48;
+	locator[0] = (char)first + 96;
+	locator[1] = (char)second + 96;
+	locator[2] = (char)third + 48;
+	locator[3] = (char)num + 48;
+	locator[4] = 0;
 
 	return locator;
 }

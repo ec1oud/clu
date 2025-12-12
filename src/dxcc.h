@@ -20,8 +20,11 @@
 
 */
 
-#include <uchar.h>
 #include <glib.h>
+
+#ifndef uchar
+#define uchar unsigned char
+#endif
 
 /*
  * dxcc.h

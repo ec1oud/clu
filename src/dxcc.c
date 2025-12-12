@@ -64,27 +64,48 @@
 // [#] Override ITU zone where # is the zone number
 //
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <ctype.h>
 
 #include "dxcc.h"
 #include "gc.h"
-#include "support.h"
 #include "cfg.h"
 #include "clu_enum.h"
 #include "awards_enum.h"
 #include "utils.h"
-#include "main.h"
-#include "log.h"
-#include "gui_countrymap.h"
 
-extern GtkWidget *mainwindow, *scorewindow, *countrymap;
-extern preferencestype preferences;
-extern programstatetype programstate;
-extern GList *logwindowlist;
+static const char *cty_location = "/usr/share/xlog/dxcc/cty.dat";
+static const char *area_location = "/usr/share/xlog/dxcc/area.dat";
+
+typedef struct
+{
+	int countries;         /* number of countries loaded */
+	int qsos;              /* number of qso's read from the logs */
+	bool controlkey;    /* control key is pressed */
+	long long rigfrequency; /* frequency read from the rig */
+	uint rigmode;          /* mode read from the rig */
+	gchar *rigrst;          /* signal strength read from rig */
+	uint rigpower;         /* rf power */
+	int scounter;          /* counter for s-levels stored in array */
+	int hlcounter;         /* counter for hamlib */
+	bool tx;            /* transmitting or receiving */
+	bool statustimer;   /* 'ready' timer for the statusbar */
+	int shmid;             /* id for shared memory */
+	int logwindows;        /* number of logwindows */
+	gchar *searchstr;       /* array with logs/qsos seached */
+	int dupecheck;         /* dupe check this log or all logs */
+	bool notdupecheckmode;  /* exclude bands from dupecheck */
+	bool notdupecheckband;  /* exclude modes from dupecheck */
+	bool utf8error;     /* error in utf-8 conversion when reading the log */
+	gchar *importremark;	/* remark added when importing from trlog or cabrillo */
+	gchar *px;              /* prefix lookup used for countrymap */
+	bool warning_nologopen;	/* No log open while receiving remote data warning dialog */
+} programstatetype;
+
+programstatetype programstate;
 GPtrArray *dxcc, *area;
 GHashTable *prefixes, *full_callsign_exceptions;
 int excitu, exccq;
@@ -415,20 +436,11 @@ area_add (char *c, int w, int i, char *cont, int lat, int lon,
 int
 readctyversion (void)
 {
-  char buf[256000], *ver, *ch, *cty_location;
+  char buf[256000], *ver, *ch;
   FILE *fp;
 
-#ifdef G_OS_WIN32
-  cty_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
-#else
-  cty_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
-#endif
   if ((fp = g_fopen (cty_location, "r")) == NULL)
-    {
-      g_free (cty_location);
       return (1);
-    }
-  g_free (cty_location);
   int n = fread (buf, 1, 256000, fp);
   buf[n] = '\0';
   ver = strstr (buf, "VER2");
@@ -451,34 +463,25 @@ int
 readctydata (void)
 {
 
-  char buf[65536], *cty_location, *pfx, **split, **pfxsplit;
+  char buf[65536], *pfx, **split, **pfxsplit;
   int ichar = 0, dxccitem = 0, ipfx = 0, ch = 0;
   gboolean firstcolon = FALSE;
   char tmp[20];
   int i;
   FILE *fp;
 
-//~ #ifdef G_OS_WIN32
-  //~ cty_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
-//~ #else
-  //~ cty_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
-//~ #endif
-	cty_location = "/usr/share/xlog/dxcc/cty.dat";
-
   if ((fp = g_fopen (cty_location, "r")) == NULL)
     {
 		printf("didn't find %s\n", cty_location);
-      //~ g_free (cty_location);
       return (1);
     }
-  //~ g_free (cty_location);
 
   dxcc = g_ptr_array_new ();
   prefixes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
   full_callsign_exceptions = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
   /* first field in case hash_table_lookup returns NULL */
-  dxcc_add (_("Unknown"), 0, 0, 99, 0, 0, 0, "", "");
+  dxcc_add ("Unknown", 0, 0, 99, 0, 0, 0, "", "");
   programstate.countries = 1;
 
   while (!feof (fp))
@@ -563,20 +566,13 @@ int
 readareadata (void)
 {
 
-  char buf[4096], *area_location, **split;
+  char buf[4096], **split;
   int ichar = 0, ch = 0;
   FILE *fp;
 
-//~ #ifdef G_OS_WIN32
-  //~ area_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "area.dat", NULL);
-//~ #else
-  //~ area_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "area.dat", NULL);
-//~ #endif
-	area_location = "/usr/share/xlog/dxcc/area.dat";
   if ((fp = g_fopen (area_location, "r")) == NULL)
     {
 		printf("failed to find %s\n", area_location);
-      //~ g_free (area_location);
       return (1);
     }
 
@@ -605,7 +601,6 @@ readareadata (void)
       g_strfreev (split);
     }
   fclose (fp);
-  //~ g_free (area_location);
   return (0);
 }
 
@@ -634,523 +629,6 @@ char lookuparea (char *callsign)
 	}
     }
   return '?';
-}
-
-/* update information of the DXCC frame with the current callsign */
-void
-updatedxccframe (char * item, gboolean byprefix, int st, int zone, int cont, uint iota)
-{
-  GtkWidget *dxcclabel1, *dxcclabel3, *dxcclabel4, *contlabel, *itulabel,
-    *cqlabel, *dxcclabel5, *dxccframe, *framelabel, *countrytreeview;
-  char *labeltext1, *labeltext3, *labeltext4, *gcresult, *conttext, *itutext,
-    *cqtext, *temp;
-  GtkTreeIter iter;
-  GtkTreeModel *model;
-  struct info lookup;
-  char iter_num[2] = "0";
-  int j;
-  gdouble lat, lon;
-
-  dxcclabel1 = lookup_widget (scorewindow, "dxcclabel1");
-  dxcclabel3 = lookup_widget (scorewindow, "dxcclabel3");
-  dxcclabel4 = lookup_widget (scorewindow, "dxcclabel4");
-  dxcclabel5 = lookup_widget (scorewindow, "dxcclabel5");
-  dxccframe = lookup_widget (scorewindow, "dxccframe");
-  contlabel = lookup_widget (scorewindow, "contlabel");
-  itulabel = lookup_widget (scorewindow, "itulabel");
-  cqlabel = lookup_widget (scorewindow, "cqlabel");
-  labeltext1 = g_strdup ("");
-  labeltext3 = g_strdup ("");
-  labeltext4 = g_strdup ("");
-  gcresult = g_strdup ("");
-  conttext = g_strdup ("");
-  itutext = g_strdup ("");
-  cqtext = g_strdup ("");
-
-  if (byprefix)
-    lookup = lookupcountry_by_prefix (item);
-  else
-    lookup = lookupcountry_by_callsign (item);
-
-  if (cont != 99)
-    lookup.continent = cont;
-
-  /* update the frame */
-  framelabel = gtk_frame_get_label_widget (GTK_FRAME(dxccframe));
-  temp = g_strdup_printf ("<b>%s</b>", item);
-  gtk_label_set_markup (GTK_LABEL (framelabel), temp);
-
-  countrytreeview = lookup_widget (scorewindow, "countrytreeview");
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (countrytreeview));
-
-  /* update DXCC */
-  dxcc_data *d = g_ptr_array_index (dxcc, lookup.country);
-  if (lookup.country != 0)
-    {
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, d->px, -1);
-      if (countrymap)
-	{
-	  if (strcmp (programstate.px, d->px))
-	    {
-	      countrymap_refresh (d->px);
-	      programstate.px = g_strdup (d->px);
-	    }
-	}
-      iter_num[0]++;
-      for (j = 0; j < MAX_BANDS; j++)
-	{
-	  if (dxcc_c[lookup.country][j] > 0)
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "X", -1);
-	  else if (dxcc_w[lookup.country][j] > 0)
-	    {
-	      temp = g_strdup_printf ("%d", dxcc_w[lookup.country][j]);
-	      gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-	    }
-	  else
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "", -1);
-	}
-    }
-
-  /* update WAC */
-  if (preferences.awardswac == 1 && lookup.country != 0)
-    {
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-      iter_num[0]++;
-      temp = g_strdup_printf ("WAC-%s", enum_to_cont (lookup.continent));
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, temp, -1);
-      for (j = 0; j < MAX_BANDS; j++)
-	{
-	  if (wac_c[lookup.continent][j] > 0)
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "X", -1);
-	  else if (wac_w[lookup.continent][j] > 0)
-	    {
-	      temp = g_strdup_printf ("%d", wac_w[lookup.continent][j]);
-	      gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-	    }
-	  else
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "", -1);
-	}
-    }
-
-  /* update WAS */
-  if (preferences.awardswas == 1 && st != 99)
-    {
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-
-      temp = g_strdup_printf ("WAS-%s", enum_to_state (st));
-      iter_num[0]++;
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, temp, -1);
-      for (j = 0; j < MAX_BANDS; j++)
-	{
-	  if (was_c[st][j] > 0)
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "X", -1);
-	  else if (was_w[st][j] > 0)
-	    {
-	      temp = g_strdup_printf ("%d", was_w[st][j]);
-	      gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-	    }
-	  else
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "", -1);
-	}
-    }
-
-  /* update WAZ */
-  if (preferences.awardswaz == 1 && lookup.cq != 0)
-    {
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-      iter_num[0]++;
-      temp = g_strdup_printf ("WAZ-%d", lookup.cq);
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, temp, -1);
-      for (j = 0; j < MAX_BANDS; j++)
-	{
-	  if (waz_c[lookup.cq-1][j] > 0)
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "X", -1);
-	  else if (waz_w[lookup.cq-1][j] > 0)
-	    {
-	      temp = g_strdup_printf ("%d", waz_w[lookup.cq-1][j]);
-	      gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-	    }
-	  else
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "", -1);
-	}
-    }
-
-  /* update IOTA */
-  if (preferences.awardsiota == 1 && iota != NOT_AN_IOTA)
-    {
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-
-      char *iotastr = num_to_iota(iota);
-      iter_num[0]++;
-
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, iotastr, -1);
-      for (j = 0; j < MAX_BANDS; j++)
-	{
-	  gpointer p_iota_w = g_hash_table_lookup (iota_w[j], iotastr);
-	  gpointer p_iota_c = g_hash_table_lookup (iota_c[j], iotastr);
-
-	  if (p_iota_c && GPOINTER_TO_INT(p_iota_c) > 0)
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "X", -1);
-	  else if (p_iota_w && GPOINTER_TO_INT(p_iota_w) > 0)
-	    {
-	      temp = g_strdup_printf ("%d", GPOINTER_TO_INT(p_iota_w));
-	      gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-	    }
-	  else
-	    gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "", -1);
-	}
-      g_free(iotastr);
-    }
-
-  /* update Grid Locator */
-  if (preferences.awardsloc == 1)
-    {
-      GtkWidget *locatorentry = lookup_widget (mainwindow, "locatorentry");
-      char *locator = gtk_editable_get_chars (GTK_EDITABLE (locatorentry), 0, -1);
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-      char *loc4 = loc_norm(locator);
-      g_free (locator);
-
-      if (loc4)
-		{
-		  temp = g_strdup_printf ("%s", loc4);
-		  iter_num[0]++;
-
-		  gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, temp, -1);
-		  for (j = 0; j < MAX_BANDS; j++)
-			{
-			  // loc_w[] and loc_c[] will be null if init_scoring() has not been called.
-			  // init_scoring() is called when the scoring window is visible.
-			  // If the scoring window is not visible, but the LOCATOR box is visible,
-			  // bypass this code since loc_w[] and loc_c[] will be NULL.
-			  // AndyS 16-Jan-2021
-			  if (loc_w[j] != NULL) {
-				gpointer p_loc_w = g_hash_table_lookup (loc_w[j], loc4);
-				gpointer p_loc_c = g_hash_table_lookup (loc_c[j], loc4);
-
-				if (p_loc_c && GPOINTER_TO_INT(p_loc_c) > 0)
-				  gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "X", -1);
-				else if (p_loc_w && GPOINTER_TO_INT(p_loc_w) > 0)
-				  {
-					temp = g_strdup_printf ("%d", GPOINTER_TO_INT(p_loc_w));
-					gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-				  }
-				else
-				  gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, "", -1);
-			  }
-			}
-		  g_free(loc4);
-		}
-    }
-
-  /* Clear the rest of iter_num's */
-  while (iter_num[0] < '0'+NB_AWARDS)
-    {
-      gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-      temp = g_strdup ("");
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, temp, -1);
-      for (j = 0; j < MAX_BANDS; j++)
-	{
-	  gtk_list_store_set (GTK_LIST_STORE (model), &iter, j + 1, temp, -1);
-	}
-      iter_num[0]++;
-    }
-
-  if (g_strrstr(d->countryname, "&"))
-    temp = my_strreplace (d->countryname, "&", "&amp;");
-  else
-    temp = g_strdup (d->countryname);
-
-  /* override some items if there is area information available */
-  /* TODO: if we add WAZ scoring we need to use this routine for scoring */
-  /* TODO: ITU may contain strings like "07-08", right now it is an 'int' */
-  if (!byprefix && (!strcmp(d->px, "K") || !strcmp(d->px, "VK")))
-    {
-      char callarea = lookuparea (item);
-      if (callarea != '?')
-	{
-	  int index;
-	  char *areapx = g_strdup_printf ("%s%c", d->px, callarea);
-	  for (index = 0; index < area->len; index++)
-	    {
-	      area_data *a = g_ptr_array_index (area, index);
-	      if (g_ascii_strcasecmp (a->px, areapx) == 0)
-		{
-		  temp = g_strdup (a->countryname);
-		  lookup.itu = a->itu;
-		  lookup.cq = a->cq;
-		  d->timezone = a->timezone;
-		  d->latitude = a->latitude;
-		  d->longitude = a->longitude;
-		  break;
-		}
-	    }
-	  g_free (areapx);
-	}
-
-    }
-
-  labeltext1 = g_strdup_printf ("<b><i>%s</i></b>", temp);
-  conttext = enum_to_cont (lookup.continent);
-  itutext = g_strdup_printf ("ITU %d", lookup.itu);
-  cqtext = g_strdup_printf ("CQ %d", lookup.cq);
-  labeltext3 = g_strdup_printf (_("Timezone: %+1.1f"), (gdouble)d->timezone/10);
-
-  /* to facilitate language translations */
-  const char *north = _("N");
-  const char *south = _("S");
-  const char *east = _("E");
-  const char *west = _("W");
-  const char *loc = _("Location");
-
-  if (d->latitude >= 0 && d->longitude >= 0)
-    labeltext4 = g_strdup_printf ("%s: %1.2f%s %1.2f%s",
-				  loc, (gdouble)d->latitude/100, north, (gdouble)d->longitude/100, west);
-  else if (d->latitude >= 0 && d->longitude < 0)
-    labeltext4 = g_strdup_printf ("%s: %1.2f%s %1.2f%s",
-				  loc, (gdouble)d->latitude/100, north, -1 * (gdouble)d->longitude/100, east);
-  else if (d->latitude < 0 && d->longitude >= 0)
-    labeltext4 = g_strdup_printf ("%s: %1.2f%s %1.2f%s",
-				  loc, -1 * (gdouble)d->latitude/100, south, (gdouble)d->longitude/100, west);
-  else
-    labeltext4 = g_strdup_printf ("%s: %1.2f%s %1.2f%s",
-				  loc, -1 * (gdouble)d->latitude/100, south, -1 * (gdouble)d->longitude/100, east);
-
-  if (lookup.country > 0)
-    {
-      if (preferences.NS == 1)
-	lat = -1.0 * preferences.latitude;
-      else
-	lat = preferences.latitude;
-      if (preferences.EW == 1)
-	lon = -1.0 * preferences.longitude;
-      else
-	lon = preferences.longitude;
-
-      gcresult = g_strdup_printf ("<small>%s</small>",
-				  gcircle (preferences.units, lat, lon,
-					   (gdouble)d->latitude/100, (gdouble)d->longitude/100));
-    }
-  gtk_label_set_markup (GTK_LABEL (dxcclabel1), labeltext1);
-  gtk_label_set_text (GTK_LABEL (contlabel), conttext);
-  gtk_label_set_text (GTK_LABEL (itulabel), itutext);
-  gtk_label_set_text (GTK_LABEL (cqlabel), cqtext);
-  gtk_label_set_text (GTK_LABEL (dxcclabel3), labeltext3);
-  gtk_label_set_text (GTK_LABEL (dxcclabel4), labeltext4);
-  gtk_label_set_markup (GTK_LABEL (dxcclabel5), gcresult);
-  g_free (labeltext1);
-  g_free (conttext);
-  g_free (itutext);
-  g_free (cqtext);
-  g_free (labeltext3);
-  g_free (labeltext4);
-  g_free (gcresult);
-  g_free (temp);
-}
-
-void update_dxccscoring (void)
-{
-  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
-  GtkWidget *dxcctreeview;
-  GtkTreeModel *dxccmodel;
-  GtkTreeIter dxcciter;
-  char *str = g_strdup ("");;
-
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = 0;
-      confirmed[j] = 0;
-    }
-  for (i = 0; i <= programstate.countries; i++)
-    {
-      for (j = 0; j <= MAX_BANDS; j++)
-	{
-	  if (dxcc_w[i][j] > 0) worked[j]++;
-	  if (dxcc_c[i][j] > 0) confirmed[j]++;
-	}
-    }
-  dxcctreeview = lookup_widget (scorewindow, "dxcctreeview");
-  dxccmodel = gtk_tree_view_get_model (GTK_TREE_VIEW (dxcctreeview));
-  gtk_tree_model_get_iter (dxccmodel, &dxcciter, gtk_tree_path_new_from_string ("0"));
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      str = g_strdup_printf ("%d\n%d", worked[j], confirmed[j]);
-      gtk_list_store_set (GTK_LIST_STORE (dxccmodel), &dxcciter, j, str, -1);
-    }
-  g_free (str);
-}
-
-void update_wacscoring (void)
-{
-  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
-  GtkWidget *wactreeview;
-  GtkTreeModel *wacmodel;
-  GtkTreeIter waciter;
-  char *str = g_strdup ("");;
-
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = 0;
-      confirmed[j] = 0;
-    }
-  for (i = 0; i < MAX_CONTINENTS; i++)
-    {
-      for (j = 0; j <= MAX_BANDS; j++)
-	{
-	  if (wac_w[i][j] != 0) worked[j]++;
-	  if (wac_c[i][j] != 0) confirmed[j]++;
-	}
-    }
-  wactreeview = lookup_widget (scorewindow, "wactreeview");
-  wacmodel = gtk_tree_view_get_model (GTK_TREE_VIEW (wactreeview));
-  gtk_tree_model_get_iter (wacmodel, &waciter, gtk_tree_path_new_from_string ("0"));
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      str = g_strdup_printf ("%d\n%d", worked[j], confirmed[j]);
-      gtk_list_store_set (GTK_LIST_STORE (wacmodel), &waciter, j, str, -1);
-    }
-  g_free (str);
-}
-
-void update_wasscoring (void)
-{
-  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
-  GtkWidget *wastreeview;
-  GtkTreeModel *wasmodel;
-  GtkTreeIter wasiter;
-  char *str = g_strdup ("");;
-
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = 0;
-      confirmed[j] = 0;
-    }
-  for (i = 0; i < MAX_STATES; i++)
-    {
-      for (j = 0; j <= MAX_BANDS; j++)
-	{
-	  if (was_w[i][j] != 0) worked[j]++;
-	  if (was_c[i][j] != 0) confirmed[j]++;
-	}
-    }
-  wastreeview = lookup_widget (scorewindow, "wastreeview");
-  wasmodel = gtk_tree_view_get_model (GTK_TREE_VIEW (wastreeview));
-  gtk_tree_model_get_iter (wasmodel, &wasiter, gtk_tree_path_new_from_string ("0"));
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      str = g_strdup_printf ("%d\n%d", worked[j], confirmed[j]);
-      gtk_list_store_set (GTK_LIST_STORE (wasmodel), &wasiter, j, str, -1);
-    }
-  g_free (str);
-}
-
-void update_wazscoring (void)
-{
-  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
-  GtkWidget *waztreeview;
-  GtkTreeModel *wazmodel;
-  GtkTreeIter waziter;
-  char *str = g_strdup ("");;
-
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = 0;
-      confirmed[j] = 0;
-    }
-  for (i = 0; i < MAX_ZONES; i++)
-    {
-      for (j = 0; j <= MAX_BANDS; j++)
-	{
-	  if (waz_w[i][j] != 0) worked[j]++;
-	  if (waz_c[i][j] != 0) confirmed[j]++;
-	}
-    }
-  waztreeview = lookup_widget (scorewindow, "waztreeview");
-  wazmodel = gtk_tree_view_get_model (GTK_TREE_VIEW (waztreeview));
-  gtk_tree_model_get_iter (wazmodel, &waziter, gtk_tree_path_new_from_string ("0"));
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      str = g_strdup_printf ("%d\n%d", worked[j], confirmed[j]);
-      gtk_list_store_set (GTK_LIST_STORE (wazmodel), &waziter, j, str, -1);
-    }
-  g_free (str);
-}
-
-void update_iotascoring (void)
-{
-  int j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
-  GtkWidget *iotatreeview;
-  GtkTreeModel *iotamodel;
-  GtkTreeIter iotaiter;
-  char *str = g_strdup ("");;
-
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = 0;
-      confirmed[j] = 0;
-    }
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = g_hash_table_size(iota_w[j]);
-      confirmed[j] = g_hash_table_size(iota_c[j]);
-    }
-
-  iotatreeview = lookup_widget (scorewindow, "iotatreeview");
-  iotamodel = gtk_tree_view_get_model (GTK_TREE_VIEW (iotatreeview));
-  gtk_tree_model_get_iter (iotamodel, &iotaiter, gtk_tree_path_new_from_string ("0"));
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      str = g_strdup_printf ("%d\n%d", worked[j], confirmed[j]);
-      gtk_list_store_set (GTK_LIST_STORE (iotamodel), &iotaiter, j, str, -1);
-    }
-  g_free (str);
-}
-
-
-#if 0
-static void loc_gh_add (gpointer key, gpointer value, gpointer user_data)
-{
-  int *p_counter = (int *)user_data;
-
-  if (value && GPOINTER_TO_INT(value))
-    (*p_counter) ++;
-}
-#endif
-
-void update_locscoring (void)
-{
-  int j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
-  GtkWidget *loctreeview;
-  GtkTreeModel *locmodel;
-  GtkTreeIter lociter;
-  char *str = g_strdup ("");;
-
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      worked[j] = 0;
-      confirmed[j] = 0;
-    }
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-#if 0
-      g_hash_table_foreach (loc_w[j], &loc_gh_add, (gpointer)&worked[j]);
-      g_hash_table_foreach (loc_c[j], &loc_gh_add, (gpointer)&confirmed[j]);
-#else
-      worked[j] = g_hash_table_size(loc_w[j]);
-      confirmed[j] = g_hash_table_size(loc_c[j]);
-#endif
-    }
-
-  loctreeview = lookup_widget (scorewindow, "loctreeview");
-  locmodel = gtk_tree_view_get_model (GTK_TREE_VIEW (loctreeview));
-  gtk_tree_model_get_iter (locmodel, &lociter, gtk_tree_path_new_from_string ("0"));
-  for (j = 0; j <= MAX_BANDS; j++)
-    {
-      str = g_strdup_printf ("%d\n%d", worked[j], confirmed[j]);
-      gtk_list_store_set (GTK_LIST_STORE (locmodel), &lociter, j, str, -1);
-    }
-  g_free (str);
 }
 
 void hash_inc(GHashTable *hash_table, const char *key)
@@ -1238,9 +716,7 @@ void loc_del_qso(const char *locator, int f, gboolean qslconfirmed)
 
 void iota_new_qso(uint iota, int f, gboolean qslconfirmed)
 {
-  char *iotastr;
-
-  iotastr = num_to_iota(iota);
+  const char *iotastr = num_to_iota(iota);
   if (!iotastr)
     return;
 
@@ -1252,15 +728,11 @@ void iota_new_qso(uint iota, int f, gboolean qslconfirmed)
       hash_inc(iota_c[f], iotastr);
       hash_inc(iota_c[MAX_BANDS], iotastr);
     }
-
-  g_free(iotastr);
 }
 
 void iota_del_qso(uint iota, int f, gboolean qslconfirmed)
 {
-  char *iotastr;
-
-  iotastr = num_to_iota(iota);
+  const char *iotastr = num_to_iota(iota);
   if (!iotastr)
     return;
 
@@ -1311,99 +783,5 @@ static void init_scoring (void)
     {
       loc_w[j] = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
       loc_c[j] = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-    }
-}
-
-void fill_scoring_arrays (void)
-{
-  int i, f;
-  uint st, zone, cont, iota;
-  gboolean valid, qslconfirmed;
-  logtype *logw;
-  GtkTreeModel *logmodel;
-  GtkTreeIter logiter;
-  char *call, *freq, *qslin, *awstr, *locator;
-  struct info lookup;
-
-
-  init_scoring ();
-  for (i = 0; i < g_list_length (logwindowlist); i++)
-    {
-      logw = g_list_nth_data (logwindowlist, i);
-      logmodel = gtk_tree_view_get_model (GTK_TREE_VIEW(logw -> treeview));
-      valid = gtk_tree_model_get_iter_first (logmodel, &logiter);
-      while (valid)
-	{
-	  gtk_tree_model_get (logmodel, &logiter, CALL, &call, -1);
-	  gtk_tree_model_get (logmodel, &logiter, BAND, &freq, -1);
-	  gtk_tree_model_get (logmodel, &logiter, QSLIN, &qslin, -1);
-	  gtk_tree_model_get (logmodel, &logiter, AWARDS, &awstr, -1);
-	  gtk_tree_model_get (logmodel, &logiter, LOCATOR, &locator, -1);
-	  f = freq2enum (freq);
-	  char *result = valid_awards_entry (awstr, &st, &zone, &cont, &iota);
-	  if (result)
-	    {
-	      lookup = lookupcountry_by_prefix (result);
-	      g_free (result);
-	    }
-	  else
-	    lookup = lookupcountry_by_callsign (call);
-
-	  if (f >= 0 && preferences.scoringbands[f] == 1)
-	    {
-	      qslconfirmed = qslreceived (qslin);
-	      if (lookup.country > 0)
-		{
-		  dxcc_w[lookup.country][f]++;
-		  dxcc_w[lookup.country][MAX_BANDS]++;
-		  if (qslconfirmed)
-		    {
-		      dxcc_c[lookup.country][f]++;
-		      dxcc_c[lookup.country][MAX_BANDS]++;
-		    }
-		}
-	      if (cont != 99 || lookup.continent != 99)
-		{
-		  if (cont == 99) cont = lookup.continent;
-		  wac_w[cont][f]++;
-		  wac_w[cont][MAX_BANDS]++;
-		  if (qslconfirmed)
-		    {
-		      wac_c[cont][f]++;
-		      wac_c[cont][MAX_BANDS]++;
-		    }
-		}
-	      if (st != 99)
-		{
-		  was_w[st][f]++;
-		  was_w[st][MAX_BANDS]++;
-		  if (qslconfirmed)
-		    {
-		      was_c[st][f]++;
-		      was_c[st][MAX_BANDS]++;
-		    }
-		}
-	      if ((zone > 0 && zone < 99) || (lookup.cq > 0 && lookup.cq < 99))
-		{
-		  if (zone == 99) zone = lookup.cq;
-		  waz_w[zone-1][f]++;
-		  waz_w[zone-1][MAX_BANDS]++;
-		  if (qslconfirmed)
-		    {
-		      waz_c[zone-1][f]++;
-		      waz_c[zone-1][MAX_BANDS]++;
-		    }
-		}
-	      if (iota != NOT_AN_IOTA)
-		{
-		  iota_new_qso(iota, f, qslconfirmed);
-		}
-	      if (strlen(locator) > 0)
-		{
-		  loc_new_qso(locator, f, qslconfirmed);
-		}
-	    }
-	  valid = gtk_tree_model_iter_next (logmodel, &logiter);
-	}
     }
 }

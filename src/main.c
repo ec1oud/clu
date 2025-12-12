@@ -25,52 +25,7 @@
 #include <time.h>
 #include <locale.h>
 #include <string.h>
-
-// --- cruft to remove ---
-#include <gtk/gtk.h>
-#include <glib/gstdio.h>
-#include "gui_b4window.h"
-#include "gui_scorewindow.h"
-#include "gui_mainwindow.h"
-#include "gui_setupdialog.h"
-#include "gui_warningdialog.h"
-#include "gui_utils.h"
-#include "support.h"
-#include "callbacks_mainwindow_menu.h"
-#include "callbacks_mainwindow_qsoframe.h"
-#include "callbacks_mainwindow.h"
-#include "cfg.h"
-#include "log.h"
-#include "utils.h"
-#include "dxcc.h"
-#include "remote.h"
-#include "history.h"
-#include "main.h"
-#include "hamlib-utils.h"
-
-GtkWidget *mainwindow, *mainnotebook;
-gchar *xlogdir;
-int clocktimer = -1, savetimer = -1;
-int sockettimer_2333 = -1;
-int remotetimer_7311 = -1, sockettimer_7311 = -1;
-gchar **qso = NULL;
-programstatetype programstate;
-glong msgid_7311;
-GList *logwindowlist = NULL;
-GdkColormap *colormap;
-GIOChannel *channel_2333;
-GIOFlags flags_2333;
-GIOChannel *channel_7311;
-
-extern GtkWidget *b4window, *scorewindow;
-extern preferencestype preferences;
-extern remotetype remote;
-extern int server_sockfd_7311;
-extern int server_sockfd_2333;
-extern GtkUIManager *ui_manager;
-extern GtkPrintSettings *print_settings;
-extern GtkPageSetup *print_page_setup;
-// --- end of cruft to remove ---
+#include <stdio.h>
 
 #include "dxcc.h"
 
@@ -87,8 +42,7 @@ parsecommandline (int argc, char *argv[])
 			case ':':
 			case '?':
 			case 'h':
-				printf ("Usage: %s [option] callsign\n",
-					PACKAGE);
+				printf ("Usage: clu [option] callsign\n");
 				printf ("	-h	Display this help and exit\n");
 				printf ("	-v	Output version information and exit\n");
 				exit (0);
