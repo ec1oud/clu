@@ -60,34 +60,15 @@ typedef struct
 	char* px;
 } area_data;
 
-struct info {
-	uint country;
-	uint cq;
-	uint itu;
-	uint continent;
-};
-
 void cleanup_dxcc(void);
 void cleanup_area(void);
 int readctyversion(void);
 int readctydata(void);
 int readareadata(void);
-void updatedxccframe(char* item, gboolean byprefix, int st, int zone, int cont, uint iota);
-void update_dxccscoring(void);
-void update_wacscoring(void);
-void update_wasscoring(void);
-void update_wazscoring(void);
-void update_iotascoring(void);
-void update_locscoring(void);
-void fill_scoring_arrays(void);
 dxcc_data lookupcountry_by_callsign(const char* callsign);
 
 void hash_inc(GHashTable* hash_table, const char* key);
 void hash_dec(GHashTable* hash_table, const char* key);
-void iota_new_qso(uint iota, int f, gboolean qslconfirmed);
-void iota_del_qso(uint iota, int f, gboolean qslconfirmed);
-void loc_new_qso(const char* locator, int f, gboolean qslconfirmed);
-void loc_del_qso(const char* locator, int f, gboolean qslconfirmed);
 char* loc_norm(const char* locator);
 
 #endif /* DXCC_H */

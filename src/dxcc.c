@@ -242,33 +242,6 @@ findexc(char* exception)
 	return (exception);
 }
 
-/*
- * return the country number cq zone and itu zone directly from the array
- */
-struct info
-lookupcountry_by_prefix(char* px)
-{
-	int index;
-	struct info lookup;
-
-	lookup.country = 0;
-	lookup.itu = 0;
-	lookup.cq = 0;
-	lookup.continent = 99;
-
-	for (index = 0; index < dxcc->len; index++) {
-		dxcc_data* d = g_ptr_array_index(dxcc, index);
-		if (g_ascii_strcasecmp(d->px, px) == 0) {
-			lookup.country = index;
-			lookup.itu = d->itu;
-			lookup.cq = d->cq;
-			lookup.continent = d->continent;
-			break;
-		}
-	}
-	return lookup;
-}
-
 /*!
 	Look up information related to the given \a callsign.
 	Note: strings in the returned struct are static constants;
