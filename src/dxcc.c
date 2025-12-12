@@ -42,26 +42,26 @@
 // 69	6	Primary DXCC Prefix terminated by a colon character.
 // next line(s)	List of prefixes assigned to that country, each one separated
 //              by a comma and terminated by a semicolon.
-// 
+//
 // The fields are aligned in columns and spaced out for readability only.
 // It is the ":" at the end of each field that acts as a delimiter for that field.
-// 
+//
 // Alias DXCC prefixes (including the primary one) follow on consecutive lines,
 // separated by ",". If there is more than one line, subsequent lines begin
-// with the "&" continuation character. A ";" terminates the last prefix in 
+// with the "&" continuation character. A ";" terminates the last prefix in
 // the list.
-// 
+//
 // "Prefixes" which start with "=" are not prefixes, but are full callsigns
 // and seem to be exceptions to the rules.
 //
-// If the country spans multiple zones, then the prefix may be followed by a 
+// If the country spans multiple zones, then the prefix may be followed by a
 // CQWW zone number in parenthesis, and it may also be followed by an ITU zone
 // number in square brackets, or both, but the CQ zone number in parenthesis
 // must precede the ITU zone number in square brackets.
-// 
+//
 // The following special characters can be applied to an alias prefix:
 // (#) Override CQ zone where # is the zone number
-// [#] Override ITU zone where # is the zone number 
+// [#] Override ITU zone where # is the zone number
 //
 
 #include <gtk/gtk.h>
@@ -517,15 +517,15 @@ readctydata (void)
 	  /* With this addition, the user can enter the "callsign" like "3D2/R" and the */
 	  /* scoring window locator box will show the proper DXCC entity, even though   */
 	  /* this isn't a "real" callsign.  AMS 24-feb-2013 */
- 
-	  if (strchr(split[7], '/')) 
+
+	  if (strchr(split[7], '/'))
 	    {
 	      for (i=0; i<strlen(split[7]); i++)
 		{
 		  tmp[i] = toupper(split[7][i]);
 		}
 	      tmp[i] = '\0';
-	      g_hash_table_insert (prefixes, g_strdup (tmp), GINT_TO_POINTER (programstate.countries));	      
+	      g_hash_table_insert (prefixes, g_strdup (tmp), GINT_TO_POINTER (programstate.countries));
 	    }
 
 	  /* split up the second line */
@@ -910,7 +910,7 @@ updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont,
   else
     labeltext4 = g_strdup_printf ("%s: %1.2f%s %1.2f%s",
 				  loc, -1 * (gdouble)d->latitude/100, south, -1 * (gdouble)d->longitude/100, east);
-	
+
   if (lookup.country > 0)
     {
       if (preferences.NS == 1)
