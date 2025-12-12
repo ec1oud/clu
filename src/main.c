@@ -31,31 +31,28 @@
 
 /* command line options */
 static void
-parsecommandline (int argc, char *argv[])
+parsecommandline(int argc, char* argv[])
 {
 	int p;
 
-	while ((p = getopt (argc, argv, "hv")) != -1)
-	{
-		switch (p)
-		{
-			case 'v':
-				printf("cty version %d\n", readctyversion());
-				exit (0);
-			case ':':
-			case '?':
-			case 'h':
-				printf ("Usage: clu [option] callsign\n");
-				printf ("	-h	Display this help and exit\n");
-				printf ("	-v	Output version information and exit\n");
-				exit (0);
+	while ((p = getopt(argc, argv, "hv")) != -1) {
+		switch (p) {
+		case 'v':
+			printf("cty version %d\n", readctyversion());
+			exit(0);
+		case ':':
+		case '?':
+		case 'h':
+			printf("Usage: clu [option] callsign\n");
+			printf("	-h	Display this help and exit\n");
+			printf("	-v	Output version information and exit\n");
+			exit(0);
 		}
 	}
 }
 
 /* the fun starts here */
-int
-main (int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	parsecommandline(argc, argv);
 	if (argc < 2)

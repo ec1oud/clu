@@ -23,7 +23,6 @@
  * gc.c - distance calculations
  */
 
-
 #include <gtk/gtk.h>
 #include <hamlib/rotator.h>
 
@@ -43,40 +42,36 @@
  * note: longitude = E/W, latitude = N/S, N and E are positive
  *
  */
-char *
-gcircle (int units, gdouble latmy, gdouble lonmy, gdouble latdx, gdouble londx)
+char* gcircle(int units, gdouble latmy, gdouble lonmy, gdouble latdx, gdouble londx)
 {
 	gdouble distsp, bsp, distlp, blp;
 	char *result, *unitsstr;
 	int retcode;
 
-	result = g_strdup ("");
+	result = g_strdup("");
 
 	if (units == 1)
-		unitsstr = g_strdup ("km");
+		unitsstr = g_strdup("km");
 	else
-		unitsstr = g_strdup ("m");
+		unitsstr = g_strdup("m");
 
 	/* data in cty.dat uses a negative number for eastern longitudes */
 #ifdef G_OS_WIN32
-	retcode = myqrb (lonmy, latmy, (-1. * londx), latdx, &distsp, &bsp);
+	retcode = myqrb(lonmy, latmy, (-1. * londx), latdx, &distsp, &bsp);
 #else
-	retcode = qrb (lonmy, latmy, (-1. * londx), latdx, &distsp, &bsp);
+	retcode = qrb(lonmy, latmy, (-1. * londx), latdx, &distsp, &bsp);
 #endif
-	if (retcode == RIG_OK)
-	{
-		distlp = distance_long_path (distsp);
-		blp = azimuth_long_path (bsp);
-		if (units == 0)
-		{
+	if (retcode == RIG_OK) {
+		distlp = distance_long_path(distsp);
+		blp = azimuth_long_path(bsp);
+		if (units == 0) {
 			distsp = distsp / 1.609;
 			distlp = distlp / 1.609;
 		}
-		result = g_strdup_printf
-(_("\nShort Path: %03.0f deg, %.0f %s\nLong Path: %03.0f deg, %.0f %s\n"),
-		bsp, distsp, unitsstr, blp, distlp, unitsstr);
+		result = g_strdup_printf(_("\nShort Path: %03.0f deg, %.0f %s\nLong Path: %03.0f deg, %.0f %s\n"),
+		    bsp, distsp, unitsstr, blp, distlp, unitsstr);
 	}
 
-	g_free (unitsstr);
+	g_free(unitsstr);
 	return (result);
 }
