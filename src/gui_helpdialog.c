@@ -46,18 +46,18 @@
 
 extern GtkWidget *mainwindow;
 
-static void open_help (gchar *filename)
+static void open_help (char *filename)
 {
 	GtkWidget *helpdialog, *helptextview, *scrolledwindow, *ok_button;
-	gchar *buf, fbuf[80], *helpfile, *title;
-	const gchar *encoding;
+	char *buf, fbuf[80], *helpfile, *title;
+	const char *encoding;
 	FILE *in;
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
-	gint response, l;
+	int response, l;
 	GError *err;
 	gsize utf8_len, read_len;
-	gboolean retry;
+	bool retry;
 
 	title = g_strdup_printf ("xlog - %s", filename);
 	helpdialog = gtk_dialog_new_with_buttons (title,
@@ -89,7 +89,7 @@ static void open_help (gchar *filename)
 	gtk_text_buffer_create_tag (buffer, "italic", "style", PANGO_STYLE_ITALIC, NULL);
 	gtk_text_buffer_create_tag (buffer, "blue", "foreground", "blue", NULL);
 
-	buf = g_new0 (gchar, 100);
+	buf = g_new0 (char, 100);
 	g_get_charset (&encoding);
 	in = g_fopen (helpfile, "r");
 	if (in)
@@ -158,13 +158,13 @@ void
 on_helpmanual_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
 #ifdef G_OS_WIN32
-	gchar *win32_dir = g_win32_get_package_installation_directory_of_module (NULL);
-	gchar *command = g_strdup_printf ("iexplore.exe %s%smanual%soutput%shtml%sindex.html", win32_dir, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S);
+	char *win32_dir = g_win32_get_package_installation_directory_of_module (NULL);
+	char *command = g_strdup_printf ("iexplore.exe %s%smanual%soutput%shtml%sindex.html", win32_dir, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S, G_DIR_SEPARATOR_S);
 	win32_fork (command);
 	g_free (win32_dir);
 	g_free (command);
 #else
-	gchar *command[] = {"xdg-open", NULL, NULL};
+	char *command[] = {"xdg-open", NULL, NULL};
 	command[1] = g_strconcat (XLOG_DOCDIR, G_DIR_SEPARATOR_S, "manual", G_DIR_SEPARATOR_S, "output", G_DIR_SEPARATOR_S, "html", G_DIR_SEPARATOR_S, "index.html", NULL);
 	g_spawn_async (NULL, command, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, NULL);
 	g_free (command[1]);

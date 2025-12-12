@@ -71,7 +71,7 @@
 #define ARC_IN_KM 111.2
 #endif
 
-gint statusbartimer;
+int statusbartimer;
 
 extern GtkWidget *mainwindow, *keyerwindow, *b4window, *scorewindow;
 extern preferencestype preferences;
@@ -79,9 +79,9 @@ extern programstatetype programstate;
 extern remotetype remote;
 extern gchar **qso;
 extern gchar *xlogdir;
-extern gint sockettimer_2333;
-extern gint remotetimer_7311, sockettimer_7311;
-extern gint savetimer, clocktimer;
+extern int sockettimer_2333;
+extern int remotetimer_7311, sockettimer_7311;
+extern int savetimer, clocktimer;
 extern glong msgid_7311;
 extern void *shareCall;
 extern GList *logwindowlist;
@@ -225,7 +225,7 @@ makebandoptionmenu (gchar *bands)
 {
 	GtkWidget *bandhbox2, *bandoptionmenu, *old, *entry, *label;
 	gchar **split;
-	gint index = 0;
+	int index = 0;
 
 	entry = g_object_get_data (G_OBJECT (mainwindow), "bandentry");
 	label = g_object_get_data (G_OBJECT (mainwindow), "mhzlabel");
@@ -262,7 +262,7 @@ makemodeoptionmenu (gchar *modes)
 {
 	GtkWidget *modehbox2, *modeoptionmenu, *old, *entry, *label;
 	gchar **split;
-	gint index = 0;
+	int index = 0;
 
 	entry = g_object_get_data (G_OBJECT (mainwindow), "modeentry");
 	label = g_object_get_data (G_OBJECT (mainwindow), "modelabel");
@@ -298,7 +298,7 @@ makemodeoptionmenu (gchar *modes)
 void
 deletespaces (gchar ** split)
 {
-	gint index = 0;
+	int index = 0;
 
 	for (;;)
 	{
@@ -310,7 +310,7 @@ deletespaces (gchar ** split)
 }
 
 /* clear statusbar */
-static gint
+static int
 statusbar_timeout (gpointer data)
 {
 	GtkWidget *statusbar;
@@ -398,7 +398,7 @@ freeremote (void)
 void
 save_windowsize_and_cleanup (void)
 {
-	gint i;
+	int i;
 	GtkWidget *bandoptionmenu, *modeoptionmenu, *handlebox, *hpaned;
 
 	/* free the tables array */
@@ -548,7 +548,7 @@ xloggettime (void)
 
 /* look up mode in a list of modes */
 gchar *
-lookup_mode (gint index)
+lookup_mode (int index)
 {
 	gchar **s, *mode;
 
@@ -560,7 +560,7 @@ lookup_mode (gint index)
 
 /* look up band in a list of bands */
 gchar *
-lookup_band (gint index)
+lookup_band (int index)
 {
 	gchar **s, *band;
 
@@ -571,7 +571,7 @@ lookup_band (gint index)
 }
 
 /* clock which updates a label in the statusbar */
-gint
+int
 updateclock (void)
 {
 	GtkWidget *clocklabel;
@@ -609,13 +609,13 @@ color_parse (gchar * value)
 
 
 
-gint
+int
 autosave (void)
 {
-	gint i;
+	int i;
 	logtype *logw;
 	gchar *temp;
-	gboolean message = FALSE;
+	bool message = FALSE;
 
 	for (i = 0; i < g_list_length (logwindowlist); i++)
 	{
@@ -647,7 +647,7 @@ autosave (void)
 void
 set_qsoframe (gpointer arg)
 {
-	gint i, j;
+	int i, j;
 	GtkWidget *endhbox, *awardshbox, *powerhbox, *namehbox, *locatorhbox, *qthhbox,
 		*hrsthbox, *mrsthbox,
 		*unknown1hbox, *unknown2hbox, *powerbutton, *powerlabel, *qslhbox,
@@ -818,11 +818,11 @@ my_strreplace(const char *str, const char *delimiter, const char *replacement)
 
 /* check if the awards entry contains a valid awards string */
 gchar *
-valid_awards_entry (gchar *a, guint *st, guint *zone, guint *cont, guint *iota)
+valid_awards_entry (gchar *a, uint *st, uint *zone, uint *cont, uint *iota)
 {
 	gchar **s = g_strsplit (a, ",", -1);
 	gchar *p = NULL, *dup = NULL;
-	guint i = 0;
+	uint i = 0;
 
 	*st = 99;
 	*zone = 99;
@@ -851,23 +851,23 @@ valid_awards_entry (gchar *a, guint *st, guint *zone, guint *cont, guint *iota)
 	return dup;
 }
 
-gboolean
+bool
 qslreceived(gchar *in)
 {
 	if (in && (!g_ascii_strcasecmp (in, "x") || !g_ascii_strcasecmp (in, "y"))) return TRUE;
 	return FALSE;
 }
 
-gint num_qsos_to_export;
+int num_qsos_to_export;
 
-gint
+int
 get_num_qsos_to_export(void)
 {
   return num_qsos_to_export;
 }
 
 void 
-save_num_qsos_to_export(gint num)
+save_num_qsos_to_export(int num)
 {
   num_qsos_to_export = num;
 }

@@ -22,4 +22,4 @@
 
 /* gui_warningdialog.h */
 
-void warningdialog (gchar *title, gchar *warning, gchar *dialogimage);
+void warningdialog (char *title, char *warning, char *dialogimage);

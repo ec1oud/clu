@@ -37,10 +37,10 @@ extern GPtrArray *dxcc;
 extern programstatetype programstate;
 
 /* sort function for the latitude, longitude and timezone columns */
-static gint
+static int
 sort_column (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data)
 {
-	gchar *item_a = NULL, *item_b = NULL;
+	char *item_a = NULL, *item_b = NULL;
 	double da, db;
 
 	gtk_tree_model_get (model, a, GPOINTER_TO_INT(user_data), &item_a, -1);
@@ -61,8 +61,8 @@ on_menu_dxcclist_activate (GtkMenuItem *menuitem, gpointer user_data)
 	GtkListStore *model;
 	GtkCellRenderer *renderer, *brenderer;
 	GtkTreeIter iter;
-	gint i;
-	gchar *lat, *lon, *tz;
+	int i;
+	char *lat, *lon, *tz;
 
 	dxccwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (GTK_WINDOW (dxccwindow), _("xlog - DXCC list"));

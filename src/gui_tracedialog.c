@@ -42,23 +42,23 @@
 typedef struct
 {
 	time_t modified;		/* Last Modified Time */				
-	gchar *filename;		/* File Name */
+	char *filename;		/* File Name */
 	FILE *fd;				/* File Descriptor */
 	unsigned long filesize; /* File Size */
 } fileinfo;
 
-gint saved_fd;
-gint tracetimer = -1;
+int saved_fd;
+int tracetimer = -1;
 fileinfo finfo;
 
-extern gchar *xlogdir;
+extern char *xlogdir;
 extern preferencestype preferences;
 extern GtkWidget *mainwindow;
 
 static void
 stop_tracing (void)
 {
-	gint hamlibresult;
+	int hamlibresult;
 
 	stop_hamlib ();
 	g_source_remove (tracetimer);
@@ -74,7 +74,7 @@ stop_tracing (void)
 		RIG_DEBUG_NONE, preferences.polltime);
 }
 
-static gboolean
+static bool
 on_tracedialog_delete_event (GtkWidget * widget, GdkEvent * event,
 	 gpointer user_data)
 {
@@ -86,7 +86,7 @@ on_tracedialog_delete_event (GtkWidget * widget, GdkEvent * event,
 static int fileupdated(void) 
 {
 	struct stat s;
-	gint status;
+	int status;
 
 	if (finfo.filename) 
 	{
@@ -97,15 +97,15 @@ static int fileupdated(void)
 	return -1;
 }
 
-static gint
+static int
 updatetrace (gpointer data)
 {
 	GtkTextBuffer *buffer;
 	GtkTextIter start, end;
 	GtkTextMark *mark;
 	FILE *fd;
-	gint numread = 0;
-	gchar buf[1025];
+	int numread = 0;
+	char buf[1025];
  
 	fflush(stderr);
 	if (fileupdated ()) 
@@ -134,8 +134,8 @@ on_trace_hamlib_activate(GtkMenuItem * menuitem, gpointer user_data)
 {
 	GtkWidget *tracedialog, *tracelabel, *vbox,	*tracedialog_hseparator,
 		*tracedialog_scrolledwindow, *tracedialog_textview, *close_button;
-	gint hamlibresult, response;
-	gchar *tracestr;
+	int hamlibresult, response;
+	char *tracestr;
 	
 	if (preferences.hamlib == 0)
 	{

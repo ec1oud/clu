@@ -61,7 +61,7 @@
 void *shareCall;
 
 extern GtkWidget *mainwindow, *b4window, *keyerwindow;
-extern gint callid;
+extern int callid;
 extern programstatetype programstate;
 extern GList *logwindowlist;
 extern preferencestype preferences;
@@ -73,7 +73,7 @@ void
 on_datebutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *entry;
-	gchar *nowdate;
+	char *nowdate;
 
 	nowdate = xloggetdate ();
 	entry = lookup_widget (mainwindow, "dateentry");
@@ -86,7 +86,7 @@ void
 on_gmtbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *entry;
-	gchar *nowtime;
+	char *nowtime;
 
 	entry = lookup_widget (mainwindow, "gmtentry");
 	nowtime = xloggettime ();
@@ -98,7 +98,7 @@ void
 on_endbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *entry;
-	gchar *nowtime;
+	char *nowtime;
 
 	entry = lookup_widget (mainwindow, "endentry");
 	nowtime = xloggettime ();
@@ -108,11 +108,11 @@ on_endbutton_clicked (GtkButton * button, gpointer user_data)
 
 /* convert callsign to uppercase */
 void
-on_callentry_insert_text (GtkEditable * editable, gchar * new_text,
-	gint new_text_length, gpointer position, gpointer user_data)
+on_callentry_insert_text (GtkEditable * editable, char * new_text,
+	int new_text_length, gpointer position, gpointer user_data)
 {
-	gint i;
-	gchar *result = g_new (gchar, new_text_length);
+	int i;
+	char *result = g_new (char, new_text_length);
 
 	for (i = 0; i < new_text_length; i++)
 result[i] = islower (new_text[i]) ? toupper (new_text[i]) : new_text[i];
@@ -129,11 +129,11 @@ result[i] = islower (new_text[i]) ? toupper (new_text[i]) : new_text[i];
 
 /* convert awards entry to uppercase */
 void
-on_awardsentry_insert_text (GtkEditable * editable, gchar * new_text,
-	gint new_text_length, gpointer position, gpointer user_data)
+on_awardsentry_insert_text (GtkEditable * editable, char * new_text,
+	int new_text_length, gpointer position, gpointer user_data)
 {
-	gint i;
-	gchar *result = g_new (gchar, new_text_length);
+	int i;
+	char *result = g_new (char, new_text_length);
 
 	for (i = 0; i < new_text_length; i++)
 result[i] = islower (new_text[i]) ? toupper (new_text[i]) : new_text[i];
@@ -153,12 +153,12 @@ on_callbutton_clicked (GtkButton * button, gpointer user_data)
 	GtkWidget *entry;
 
 	entry = lookup_widget (mainwindow, "callentry");
-	gchar *call = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	char *call = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
 	if (strlen(call) > 2)
 	{
 		if (g_strrstr (preferences.openurl, "<call>"))
 		{
-			gchar *link = g_strdup (preferences.openurl);
+			char *link = g_strdup (preferences.openurl);
 			link = my_strreplace (link, "<call>", call);
 			open_url (link);
 			g_free (link);
@@ -168,13 +168,13 @@ on_callbutton_clicked (GtkButton * button, gpointer user_data)
 }
 
 static void
-updateb4window (gchar *callsign)
+updateb4window (char *callsign)
 {
 	GtkWidget *b4treeview;
-	guint i, j;
+	uint i, j;
 	logtype *logw;
-	gchar *logcallsign, **b4 = NULL;
-	gboolean valid = FALSE;
+	char *logcallsign, **b4 = NULL;
+	bool valid = FALSE;
 	GtkTreeIter iter, b4iter;
 	GtkTreeModel *model;
 	GtkListStore *b4model = NULL;
@@ -189,9 +189,9 @@ updateb4window (gchar *callsign)
 
 		if (strlen(callsign) < 2) return; /* for responsiveness */
 
-		b4 = g_new0 (gchar *, QSO_FIELDS + 1);
+		b4 = g_new0 (char *, QSO_FIELDS + 1);
 		for (j = 0; j < QSO_FIELDS + 1; j++)
-			b4[j] = g_new0 (gchar, 100);
+			b4[j] = g_new0 (char, 100);
 
 		/* search all logs, if there is a match display it */
 		for (i = 0; i < g_list_length (logwindowlist); i++)
@@ -231,17 +231,17 @@ updateb4window (gchar *callsign)
 void
 on_callentry_changed (GtkEditable * editable, gpointer user_data)
 {
-	gchar *call;
-	guint st, zone, cont, iota;
+	char *call;
+	uint st, zone, cont, iota;
 #if HAVE_SYS_SHM_H
-	gchar *errorstr;
+	char *errorstr;
 #endif
 
 	call = gtk_editable_get_chars (GTK_EDITABLE (editable), 0, -1);
 
 	GtkWidget *awardsentry = lookup_widget (mainwindow, "awardsentry");
-	gchar *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
-	gchar *result = valid_awards_entry (aw, &st, &zone, &cont, &iota);
+	char *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
+	char *result = valid_awards_entry (aw, &st, &zone, &cont, &iota);
 	if (!result)
 		updatedxccframe (call, FALSE, st, zone, cont, iota);
 	else
@@ -260,7 +260,7 @@ on_callentry_changed (GtkEditable * editable, gpointer user_data)
 			update_statusbar (errorstr);
 			g_free (errorstr);
 		}
-		if ((shareCall = (shmat (programstate.shmid, NULL, 0))) == (gchar *) - 1)
+		if ((shareCall = (shmat (programstate.shmid, NULL, 0))) == (char *) - 1)
 		{
 			errorstr = g_strdup_printf
 				(_("shmat failed: %s"), g_strerror (errno));
@@ -276,15 +276,15 @@ on_callentry_changed (GtkEditable * editable, gpointer user_data)
 	g_free (call);
 }
 
-gboolean
+bool
 	on_callentry_unfocus (GtkEntry *callentry, GdkEventFocus *event, 
 		gpointer user_data)
 {
-	guint i;
+	uint i;
 	GtkWidget *remarksvbox, *remtv, *namehbox, *nameentry,
 		*qthhbox, *qthentry, *locatorhbox, *locatorentry;
-	gboolean valid = FALSE, found = FALSE;
-	gchar *logcallsign, *logname, *logqth, *logloc, *logremarks, *entry;
+	bool valid = FALSE, found = FALSE;
+	char *logcallsign, *logname, *logqth, *logloc, *logremarks, *entry;
 	const char *call;
 	GtkTextBuffer *b;
 	logtype *logw;
@@ -362,10 +362,10 @@ gboolean
 void
 on_awardsentry_changed (GtkEditable * editable, gpointer user_data)
 {
-	guint st, zone, cont, iota;
+	uint st, zone, cont, iota;
 
-	gchar *aw = gtk_editable_get_chars (editable, 0, -1);
-	gchar *result = valid_awards_entry (aw,  &st, &zone, &cont, &iota);
+	char *aw = gtk_editable_get_chars (editable, 0, -1);
+	char *result = valid_awards_entry (aw,  &st, &zone, &cont, &iota);
 	if (result)
 	{
 		updatedxccframe (result, TRUE, st, zone, cont, iota);
@@ -374,7 +374,7 @@ on_awardsentry_changed (GtkEditable * editable, gpointer user_data)
 	else
 	{
 		GtkWidget *callentry = lookup_widget (mainwindow, "callentry");
-		gchar *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
+		char *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
 		updatedxccframe (call, FALSE, st, zone, cont, iota);
 		g_free (call);
 	}
@@ -389,7 +389,7 @@ on_mhzbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *entry, *bandoptionmenu;
 	GString *digits = g_string_new ("");
-	gint bandenum;
+	int bandenum;
 
 	entry = lookup_widget (mainwindow, "bandentry");
 	bandoptionmenu = lookup_widget (mainwindow, "bandoptionmenu");
@@ -423,8 +423,8 @@ void
 on_modebutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *entry, *modeoptionmenu;
-	gchar *mode;
-	gint modeenum;
+	char *mode;
+	int modeenum;
 
 	entry = lookup_widget (mainwindow, "modeentry");
 	modeoptionmenu = lookup_widget (mainwindow, "modeoptionmenu");
@@ -456,8 +456,8 @@ void
 on_rstbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *rstentry, *count;
-	gint c;
-	gchar *str, *countstr, *lastmsg;
+	int c;
+	char *str, *countstr, *lastmsg;
 
 	rstentry = lookup_widget (mainwindow, "rstentry");
 	if (strlen (preferences.defaulttxrst) > 0)
@@ -498,7 +498,7 @@ void
 on_powerbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *entry;
-	gchar *rigpower;
+	char *rigpower;
 
 	entry = lookup_widget (mainwindow, "powerentry");
 	if (strlen (preferences.defaultpower) > 0)
@@ -518,7 +518,7 @@ on_powerbutton_clicked (GtkButton * button, gpointer user_data)
 void
 on_locatorentry_changed (GtkEditable * editable, gpointer user_data)
 {
-	gchar *locator;
+	char *locator;
 
 	locator = gtk_editable_get_chars (GTK_EDITABLE (editable), 0, -1);
 	updatelocatorframe (locator);
@@ -526,10 +526,10 @@ on_locatorentry_changed (GtkEditable * editable, gpointer user_data)
 
 	/* Update Locator Award */
 
-	guint st, zone, cont, iota;
+	uint st, zone, cont, iota;
 	GtkWidget *awardsentry = lookup_widget (mainwindow, "awardsentry");
-	gchar *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
-	gchar *result = valid_awards_entry (aw,  &st, &zone, &cont, &iota);
+	char *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
+	char *result = valid_awards_entry (aw,  &st, &zone, &cont, &iota);
 	if (result)
 	{
 		updatedxccframe (result, TRUE, st, zone, cont, iota);
@@ -538,7 +538,7 @@ on_locatorentry_changed (GtkEditable * editable, gpointer user_data)
 	else
 	{
 		GtkWidget *callentry = lookup_widget (mainwindow, "callentry");
-		gchar *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
+		char *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
 		updatedxccframe (call, FALSE, st, zone, cont, iota);
 		g_free (call);
 	}
@@ -548,7 +548,7 @@ on_locatorentry_changed (GtkEditable * editable, gpointer user_data)
 void
 tv_changed (GtkTextBuffer *buffer, gpointer user_data)
 {
-	gint count;
+	int count;
 
 	count = gtk_text_buffer_get_char_count (buffer);
 	if (count > 512)
@@ -560,9 +560,9 @@ tv_changed (GtkTextBuffer *buffer, gpointer user_data)
 
 /* entry get's focus because Alt+key is used */
 void
-entry_mnemonic_activate (GtkWidget *entry, gboolean arg1, gpointer user_data)
+entry_mnemonic_activate (GtkWidget *entry, bool arg1, gpointer user_data)
 {
-	gchar *temp;
+	char *temp;
 
 	if (GPOINTER_TO_INT(user_data) == 1)
 		temp = g_strdup (preferences.defaultmhz);
@@ -591,7 +591,7 @@ entry_mnemonic_activate (GtkWidget *entry, gboolean arg1, gpointer user_data)
 
 /* textview get's focus because Alt+key is used */
 void
-tv_mnemonic_activate (GtkWidget *tv, gboolean arg1, gpointer user_data)
+tv_mnemonic_activate (GtkWidget *tv, bool arg1, gpointer user_data)
 {
 	if (strlen (preferences.defaultremarks) > 0)
 	{
@@ -603,9 +603,9 @@ tv_mnemonic_activate (GtkWidget *tv, gboolean arg1, gpointer user_data)
 
 /* bandcombobox get's focus because Alt+m is used */
 void
-bandoptionactivate (GtkWidget *bandoptionmenu, gboolean arg1, gpointer user_data)
+bandoptionactivate (GtkWidget *bandoptionmenu, bool arg1, gpointer user_data)
 {
-	gint bandenum;
+	int bandenum;
 
 	if (strlen (preferences.defaultmhz) > 0)
 	{
@@ -620,9 +620,9 @@ bandoptionactivate (GtkWidget *bandoptionmenu, gboolean arg1, gpointer user_data
 
 /* modecombobox get's focus because Alt+o is used */
 void
-modeoptionactivate (GtkWidget *modeoptionmenu, gboolean arg1, gpointer user_data)
+modeoptionactivate (GtkWidget *modeoptionmenu, bool arg1, gpointer user_data)
 {
-	gint modeenum;
+	int modeenum;
 
 	if (strlen (preferences.defaultmode) > 0)
 	{

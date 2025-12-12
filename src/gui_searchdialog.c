@@ -47,15 +47,15 @@ GtkWidget *searchdialog = NULL;
 
 #define SEARCHHISTORY 10
 
-static gchar *
-compare_utf8 (const gchar *haystack, const gchar *needle)
+static char *
+compare_utf8 (const char *haystack, const char *needle)
 {
-	gchar *normalized_haystack = g_utf8_normalize
+	char *normalized_haystack = g_utf8_normalize
 		(haystack, -1, G_NORMALIZE_DEFAULT_COMPOSE);
-	gchar *normalized_needle = g_utf8_normalize
+	char *normalized_needle = g_utf8_normalize
 		(needle, -1, G_NORMALIZE_DEFAULT_COMPOSE);
-	gchar *case_normalized_haystack = g_utf8_casefold (normalized_haystack, -1);
-	gchar *case_normalized_needle = g_utf8_casefold (normalized_needle, -1);
+	char *case_normalized_haystack = g_utf8_casefold (normalized_haystack, -1);
+	char *case_normalized_needle = g_utf8_casefold (normalized_needle, -1);
 	return strstr (case_normalized_haystack, case_normalized_needle);
 }
 
@@ -63,9 +63,9 @@ static void
 searchok (GtkButton *button, gpointer user_data)
 {
 	GtkWidget *searchresultdialog, *resultlabel, *searchcombo;
-	gchar *searchstr, *data, *current, *nr, *labeltext, *column;
-	gint i, j, len;
-	gboolean valid, result = FALSE;
+	char *searchstr, *data, *current, *nr, *labeltext, *column;
+	int i, j, len;
+	bool valid, result = FALSE;
 	GList *node;
 	logtype *logwindow;
 	GtkTreeModel *model;
@@ -76,9 +76,9 @@ searchok (GtkButton *button, gpointer user_data)
 	searchcombo = lookup_widget (searchdialog, "searchcombo");
 	GtkWidget *callradiobutton = lookup_widget (searchdialog, "callradiobutton");
 	GtkWidget *thisradiobutton = lookup_widget (searchdialog, "thisradiobutton");
-	gboolean searchcall = gtk_toggle_button_get_active
+	bool searchcall = gtk_toggle_button_get_active
 		(GTK_TOGGLE_BUTTON(callradiobutton));
-	gboolean thislog = gtk_toggle_button_get_active
+	bool thislog = gtk_toggle_button_get_active
 		(GTK_TOGGLE_BUTTON(thisradiobutton));
 
 	searchstr = gtk_editable_get_chars 
@@ -103,7 +103,7 @@ searchok (GtkButton *button, gpointer user_data)
 	{
 		if (thislog)
 		{
-			gint page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
+			int page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 			logwindow = g_list_nth_data (logwindowlist, page);
 			i = g_list_length (logwindowlist);
 		}
@@ -227,8 +227,8 @@ on_menu_search_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
 	GtkWidget *vbox, *searchcombo, *cancel_button, *ok_button;
 	GdkPixbuf *dialog_icon_pixbuf;
-	gint i, num;
-	gchar *s;
+	int i, num;
+	char *s;
 
 	if (searchdialog)
 	{

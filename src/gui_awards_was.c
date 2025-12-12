@@ -33,8 +33,8 @@
 
 extern GtkWidget *mainwindow, *scorewindow;
 extern preferencestype preferences;
-extern gushort was_w[MAX_STATES][MAX_BANDS + 1];
-extern gushort was_c[MAX_STATES][MAX_BANDS + 1];
+extern ushort was_w[MAX_STATES][MAX_BANDS + 1];
+extern ushort was_c[MAX_STATES][MAX_BANDS + 1];
 
 void on_awards_was_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
@@ -244,7 +244,7 @@ void on_awards_was_activate (GtkMenuItem *menuitem, gpointer user_data)
                 (column, preferences.scoringbands[BAND_SUBMM]);
 
 	GtkTreeIter iter;
-	gint i, j;
+	int i, j;
 	for (i = 0; i < MAX_STATES; i++)
 	{
 		gtk_list_store_append (GTK_LIST_STORE (model), &iter);
@@ -257,7 +257,7 @@ void on_awards_was_activate (GtkMenuItem *menuitem, gpointer user_data)
 			}
 			else if (was_w[i][j] > 0)
 			{
-				gchar *str = g_strdup_printf ("%d", was_w[i][j]);
+				char *str = g_strdup_printf ("%d", was_w[i][j]);
 				gtk_list_store_set (GTK_LIST_STORE (model), &iter, j+1, str, -1);
 				g_free (str);
 			}

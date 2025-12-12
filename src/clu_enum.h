@@ -218,16 +218,16 @@ enum /* modes and submodes taken from ADIF spec, listed alphabetically */
   MAX_MODES /* number of modes in the enumeration */
 };
 
-gchar *band_enum2char (guint band_enum);
-gchar *band_enum2cabrillochar (guint band_enum);
-gint freq2enum (gchar * str);
-gint hamlibfreq2enum (long long f);
-gchar *band_enum2bandchar (gint band_enum);
-gint meters2enum (gchar * str);
-gchar *mode_enum2char (guint mode_enum);
-gint reportlen(guint mode_enum);
-gint mode2enum (gchar * str);
-gchar *freq2khz (gchar *str);
+char *band_enum2char (uint band_enum);
+char *band_enum2cabrillochar (uint band_enum);
+int freq2enum (char * str);
+int hamlibfreq2enum (long long f);
+char *band_enum2bandchar (int band_enum);
+int meters2enum (char * str);
+char *mode_enum2char (uint mode_enum);
+int reportlen(uint mode_enum);
+int mode2enum (char * str);
+char *freq2khz (char *str);
 
 #endif // XLOG_ENUM_H
 

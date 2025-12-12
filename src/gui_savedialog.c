@@ -37,7 +37,7 @@ void
 create_savedialog (void)
 {
 	GtkWidget *savedialog, *vbox, *image, *label;
-	gint response;
+	int response;
 
 	savedialog = gtk_dialog_new_with_buttons (_("xlog - saving"),
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -70,7 +70,7 @@ void
 create_exitdialog (void)
 {
 	GtkWidget *exitdialog, *vbox, *image, *label;
-	gint response;
+	int response;
 
 	exitdialog = gtk_dialog_new_with_buttons (_("xlog - exiting"),
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,

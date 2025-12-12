@@ -46,17 +46,17 @@ extern GtkWidget *mainwindow;
 extern GList *logwindowlist;
 
 /* global used for dupecheck abort */
-gboolean breakit;
+bool breakit;
 GtkWidget *dupecheckdialog;
 
 static void
 on_dupelisttreeview_select_row (GtkTreeSelection * selection,
 	gpointer user_data)
 {
-	gchar *nr, *lognr, *logn;
-	guint i = 0;
+	char *nr, *lognr, *logn;
+	uint i = 0;
 	logtype *logwindow = NULL;
-	gboolean qsofound = FALSE, valid = FALSE;
+	bool qsofound = FALSE, valid = FALSE;
 	GtkTreeModel *model, *logmodel = NULL;
 	GtkTreeIter iter, logiter;
 	GtkTreeSelection *logselection;
@@ -124,13 +124,13 @@ on_menu_dupecheck_activate (GtkMenuItem * menuitem, gpointer user_data)
 	GList *dupelist = NULL;
 	GSList *duperadiobutton_group = NULL;
 	logtype *logwindow;
-	gint i, j, qso_search_num, num_uniq_dupes, savedpage, page, pages, row = 0, dupecheckresponse,
+	int i, j, qso_search_num, num_uniq_dupes, savedpage, page, pages, row = 0, dupecheckresponse,
 	  enumband, enummode, dupe_already_found, uniq;
-	gchar *nr, *date, *gmt, *callsign, *band,
+	char *nr, *date, *gmt, *callsign, *band,
 	  *mode, *temp = NULL, *str, *prog_str = NULL;
-	gchar *temp_dupe = NULL;
-	gchar **dupe = NULL;
-	gboolean dupefound = FALSE, valid = FALSE;
+	char *temp_dupe = NULL;
+	char **dupe = NULL;
+	bool dupefound = FALSE, valid = FALSE;
 	GtkTreeIter dupeiter, iter;
 	GtkTreeModel *logmodel, *dupemodel;
 	GtkListStore *dupestore;
@@ -220,9 +220,9 @@ on_menu_dupecheck_activate (GtkMenuItem * menuitem, gpointer user_data)
 		dupecheckresponse = gtk_dialog_run (GTK_DIALOG(dupecheckdialog));
 		if (dupecheckresponse == GTK_RESPONSE_OK)
 		{
-			dupe = g_new0 (gchar *, 7);
+			dupe = g_new0 (char *, 7);
 			for (i = 0; i < 7; i++)
-				dupe[i] = g_new0 (gchar, 100);
+				dupe[i] = g_new0 (char, 100);
 
 			gtk_statusbar_pop (GTK_STATUSBAR (dupecheckstatusbar), 1);
 			gtk_statusbar_push (GTK_STATUSBAR (dupecheckstatusbar), 1,

@@ -70,15 +70,15 @@ extern preferencestype preferences;
 
 #ifndef G_OS_WIN32
 static struct {
-	gchar *filename;
-	gchar *stock_id;
+	char *filename;
+	char *stock_id;
 } stock_icons[] = {
 	{ DATADIR"/pixmaps/xlog/cwdaemon.png", "xlog_stock_cwdaemon" },
 	{ DATADIR"/pixmaps/xlog/jigsaw.png", "xlog_stock_merge" },
 	{ DATADIR"/pixmaps/xlog/countrymap.png", "xlog_stock_map" },
 };
 
-static gint n_stock_icons = G_N_ELEMENTS (stock_icons);
+static int n_stock_icons = G_N_ELEMENTS (stock_icons);
 
 static void
 register_my_stock_icons (void)
@@ -86,7 +86,7 @@ register_my_stock_icons (void)
 	GtkIconFactory *icon_factory;
 	GtkIconSet *icon_set;
 	GtkIconSource *icon_source;
-	gint i;
+	int i;
 
 	icon_factory = gtk_icon_factory_new ();
 
@@ -139,8 +139,8 @@ create_mainwindow (void)
 	GtkAccelGroup *accel_group;
 	GtkActionGroup *action_group;
 	GError *error;
-	gint merge_id;
-	gchar *temp;
+	int merge_id;
+	char *temp;
 
 /* Normal items */
 static GtkActionEntry entries[] =

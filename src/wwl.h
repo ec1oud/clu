@@ -24,5 +24,5 @@
  * wwl.h
  */
 
-gint locatordistance (gchar *my, gchar *dx, gint *dist, gint *bearing);
+int locatordistance (gchar *my, gchar *dx, int *dist, int *bearing);
 void updatelocatorframe (gchar * locator);

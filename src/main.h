@@ -27,26 +27,26 @@
 /* structure used for program state */
 typedef struct
 {
-	gint countries;         /* number of countries loaded */
-	gint qsos;              /* number of qso's read from the logs */
-	gboolean controlkey;    /* control key is pressed */
+	int countries;         /* number of countries loaded */
+	int qsos;              /* number of qso's read from the logs */
+	bool controlkey;    /* control key is pressed */
 	long long rigfrequency; /* frequency read from the rig */
-	guint rigmode;          /* mode read from the rig */
+	uint rigmode;          /* mode read from the rig */
 	gchar *rigrst;          /* signal strength read from rig */
-	guint rigpower;         /* rf power */
-	gint scounter;          /* counter for s-levels stored in array */
-	gint hlcounter;         /* counter for hamlib */
-	gboolean tx;            /* transmitting or receiving */
-	gboolean statustimer;   /* 'ready' timer for the statusbar */
-	gint shmid;             /* id for shared memory */
-	gint logwindows;        /* number of logwindows */
+	uint rigpower;         /* rf power */
+	int scounter;          /* counter for s-levels stored in array */
+	int hlcounter;         /* counter for hamlib */
+	bool tx;            /* transmitting or receiving */
+	bool statustimer;   /* 'ready' timer for the statusbar */
+	int shmid;             /* id for shared memory */
+	int logwindows;        /* number of logwindows */
 	gchar *searchstr;       /* array with logs/qsos seached */
-	gint dupecheck;         /* dupe check this log or all logs */
-	gboolean notdupecheckmode;  /* exclude bands from dupecheck */
-	gboolean notdupecheckband;  /* exclude modes from dupecheck */
-	gboolean utf8error;     /* error in utf-8 conversion when reading the log */
+	int dupecheck;         /* dupe check this log or all logs */
+	bool notdupecheckmode;  /* exclude bands from dupecheck */
+	bool notdupecheckband;  /* exclude modes from dupecheck */
+	bool utf8error;     /* error in utf-8 conversion when reading the log */
 	gchar *importremark;	/* remark added when importing from trlog or cabrillo */
 	gchar *px;              /* prefix lookup used for countrymap */
-	gboolean warning_nologopen;	/* No log open while receiving remote data warning dialog */
+	bool warning_nologopen;	/* No log open while receiving remote data warning dialog */
 }
 programstatetype;

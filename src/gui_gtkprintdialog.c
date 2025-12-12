@@ -42,15 +42,15 @@ typedef struct
 	gdouble left_margin;
 	gdouble page_height;
 	gdouble page_width;
-	guint lines_per_page;
-	guint num_pages;
+	uint lines_per_page;
+	uint num_pages;
 } PrintData;
 GtkPageSetup *print_page_setup;
 GtkPrintSettings *print_settings;
 static const char *printtype = "sans 12";
 static GtkWidget *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8, *p9, *p10,
 	*pawards, *p11, *p12, *p13, *p14, *p15, *p16, *p17, *p18;
-static gboolean boolnr, booldate, boolutc, boolend, boolcall, boolmhz,
+static bool boolnr, booldate, boolutc, boolend, boolcall, boolmhz,
 	boolmode, booltx, boolrx, boolawards, boolqslout, boolqslin, boolpower,
 	boolname, boolqth, boollocator, boolfree1, boolfree2, boolremarks;
 
@@ -125,15 +125,15 @@ begin_print (GtkPrintOperation *operation, GtkPrintContext *context,
 		gtk_page_setup_get_page_width (print_page_setup, GTK_UNIT_POINTS);
 }
 
-gint
-colwidth (gpointer arg, gint column, gint firstqso, gpointer user_data)
+int
+colwidth (gpointer arg, int column, int firstqso, gpointer user_data)
 {
 	PrintData *data = (PrintData *)user_data;
-	gint i, lastqso, width = 0;
+	int i, lastqso, width = 0;
 	GtkTreeIter iter;
 	GtkTreeModel *model;
 	GtkTreePath *path;
-	gchar *pathstr, *it;
+	char *pathstr, *it;
 
 	lastqso = firstqso - data->lines_per_page;
 	if (lastqso < 0) lastqso = 0;
@@ -207,8 +207,8 @@ colwidth (gpointer arg, gint column, gint firstqso, gpointer user_data)
 		return (width + 3) * data->font_width;
 }
 
-gboolean
-column_visible (gpointer arg, gint nr)
+bool
+column_visible (gpointer arg, int nr)
 {
 	logtype *logwindow = (logtype *) arg;
 	GtkTreeViewColumn *column =
@@ -219,24 +219,24 @@ column_visible (gpointer arg, gint nr)
 
 static void
 draw_page (GtkPrintOperation *operation, GtkPrintContext *context,
-	gint page_nr, gpointer user_data)
+	int page_nr, gpointer user_data)
 {
 	logtype *logwindow;
 	cairo_t *cr;
 	PangoLayout *layout;
 	PangoFontDescription *desc;
-	gint i, j, left, linecount, first, last, top = 20;
-	gint wnr = 0, wdate = 0, wgmt = 0, wgmtend = 0, wcall = 0,
+	int i, j, left, linecount, first, last, top = 20;
+	int wnr = 0, wdate = 0, wgmt = 0, wgmtend = 0, wcall = 0,
 		wband = 0, wmode = 0, wrst = 0, wmyrst = 0, wawards = 0,
 		wqslout = 0, wqslin = 0, wpower = 0, wname = 0, wqth = 0,
 		wlocator = 0, wu1 = 0, wu2 = 0, wremarks = 0;
-	gboolean gmtendok = FALSE, awardsok = FALSE, qsloutok = FALSE,
+	bool gmtendok = FALSE, awardsok = FALSE, qsloutok = FALSE,
 		qslinok = FALSE, powerok = FALSE,nameok = FALSE, qthok = FALSE,
 		locatorok = FALSE, u1ok = FALSE, u2ok = FALSE, remarksok = FALSE;
 	GtkTreeIter iter;
 	GtkTreeModel *model;
 	GtkTreePath *path;
-	gchar *pathstr, **item;
+	char *pathstr, **item;
 
 
 	PrintData *data = (PrintData *)user_data;
@@ -256,7 +256,7 @@ draw_page (GtkPrintOperation *operation, GtkPrintContext *context,
 		pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
 		pango_layout_set_font_description (layout, desc);
 
-		item = g_new0 (gchar *, QSO_FIELDS);
+		item = g_new0 (char *, QSO_FIELDS);
 
 		/* calculate first and last QSO for this page,
 		 * NB: page_nr starts at zero */
@@ -640,7 +640,7 @@ draw_page (GtkPrintOperation *operation, GtkPrintContext *context,
 		left = data->left_margin;
 		top = data->page_height - 1 * data->font_height;
 		cairo_move_to (cr, left, top);
-		gchar *temp = g_strdup_printf
+		char *temp = g_strdup_printf
 			(_("Log \"%s\" printed on %s by %s version %s"),
 			logwindow->logname, xloggetdate(), PACKAGE, VERSION);
 	  	pango_layout_set_text (layout, temp, -1);

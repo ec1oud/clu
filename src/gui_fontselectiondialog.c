@@ -42,8 +42,8 @@ on_fontbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *fontselectiondialog, *fontentry;
 	GdkPixbuf *fontselectiondialog_icon_pixbuf;
-	gchar *font;
-	gint response;
+	char *font;
+	int response;
 
 	fontselectiondialog = gtk_font_selection_dialog_new
 		(_("xlog - select Font"));

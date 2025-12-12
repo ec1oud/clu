@@ -41,8 +41,8 @@ void
 on_pathbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *pathselection, *pathentry, *backupentry;
-	gint response, which;
-	gchar *selpath;
+	int response, which;
+	char *selpath;
 
 	which = GPOINTER_TO_INT (user_data);
 	pathselection = gtk_file_chooser_dialog_new (_("xlog - select a directory"),

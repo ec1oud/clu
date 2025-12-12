@@ -50,9 +50,9 @@
 
 GtkWidget *mainwindow, *mainnotebook;
 gchar *xlogdir;
-gint clocktimer = -1, savetimer = -1;
-gint sockettimer_2333 = -1;
-gint remotetimer_7311 = -1, sockettimer_7311 = -1;
+int clocktimer = -1, savetimer = -1;
+int sockettimer_2333 = -1;
+int remotetimer_7311 = -1, sockettimer_7311 = -1;
 gchar **qso = NULL;
 programstatetype programstate;
 glong msgid_7311;
@@ -65,8 +65,8 @@ GIOChannel *channel_7311;
 extern GtkWidget *b4window, *scorewindow;
 extern preferencestype preferences;
 extern remotetype remote;
-extern gint server_sockfd_7311;
-extern gint server_sockfd_2333;
+extern int server_sockfd_7311;
+extern int server_sockfd_2333;
 extern GtkUIManager *ui_manager;
 extern GtkPrintSettings *print_settings;
 extern GtkPageSetup *print_page_setup;

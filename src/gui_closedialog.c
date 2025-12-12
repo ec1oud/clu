@@ -47,7 +47,7 @@ on_menu_close_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
 	GtkWidget *closedialog, *label, *image, *vbox;
 	logtype *logwindow;
-	gint page, response;
+	int page, response;
 
 	page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 	if (page >= 0)

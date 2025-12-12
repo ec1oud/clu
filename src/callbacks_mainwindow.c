@@ -57,13 +57,13 @@ extern GtkUIManager *ui_manager;
 
 /* capture the delete event and display a warning in case the log
  * has not been saved */
-gboolean
+bool
 on_mainwindow_delete_event (GtkWidget * widget, GdkEvent * event,
 					gpointer user_data)
 {
-	gint i;
+	int i;
 	logtype *logwindow;
-	gboolean logchanged = FALSE;
+	bool logchanged = FALSE;
 
 	for (i = 0; i < g_list_length (logwindowlist); i++)
 	{
@@ -90,7 +90,7 @@ on_mainwindow_delete_event (GtkWidget * widget, GdkEvent * event,
 /* switch between pages of the notebook */
 void
 on_mainnotebook_switch_page (GtkNotebook * notebook, GtkNotebookPage * page,
-					 gint page_num, gpointer user_data)
+					 int page_num, gpointer user_data)
 {
 	logtype *logw = NULL;
 
@@ -108,15 +108,15 @@ on_mainnotebook_switch_page (GtkNotebook * notebook, GtkNotebookPage * page,
 }
 
 /* catch keypresses when keyer is active, don't use PgUp/PgDn here */
-gboolean
+bool
 on_mainwindow_keypress (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	GtkWidget *callentry, *rstentry, *myrstentry, *count, *stopbutton, 
 		*f1button, *f2button, *f3button, *f4button, *f5button, *f6button,
 		*f7button, *f8button, *f9button, *f10button, *f11button, *f12button,
 		*clickallmenu, *abutton;
-	gchar *call, *countstr, *str;
-	gint c;
+	char *call, *countstr, *str;
+	int c;
 
 #define CQ 13
 #define SP 14

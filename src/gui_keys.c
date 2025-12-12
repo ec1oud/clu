@@ -34,16 +34,16 @@
 
 extern GtkWidget *mainwindow;
 
-static void open_help (gchar *filename)
+static void open_help (char *filename)
 {
 	GtkWidget *keyswindow, *scrolledwindow, *keyswindowvbox, *keystreeview;
-	gchar *buf, fbuf[80], *helpfile, *title;
-	const gchar *encoding;
+	char *buf, fbuf[80], *helpfile, *title;
+	const char *encoding;
 	FILE *in;
-	gint l;
+	int l;
 	GError *err;
 	gsize utf8_len, read_len;
-	gboolean retry;
+	bool retry;
 	GtkListStore *model;
 	GtkCellRenderer *renderer, *brenderer;
 	GtkTreeViewColumn *column;
@@ -91,7 +91,7 @@ static void open_help (gchar *filename)
 	helpfile = g_strdup_printf ("%s%s%s", XLOG_DOCDIR, G_DIR_SEPARATOR_S, 
 		filename);
 #endif
-	buf = g_new0 (gchar, 100);
+	buf = g_new0 (char, 100);
 	g_get_charset (&encoding);
 	in = g_fopen (helpfile, "r");
 	if (in)
@@ -131,7 +131,7 @@ static void open_help (gchar *filename)
 					continue;
 				else
 				{
-					gchar **split = g_strsplit (buf, ":", 2);
+					char **split = g_strsplit (buf, ":", 2);
 					gtk_list_store_append (GTK_LIST_STORE (model), &iter);
 					if (split[0] && g_utf8_strlen (split[0], -1) > 0)
 					{

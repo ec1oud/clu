@@ -33,14 +33,14 @@
 #include "support.h"
 
 extern GtkWidget *mainwindow;
-extern gchar *xlogdir;
+extern char *xlogdir;
 
 void show_setupdialog (void)
 {
 	GtkWidget *setupdialog, *setuplabel;
 	GdkPixbuf *setupdialog_icon_pixbuf;
-	gint response;
-	gchar *labeltext;
+	int response;
+	char *labeltext;
 
 	setupdialog = gtk_dialog_new_with_buttons (_("xlog - setup"),
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,

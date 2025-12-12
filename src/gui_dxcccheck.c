@@ -36,7 +36,7 @@ extern GList *logwindowlist;
 
 GtkWidget *dxcccheckdialog = NULL;
 
-static gboolean
+static bool
 on_dxcccheckwindow_delete_event (GtkWidget * widget, GdkEvent * event,
 	gpointer user_data)
 {
@@ -48,10 +48,10 @@ static void
 on_dxccchecktreeview_select_row (GtkTreeSelection * selection,
 	gpointer user_data)
 {
-	gchar *nr, *lognr, *logn;
-	guint i = 0;
+	char *nr, *lognr, *logn;
+	uint i = 0;
 	logtype *logwindow = NULL;
-	gboolean qsofound = FALSE, valid = FALSE;
+	bool qsofound = FALSE, valid = FALSE;
 	GtkTreeModel *model, *logmodel = NULL;
 	GtkTreeIter iter, logiter;
 	GtkTreeSelection *logselection;
@@ -103,9 +103,9 @@ on_menu_dxcccheck_activate (GtkMenuItem *menuitem, gpointer user_data)
 		return;
 	}
 
-	gint page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));
+	int page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));
 	if (page >= 0) {
-	gboolean foundunknown = FALSE;
+	bool foundunknown = FALSE;
 	dxcccheckdialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title
 		(GTK_WINDOW (dxcccheckdialog), _("xlog - dxcc check results"));
@@ -218,12 +218,12 @@ on_menu_dxcccheck_activate (GtkMenuItem *menuitem, gpointer user_data)
 		(_("This window will not update when you modify QSO's"));
 	gtk_box_pack_start (GTK_BOX (dxcccheckdialogvbox), dxccchecklabel, FALSE, TRUE, 0);
 
-	gint pages = g_list_length (logwindowlist);
+	int pages = g_list_length (logwindowlist);
 	logtype *logwindow;
 	GtkTreeModel *logmodel;
 	GtkTreeIter iter, checkiter;
-	gboolean valid = FALSE;
-	gchar *logname = NULL, *nr = NULL, *date = NULL, *gmt = NULL,
+	bool valid = FALSE;
+	char *logname = NULL, *nr = NULL, *date = NULL, *gmt = NULL,
 		*callsign = NULL, *band = NULL, *mode = NULL, *award = NULL;
 	struct info dxcc_info;
 	for (page=0; page<pages; page++)

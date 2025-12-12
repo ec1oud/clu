@@ -45,13 +45,13 @@ extern preferencestype preferences;
 void
 on_menu_saveas_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
-	gint page, saveas_response, savewarning_response;
+	int page, saveas_response, savewarning_response;
 	GtkWidget *saveasdialog, *hbox,  *qsolabel, *lowqsoentry, *highqsoentry, *dash,
 		*savewarningdialog, *savewarninglabel;
 	logtype *logwindow;
-	gchar *temp, *selection;
-	gchar *sellog;
-	gint highqso, lowqso;
+	char *temp, *selection;
+	char *sellog;
+	int highqso, lowqso;
 
 
 	page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));

@@ -46,7 +46,7 @@ on_menu_defaults_activate (GtkMenuItem * menuitem, gpointer user_data)
 		*mainvbox, *defaultslabel, *frame, *framevbox, *hbox1, *mhzlabel,
 		*hbox2, *modelabel, *hbox3, *txrstlabel, *hbox4, *rxrstlabel,
 		*hbox9, *awardslabel, *hbox5, *powerlabel, *hbox6, *hbox7, *hbox8, *remarkslabel;
-	gint response;
+	int response;
 
 	defaultsdialog = gtk_dialog_new_with_buttons (_("xlog - defaults"),
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,

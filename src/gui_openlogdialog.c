@@ -49,7 +49,7 @@ extern GtkWidget *mainwindow, *scorewindow;
 extern GtkWidget *mainnotebook;
 extern GList *logwindowlist;
 
-gboolean ro;
+bool ro;
 
 static void
 on_readonly_toggled (GtkToggleButton * togglebutton, gpointer user_data)
@@ -62,10 +62,10 @@ on_menu_open_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
 	GtkWidget *fileselection, *readonlycheckbutton;
 	GtkFileFilter *filter;
-	gchar *logn, *xlogbackupfile, *temp, *selection;
-	gchar *sellog;
-	gboolean logexist = FALSE;
-	gint i, response;
+	char *logn, *xlogbackupfile, *temp, *selection;
+	char *sellog;
+	bool logexist = FALSE;
+	int i, response;
 	logtype *logwindow;
 	LOGDB *lp;
 	GtkTreePath *path;

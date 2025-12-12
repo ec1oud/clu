@@ -40,8 +40,8 @@ extern GHashTable *iota_c[MAX_BANDS + 1];
 
 static void iota_gh_collect (gpointer key, gpointer value, gpointer user_data)
 {
-	guint *iota_list = (guint*)user_data;
-	guint iota;
+	uint *iota_list = (uint*)user_data;
+	uint iota;
 
 	iota = iota_to_num(key);
 	while (*iota_list != NOT_AN_IOTA)
@@ -55,7 +55,7 @@ static void iota_gh_collect (gpointer key, gpointer value, gpointer user_data)
 
 static int num_compar(const void *a, const void *b)
 {
-	return *(guint*)a - *(guint*)b;
+	return *(uint*)a - *(uint*)b;
 }
 
 void on_awards_iota_activate (GtkMenuItem *menuitem, gpointer user_data)
@@ -265,8 +265,8 @@ void on_awards_iota_activate (GtkMenuItem *menuitem, gpointer user_data)
                 (column, preferences.scoringbands[BAND_SUBMM]);
 
 	GtkTreeIter iter;
-	gint i, j, nmemb=0;
-	static guint iota_list[1000];
+	int i, j, nmemb=0;
+	static uint iota_list[1000];
 
 	for (i=0; i<1000; i++)
 		iota_list[i] = NOT_AN_IOTA;
@@ -279,11 +279,11 @@ void on_awards_iota_activate (GtkMenuItem *menuitem, gpointer user_data)
 	for (i=0; i<1000 && iota_list[i]!=NOT_AN_IOTA; i++)
 		nmemb++;
 
-	qsort(iota_list, nmemb, sizeof(guint), &num_compar);
+	qsort(iota_list, nmemb, sizeof(uint), &num_compar);
 
 	for (i=0; i<nmemb; i++)
 	{
-		gchar *iotastr = num_to_iota(iota_list[i]);
+		char *iotastr = num_to_iota(iota_list[i]);
 		gtk_list_store_append (GTK_LIST_STORE (model), &iter);
 		gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, iotastr, -1);
 		for (j = 0; j < MAX_BANDS; j++)
@@ -299,7 +299,7 @@ void on_awards_iota_activate (GtkMenuItem *menuitem, gpointer user_data)
 			
 				if (p_iota_w && (GPOINTER_TO_INT(p_iota_w) > 0))
 				{
-					gchar *str = g_strdup_printf ("%d", GPOINTER_TO_INT(p_iota_w));
+					char *str = g_strdup_printf ("%d", GPOINTER_TO_INT(p_iota_w));
 					gtk_list_store_set (GTK_LIST_STORE (model), &iter, j+1, str, -1);
 					g_free (str);
 				}

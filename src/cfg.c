@@ -31,7 +31,7 @@
 #include <glib/gprintf.h>
 
 preferencestype preferences;
-extern gchar *xlogdir;
+extern char *xlogdir;
 
 /*
  * Initial configuration 
@@ -89,7 +89,7 @@ config_create (void)
 	preferences.defaultfreefield1 = g_strdup ("");
 	preferences.defaultfreefield2 = g_strdup ("");
 	preferences.defaultremarks = g_strdup ("");
-	preferences.b4columns2 = g_new (gint, 20);
+	preferences.b4columns2 = g_new (int, 20);
 //	preferences.b4columns2={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 	preferences.b4columns2[0]=1;
 	preferences.b4columns2[1]=1;
@@ -111,7 +111,7 @@ config_create (void)
 	preferences.b4columns2[17]=0;
 	preferences.b4columns2[18]=0;
 	preferences.b4columns2[19]=0;
-	preferences.logcwidths2 = g_new (gint, 19);
+	preferences.logcwidths2 = g_new (int, 19);
 	preferences.logcwidths2[0]=50;
 	preferences.logcwidths2[1]=100;
 	preferences.logcwidths2[2]=50;
@@ -142,7 +142,7 @@ config_create (void)
 	preferences.b4height = 300;
 	preferences.saveasadif = 0;
 	preferences.saveascabrillo = 0;
-	preferences.saveastsv2 = g_new (gint, 18);
+	preferences.saveastsv2 = g_new (int, 18);
 	preferences.saveastsv2[0] = 1;
 	preferences.saveastsv2[1] = 1;
 	preferences.saveastsv2[2] = 0;
@@ -189,7 +189,7 @@ config_create (void)
 	preferences.scorey = 300;
 	preferences.scorewidth = 500;
 	preferences.scoreheight = 300;
-	preferences.scoringbands = g_new (gint, MAX_BANDS);
+	preferences.scoringbands = g_new (int, MAX_BANDS);
 	preferences.scoringbands[BAND_2190] = 0;
 	preferences.scoringbands[BAND_630] = 0;
 	preferences.scoringbands[BAND_560] = 0;
@@ -716,7 +716,7 @@ static void config_load_from_keyfile (GKeyFile *file)
 void
 loadpreferences (void)
 {
-	gchar *path = g_strconcat (g_get_home_dir(), G_DIR_SEPARATOR_S, ".xlog/xlog.cfg", NULL);
+	char *path = g_strconcat (g_get_home_dir(), G_DIR_SEPARATOR_S, ".xlog/xlog.cfg", NULL);
 
 	config_create ();
 	if (g_file_test(path, G_FILE_TEST_EXISTS))
@@ -739,7 +739,7 @@ void
 savepreferences (void)
 {
 	GKeyFile *file = g_key_file_new();
-	gchar *path = g_strconcat (g_get_home_dir(), G_DIR_SEPARATOR_S, ".xlog/xlog.cfg", NULL);
+	char *path = g_strconcat (g_get_home_dir(), G_DIR_SEPARATOR_S, ".xlog/xlog.cfg", NULL);
 	g_key_file_load_from_file(file, path, G_KEY_FILE_KEEP_COMMENTS, NULL);
 
 	g_key_file_set_integer (file, "mainwindow", "x", preferences.x + 1);
@@ -846,7 +846,7 @@ savepreferences (void)
 	g_key_file_set_integer (file, "saveas", "tsvsortbydxcc", preferences.tsvsortbydxcc + 1);
 	g_key_file_set_integer (file, "saveas", "tsvgroupbycallsign", preferences.tsvgroupbycallsign + 1);
 
-	gchar *buffer = g_key_file_to_data(file, NULL, NULL);
+	char *buffer = g_key_file_to_data(file, NULL, NULL);
 	g_key_file_free(file);
 	GIOChannel *channel = g_io_channel_new_file (path, "w", NULL);
 	g_io_channel_write_chars (channel, buffer, -1, NULL, NULL);

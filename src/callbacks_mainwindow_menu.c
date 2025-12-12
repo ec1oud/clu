@@ -60,15 +60,15 @@ extern GtkUIManager *ui_manager;
 extern GtkPageSetup *print_page_setup;
 extern GtkPrintSettings *print_settings;
 
-gboolean sorted_by_date = FALSE;
-gboolean sorted_by_call = FALSE;
+bool sorted_by_date = FALSE;
+bool sorted_by_call = FALSE;
 
 /* get the action name and use it to switch logs <alt>1, <alt>2, etc. */
 void 
 on_menu_log_activate (GtkAction *action, gpointer user_data)
 {
-	const gchar *name;
-	gint lognr;
+	const char *name;
+	int lognr;
 
 	name = gtk_action_get_name(action);
 	lognr = atoi (name);
@@ -94,9 +94,9 @@ on_menu_pagesetup_activate (GtkAction *action, gpointer user_data)
 void
 on_menu_exit_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
-	gint i;
+	int i;
 	logtype *logwindow;
-	gboolean logchanged = FALSE;
+	bool logchanged = FALSE;
 
 	for (i = 0; i < g_list_length (logwindowlist); i++)
 	{
@@ -122,12 +122,12 @@ on_menu_exit_activate (GtkMenuItem * menuitem, gpointer user_data)
 void
 on_menu_save_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
-	gint page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));
+	int page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));
 	if (page >= 0)
 	{
 		logtype *logwindow = g_list_nth_data (logwindowlist, page);
 		savelog (logwindow, logwindow->filename, TYPE_FLOG, 1 , logwindow->qsos);
-		gchar *temp = g_strdup_printf (_("Log saved to %s"), logwindow->filename);
+		char *temp = g_strdup_printf (_("Log saved to %s"), logwindow->filename);
 		update_statusbar (temp);
 		logwindow->logchanged = FALSE;
 		temp = g_strdup_printf ("<b>%s</b>", logwindow->logname);
@@ -146,7 +146,7 @@ on_clearframe_activate (GtkMenuItem * menuitem, gpointer user_data)
 		*unknownentry1, *unknownentry2, *modeoptionmenu, *bandoptionmenu,
 		*awardsentry, *qsoframe, *locatorframe, *datebutton, *framelabel;
 	GtkTextBuffer *b;
-	gchar *temp;
+	char *temp;
 
 	dateentry = lookup_widget (mainwindow, "dateentry");
 	gmtentry = lookup_widget (mainwindow, "gmtentry");
@@ -214,9 +214,9 @@ on_clearframe_activate (GtkMenuItem * menuitem, gpointer user_data)
 	}
 
 	/* Update (clear) Awards */
-	guint st, zone, cont, iota;
-	gchar *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
-	gchar *result = valid_awards_entry (aw,  &st, &zone, &cont, &iota);
+	uint st, zone, cont, iota;
+	char *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
+	char *result = valid_awards_entry (aw,  &st, &zone, &cont, &iota);
 	if (result)
 	{
 		updatedxccframe (result, TRUE, st, zone, cont, iota);
@@ -224,7 +224,7 @@ on_clearframe_activate (GtkMenuItem * menuitem, gpointer user_data)
 	}
 	else
 	{
-		gchar *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
+		char *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
 		updatedxccframe (call, FALSE, st, zone, cont, iota);
 		g_free (call);
 	}
@@ -241,8 +241,8 @@ on_clickall_activate (GtkMenuItem * menuitem, gpointer user_data)
 		*powerentry, *endentry, *callentry, *count, *awardsentry,
 		*bandoptionmenu, *modeoptionmenu;
 	GtkTextBuffer *b;
-	gint c, bandenum, modeenum;
-	gchar *countstr, *lastmsg, *str;
+	int c, bandenum, modeenum;
+	char *countstr, *lastmsg, *str;
 	GtkWidget *mhzbutton, *modebutton, *rstbutton, *powerbutton;
 
 	datebutton = lookup_widget (mainwindow, "datebutton");
@@ -416,7 +416,7 @@ void
 on_view_toolbar_activate (GtkAction *action, gpointer user_data)
 {
 	GtkWidget *handlebox;
-	gboolean status;
+	bool status;
 	
 	handlebox = lookup_widget (mainwindow, "handlebox");
 	status = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
@@ -425,11 +425,11 @@ on_view_toolbar_activate (GtkAction *action, gpointer user_data)
 }
 
 /* sort function for the call column */
-static gint
+static int
 sort_by_callsign_ascending (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data)
 {
-  gchar *call_a, *call_b;
-  gint result = 0;
+  char *call_a, *call_b;
+  int result = 0;
 
   gtk_tree_model_get (model, a, CALL, &call_a, -1);
   gtk_tree_model_get (model, b, CALL, &call_b, -1);
@@ -440,11 +440,11 @@ sort_by_callsign_ascending (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b,
 }
 
 /* sort function for the date column */
-static gint
+static int
 sort_by_date_time (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data)
 {
-  gchar *date_a, *date_b, *time_a, *time_b, *dt_a, *dt_b, *res = NULL;
-  gint result = 0;
+  char *date_a, *date_b, *time_a, *time_b, *dt_a, *dt_b, *res = NULL;
+  int result = 0;
 	struct tm tm_a, tm_b;
 	char buf[255];
 
@@ -485,10 +485,10 @@ void
 on_sort_log_callsign_ascending_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
   logtype *logw;
-  gint page;
+  int page;
   GtkTreeViewColumn *column;
   GtkTreeModel *model;
-  gchar *label;
+  char *label;
 
   page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));
   if (sorted_by_call == FALSE) {
@@ -518,10 +518,10 @@ void
 on_sort_log_date_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
   logtype *logw;
-  gint page;
+  int page;
   GtkTreeViewColumn *column;
   GtkTreeModel *model;
-  gchar *label;
+  char *label;
 
   page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));
   if (sorted_by_date == FALSE) {

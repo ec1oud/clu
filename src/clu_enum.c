@@ -33,7 +33,7 @@
 #include "clu_enum.h"
 
 /* translate enumerated band to a meaningful string */
-gchar *band_enum2char (guint band_enum)
+char *band_enum2char (uint band_enum)
 {
 	switch (band_enum)
 	{
@@ -74,7 +74,7 @@ gchar *band_enum2char (guint band_enum)
 	return NULL;
 }
 
-gchar *band_enum2cabrillochar (guint band_enum)
+char *band_enum2cabrillochar (uint band_enum)
 {
 	switch (band_enum)
 	{
@@ -115,7 +115,7 @@ gchar *band_enum2cabrillochar (guint band_enum)
 	return NULL;
 }
 
-gchar *band_enum2bandchar (gint band_enum)
+char *band_enum2bandchar (int band_enum)
 {
 	switch (band_enum)
 	{
@@ -157,11 +157,11 @@ gchar *band_enum2bandchar (gint band_enum)
 }
 
 /* return freq in kHz from a given frequency string */
-gchar *freq2khz (gchar * str)
+char *freq2khz (char * str)
 {
-	gchar *p, *temp;
-	gchar *pEnd;
-	gchar temp_mhz[7];
+	char *p, *temp;
+	char *pEnd;
+	char temp_mhz[7];
 	gdouble freq, freq1;
 
 	temp  = g_strdup (str);
@@ -182,11 +182,11 @@ gchar *freq2khz (gchar * str)
 }
 
 /* return band as enum from a given frequency string */
-gint
-freq2enum (gchar * str)
+int
+freq2enum (char * str)
 {
-	gchar *p, *temp, *temp0;
-	guint fr;
+	char *p, *temp, *temp0;
+	uint fr;
 	gdouble fr0;
 
 	temp  = g_strdup (str);
@@ -253,11 +253,11 @@ freq2enum (gchar * str)
 }
 
 /* return band as enum from a given hamlib frequency string */
-gint
+int
 hamlibfreq2enum (long long f)
 {
-	guint fr_small = f / 1000;   /* for 2190m, 630m, and 560m */
-	guint fr = f / 1000000;
+	uint fr_small = f / 1000;   /* for 2190m, 630m, and 560m */
+	uint fr = f / 1000000;
 
 	switch (fr)
 	{
@@ -306,11 +306,11 @@ hamlibfreq2enum (long long f)
 }
 
 /* return band as enum from a given band string */
-gint
-meters2enum (gchar * str)
+int
+meters2enum (char * str)
 {
-  gchar *p, *temp;
-  guint m = -1, factor = 0;
+  char *p, *temp;
+  uint m = -1, factor = 0;
 
   temp = g_strdup (str);
   /* find meters, centimeters, millimeters */
@@ -421,7 +421,7 @@ meters2enum (gchar * str)
 }
 
 /* translate enumerated mode to a meaningful string */
-gchar *mode_enum2char (guint mode_enum)
+char *mode_enum2char (uint mode_enum)
 {
 	switch (mode_enum)
 	  {
@@ -578,7 +578,7 @@ gchar *mode_enum2char (guint mode_enum)
 
 /* reportlen: 2 for "59", 3 for "599", 0 if unknown mode */
 
-gint reportlen(guint mode_enum)
+int reportlen(uint mode_enum)
 {
 	switch (mode_enum)
 	{
@@ -593,7 +593,7 @@ gint reportlen(guint mode_enum)
 
 /* return mode as enum from a given string */
 
-gint mode2enum (gchar * str)
+int mode2enum (char * str)
 {
  	if ( !g_ascii_strcasecmp  (str, "AM")     || 
 	     !g_ascii_strncasecmp (str, "A3E", 3) || 

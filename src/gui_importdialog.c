@@ -49,9 +49,9 @@ static GtkWidget *previewscrolledwindow;
 /* 
  * in case we open a non-xlog file, we have to know the xlog filename
  */
-static gchar *find_logname (const gchar *selected)
+static char *find_logname (const char *selected)
 {
-	gchar *basen, *dirn, **split, *l;
+	char *basen, *dirn, **split, *l;
 
 	basen = g_path_get_basename (selected);
 	dirn = g_path_get_dirname (selected);
@@ -76,9 +76,9 @@ static void
 preview_update (GtkFileChooser *chooser, gpointer data)
 {
 	GtkWidget *preview;
-	gchar *filename, buf[80];
-	gboolean have_preview = FALSE;
-	gint i;
+	char *filename, buf[80];
+	bool have_preview = FALSE;
+	int i;
 	FILE *in;
 	GtkTextBuffer *buffer;
 	GtkTextIter start, end;
@@ -109,8 +109,8 @@ static void
 on_importlogbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *fileselection, *logentry, *preview;
-	gchar *sellog;
-	gint response;
+	char *sellog;
+	int response;
 
 	fileselection = gtk_file_chooser_dialog_new (_("xlog - select a log for import"),
     	GTK_WINDOW(mainwindow), GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, 
@@ -162,7 +162,7 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 	LOGDB *lp;
 	logtype *logw;
 	GtkTreePath *path;
-	gchar *temp;
+	char *temp;
 
 	GtkWidget *newlogradiobutton = lookup_widget
 		(importassistant, "newlogradiobutton");
@@ -170,18 +170,18 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 	GtkWidget *combobox = lookup_widget (importassistant, "combobox");
 	GtkWidget *rementry = lookup_widget (importassistant, "rementry");
 
-	gboolean newlog = gtk_toggle_button_get_active
+	bool newlog = gtk_toggle_button_get_active
 		(GTK_TOGGLE_BUTTON (newlogradiobutton));
-	gchar *log = gtk_editable_get_chars (GTK_EDITABLE (logentry), 0, -1);
-	gint filetype = gtk_combo_box_get_active (GTK_COMBO_BOX (combobox));
+	char *log = gtk_editable_get_chars (GTK_EDITABLE (logentry), 0, -1);
+	int filetype = gtk_combo_box_get_active (GTK_COMBO_BOX (combobox));
 	programstate.importremark =
 		gtk_editable_get_chars (GTK_EDITABLE (rementry), 0, -1);
 
 	/* check by filename and if log exist jump to the page in the notebook */
 	if (newlog)
 	{
-		gchar *xlogfile = find_logname (log);
-		gint i;
+		char *xlogfile = find_logname (log);
+		int i;
 		for (i = 0; i < g_list_length (logwindowlist); i++)
 		{
 			logw = g_list_nth_data (logwindowlist, i);
@@ -203,7 +203,7 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 	{
 		if (newlog)
 		{
-			gchar *logn = logname (g_path_get_basename (log));
+			char *logn = logname (g_path_get_basename (log));
 			logw =	openlogwindow (lp, logn, programstate.logwindows++);
 			gtk_notebook_set_current_page 
 				(GTK_NOTEBOOK(mainnotebook), programstate.logwindows - 1);
@@ -213,7 +213,7 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 			logw->filename = g_strconcat
 				(preferences.savedir, G_DIR_SEPARATOR_S, logw->logname, ".xlog", NULL);
 			logw->logchanged = TRUE;
-			gchar *label = g_strdup_printf ("<b>%s*</b>", logw->logname);
+			char *label = g_strdup_printf ("<b>%s*</b>", logw->logname);
 			gtk_label_set_markup (GTK_LABEL (logw->label), label);
 			g_free (label);
 			logwindowlist =	g_list_append (logwindowlist, logw);
@@ -250,7 +250,7 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 		}
 		else
 		{
-			gint page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
+			int page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 			if (page >= 0)
 			{
 				logw = g_list_nth_data (logwindowlist, page);
@@ -258,7 +258,7 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 
 				/* we enable all columns */
 				GtkTreeViewColumn *column;
-				gint j;
+				int j;
 				for (j = 0; j < QSO_FIELDS; j++)
 				{
 					column = gtk_tree_view_get_column (GTK_TREE_VIEW (logw->treeview), j);
@@ -268,7 +268,7 @@ on_wizard_close_clicked (GtkAssistant *assistant, gpointer user_data)
 				logw->logfields[QSO_FIELDS] = 0;
 				logw->columns = 17;
 				logw->logchanged = TRUE;
-				gchar *label = g_strdup_printf ("<b>%s*</b>", logw->logname);
+				char *label = g_strdup_printf ("<b>%s*</b>", logw->logname);
 				gtk_label_set_markup (GTK_LABEL (logw->label), label);
 				g_free (label);
 				log_file_close (lp);
@@ -293,7 +293,7 @@ static void
 on_logentry_changed (GtkEditable *editable, gpointer user_data)
 {
 	GtkWidget *vbox = GTK_WIDGET(user_data);
-	gchar *str = gtk_editable_get_chars (editable, 0, -1);
+	char *str = gtk_editable_get_chars (editable, 0, -1);
 	if (strlen(str) > 0)
 	  gtk_assistant_set_page_complete (GTK_ASSISTANT (importassistant), vbox, TRUE);
 	else

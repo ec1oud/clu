@@ -37,16 +37,16 @@
 #include "support.h"
 
 #ifndef G_OS_WIN32
-static gint socket_descriptor;
+static int socket_descriptor;
 static struct sockaddr_in address;
 #endif
 
 /* initialize the UDP socket for cwdaemon */
-gint
+int
 netkeyer_init (void) 
 {
 #ifndef G_OS_WIN32
-	gint netkeyer_port = 6789;
+	int netkeyer_port = 6789;
 	gchar netkeyer_hostaddress[16] = "127.0.0.1";
 	struct hostent *hostbyname;
 
@@ -70,7 +70,7 @@ void
 netkeyer_close (void)
 {
 #ifndef G_OS_WIN32
-	gint close_rc;
+	int close_rc;
 
 	close_rc = close (socket_descriptor);
 	if (close_rc == -1)
@@ -80,8 +80,8 @@ netkeyer_close (void)
 
 /* use sendto to transmit a message over the socket, the only control messages
    we use here are speed and abort */
-gint
-tonetkeyer (gint cw_op, gchar *cwmessage) 
+int
+tonetkeyer (int cw_op, gchar *cwmessage) 
 {
 	ssize_t sendto_rc = 0;
 #ifndef G_OS_WIN32

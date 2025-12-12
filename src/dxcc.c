@@ -64,9 +64,9 @@
 // [#] Override ITU zone where # is the zone number
 //
 
-#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
+#include <glib.h>
 #include <glib/gstdio.h>
 #include <ctype.h>
 
@@ -87,17 +87,17 @@ extern programstatetype programstate;
 extern GList *logwindowlist;
 GPtrArray *dxcc, *area;
 GHashTable *prefixes, *full_callsign_exceptions;
-gint excitu, exccq;
+int excitu, exccq;
 
-/* gushort: 0 - 65534, one extra element for all bands scoring */
-gushort dxcc_w[400][MAX_BANDS + 1];
-gushort dxcc_c[400][MAX_BANDS + 1];
-gushort waz_w[MAX_ZONES][MAX_BANDS + 1];
-gushort waz_c[MAX_ZONES][MAX_BANDS + 1];
-gushort wac_w[MAX_CONTINENTS][MAX_BANDS + 1];
-gushort wac_c[MAX_CONTINENTS][MAX_BANDS + 1];
-gushort was_w[MAX_STATES][MAX_BANDS + 1];
-gushort was_c[MAX_STATES][MAX_BANDS + 1];
+/* ushort: 0 - 65534, one extra element for all bands scoring */
+ushort dxcc_w[400][MAX_BANDS + 1];
+ushort dxcc_c[400][MAX_BANDS + 1];
+ushort waz_w[MAX_ZONES][MAX_BANDS + 1];
+ushort waz_c[MAX_ZONES][MAX_BANDS + 1];
+ushort wac_w[MAX_CONTINENTS][MAX_BANDS + 1];
+ushort wac_c[MAX_CONTINENTS][MAX_BANDS + 1];
+ushort was_w[MAX_STATES][MAX_BANDS + 1];
+ushort was_c[MAX_STATES][MAX_BANDS + 1];
 GHashTable *iota_w[MAX_BANDS + 1];
 GHashTable *iota_c[MAX_BANDS + 1];
 GHashTable *loc_w[MAX_BANDS + 1];
@@ -107,7 +107,7 @@ GHashTable *loc_c[MAX_BANDS + 1];
 void
 cleanup_dxcc (void)
 {
-  gint i;
+  int i;
 
   /* free the dxcc array */
   if (dxcc)
@@ -138,7 +138,7 @@ cleanup_dxcc (void)
 void
 cleanup_area (void)
 {
-  gint i;
+  int i;
 
   /* free the dxcc array */
   if (area)
@@ -159,10 +159,10 @@ cleanup_area (void)
  * go through exception string and stop when end of prefix
  * is reached (BT3L(23)[33] -> BT3L)
  */
-static gchar *
-findpfx_in_exception (gchar * pfx)
+static char *
+findpfx_in_exception (char * pfx)
 {
-  gchar *end, *j;
+  char *end, *j;
 
   g_strstrip (pfx);
   end = pfx + strlen (pfx);
@@ -185,10 +185,10 @@ findpfx_in_exception (gchar * pfx)
 }
 
 /* replace callsign area (K0AR/2 -> K2AR) so we can do correct lookups */
-static gchar *
-change_area (gchar *callsign, gint area)
+static char *
+change_area (char *callsign, int area)
 {
-  gchar *end, *j;
+  char *end, *j;
 
   end = callsign + strlen (callsign);
   for (j = callsign; j < end; ++j)
@@ -212,11 +212,11 @@ change_area (gchar *callsign, gint area)
    - skip /mm, /am and /qrp
    - return string after slash if it is shorter than string before
  */
-static gchar *
-getpx (gchar *checkcall)
+static char *
+getpx (char *checkcall)
 {
 
-  gchar *pxstr = NULL, **split;
+  char *pxstr = NULL, **split;
 
   /* characters after '/' might contain a country */
   if (strchr(checkcall, '/'))
@@ -253,10 +253,10 @@ getpx (gchar *checkcall)
 
 
 /* parse an exception and extract the CQ and ITU zone */
-static gchar *
-findexc(gchar *exception)
+static char *
+findexc(char *exception)
 {
-  gchar *end, *j;
+  char *end, *j;
 
   excitu = 0;
   exccq = 0;
@@ -287,9 +287,9 @@ findexc(gchar *exception)
  * return the country number cq zone and itu zone directly from the array
  */
 struct info
-lookupcountry_by_prefix (gchar *px)
+lookupcountry_by_prefix (char *px)
 {
-  gint index;
+  int index;
   struct info lookup;
 
   lookup.country = 0;
@@ -317,12 +317,12 @@ lookupcountry_by_prefix (gchar *px)
  * cq zone and itu zone - this also goes through the exceptionlist
  */
 struct info
-lookupcountry_by_callsign (gchar * callsign)
+lookupcountry_by_callsign (char * callsign)
 {
-  gint ipx, iexc;
-  gchar *px;
-  gchar **excsplit, *exc;
-  gchar *searchpx = NULL;
+  int ipx, iexc;
+  char *px;
+  char **excsplit, *exc;
+  char *searchpx = NULL;
   struct info lookup;
 
   lookup.country = 0;
@@ -377,8 +377,8 @@ lookupcountry_by_callsign (gchar * callsign)
 
 /* add an item from cty.dat to the dxcc array */
 static void
-dxcc_add (gchar *c, gint w, gint i, gint cont, gint lat, gint lon,
-	  gint tz, gchar *p, gchar *e)
+dxcc_add (char *c, int w, int i, int cont, int lat, int lon,
+	  int tz, char *p, char *e)
 {
   dxcc_data *new_dxcc = g_new (dxcc_data, 1);
 
@@ -396,8 +396,8 @@ dxcc_add (gchar *c, gint w, gint i, gint cont, gint lat, gint lon,
 
 /* add an item from area.dat to the area array */
 static void
-area_add (gchar *c, gint w, gint i, gchar *cont, gint lat, gint lon,
-	  gint tz, gchar *p)
+area_add (char *c, int w, int i, char *cont, int lat, int lon,
+	  int tz, char *p)
 {
   area_data *new_area = g_new (area_data, 1);
 
@@ -412,10 +412,10 @@ area_add (gchar *c, gint w, gint i, gchar *cont, gint lat, gint lon,
   g_ptr_array_add (area, new_area);
 }
 
-gint
+int
 readctyversion (void)
 {
-  gchar buf[256000], *ver, *ch, *cty_location;
+  char buf[256000], *ver, *ch, *cty_location;
   FILE *fp;
 
 #ifdef G_OS_WIN32
@@ -429,7 +429,7 @@ readctyversion (void)
       return (1);
     }
   g_free (cty_location);
-  gint n = fread (buf, 1, 256000, fp);
+  int n = fread (buf, 1, 256000, fp);
   buf[n] = '\0';
   ver = strstr (buf, "VER2");
   if (ver)
@@ -447,15 +447,15 @@ readctyversion (void)
 }
 
 /* fill the hashtable with all of the prefixes from cty.dat */
-gint
+int
 readctydata (void)
 {
 
-  gchar buf[65536], *cty_location, *pfx, **split, **pfxsplit;
-  gint ichar = 0, dxccitem = 0, ipfx = 0, ch = 0;
+  char buf[65536], *cty_location, *pfx, **split, **pfxsplit;
+  int ichar = 0, dxccitem = 0, ipfx = 0, ch = 0;
   gboolean firstcolon = FALSE;
-  gchar tmp[20];
-  gint i;
+  char tmp[20];
+  int i;
   FILE *fp;
 
 //~ #ifdef G_OS_WIN32
@@ -514,8 +514,8 @@ readctydata (void)
 	    g_strstrip (split[dxccitem]);
 
 	  dxcc_add (split[0], atoi(split[1]), atoi(split[2]), cont_to_enum(split[3]),
-		    (gint)(strtod(split[4], NULL) * 100), (gint)(strtod(split[5], NULL) * 100),
-		    (gint)(strtod(split[6], NULL) * 10), split[7], split[8]);
+		    (int)(strtod(split[4], NULL) * 100), (int)(strtod(split[5], NULL) * 100),
+		    (int)(strtod(split[6], NULL) * 10), split[7], split[8]);
 
 	  /* NOTE: split[7] is the description prefix, it is not added to the hashtable */
 	  /* With this addition, the user can enter the "callsign" like "3D2/R" and the */
@@ -559,12 +559,12 @@ readctydata (void)
 }
 
 /* fill the hashtable with all of the prefixes from area.dat */
-gint
+int
 readareadata (void)
 {
 
-  gchar buf[4096], *area_location, **split;
-  gint ichar = 0, ch = 0;
+  char buf[4096], *area_location, **split;
+  int ichar = 0, ch = 0;
   FILE *fp;
 
 //~ #ifdef G_OS_WIN32
@@ -600,8 +600,8 @@ readareadata (void)
       /* split up the line */
       split = g_strsplit (buf, ":", 9);
       area_add (split[0], atoi(split[1]), atoi(split[2]), split[3],
-		(gint)(strtod(split[4], NULL) * 100), (gint)(strtod(split[5], NULL) * 100),
-		(gint)(strtod(split[6], NULL) * 10), split[7]);
+		(int)(strtod(split[4], NULL) * 100), (int)(strtod(split[5], NULL) * 100),
+		(int)(strtod(split[6], NULL) * 10), split[7]);
       g_strfreev (split);
     }
   fclose (fp);
@@ -610,9 +610,9 @@ readareadata (void)
 }
 
 /* search a callsign and return the callsign area */
-gchar lookuparea (gchar *callsign)
+char lookuparea (char *callsign)
 {
-  gchar *end, *j, *slash;
+  char *end, *j, *slash;
 
   end = callsign + strlen (callsign);
   if ((slash = strchr(callsign, '/')))
@@ -638,17 +638,17 @@ gchar lookuparea (gchar *callsign)
 
 /* update information of the DXCC frame with the current callsign */
 void
-updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont, guint iota)
+updatedxccframe (char * item, gboolean byprefix, int st, int zone, int cont, uint iota)
 {
   GtkWidget *dxcclabel1, *dxcclabel3, *dxcclabel4, *contlabel, *itulabel,
     *cqlabel, *dxcclabel5, *dxccframe, *framelabel, *countrytreeview;
-  gchar *labeltext1, *labeltext3, *labeltext4, *gcresult, *conttext, *itutext,
+  char *labeltext1, *labeltext3, *labeltext4, *gcresult, *conttext, *itutext,
     *cqtext, *temp;
   GtkTreeIter iter;
   GtkTreeModel *model;
   struct info lookup;
-  gchar iter_num[2] = "0";
-  gint j;
+  char iter_num[2] = "0";
+  int j;
   gdouble lat, lon;
 
   dxcclabel1 = lookup_widget (scorewindow, "dxcclabel1");
@@ -781,7 +781,7 @@ updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont,
     {
       gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
 
-      gchar *iotastr = num_to_iota(iota);
+      char *iotastr = num_to_iota(iota);
       iter_num[0]++;
 
       gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, iotastr, -1);
@@ -807,9 +807,9 @@ updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont,
   if (preferences.awardsloc == 1)
     {
       GtkWidget *locatorentry = lookup_widget (mainwindow, "locatorentry");
-      gchar *locator = gtk_editable_get_chars (GTK_EDITABLE (locatorentry), 0, -1);
+      char *locator = gtk_editable_get_chars (GTK_EDITABLE (locatorentry), 0, -1);
       gtk_tree_model_get_iter (model, &iter, gtk_tree_path_new_from_string (iter_num));
-      gchar *loc4 = loc_norm(locator);
+      char *loc4 = loc_norm(locator);
       g_free (locator);
 
       if (loc4)
@@ -867,11 +867,11 @@ updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont,
   /* TODO: ITU may contain strings like "07-08", right now it is an 'int' */
   if (!byprefix && (!strcmp(d->px, "K") || !strcmp(d->px, "VK")))
     {
-      gchar callarea = lookuparea (item);
+      char callarea = lookuparea (item);
       if (callarea != '?')
 	{
-	  gint index;
-	  gchar *areapx = g_strdup_printf ("%s%c", d->px, callarea);
+	  int index;
+	  char *areapx = g_strdup_printf ("%s%c", d->px, callarea);
 	  for (index = 0; index < area->len; index++)
 	    {
 	      area_data *a = g_ptr_array_index (area, index);
@@ -951,11 +951,11 @@ updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont,
 
 void update_dxccscoring (void)
 {
-  gint i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
+  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
   GtkWidget *dxcctreeview;
   GtkTreeModel *dxccmodel;
   GtkTreeIter dxcciter;
-  gchar *str = g_strdup ("");;
+  char *str = g_strdup ("");;
 
   for (j = 0; j <= MAX_BANDS; j++)
     {
@@ -983,11 +983,11 @@ void update_dxccscoring (void)
 
 void update_wacscoring (void)
 {
-  gint i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
+  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
   GtkWidget *wactreeview;
   GtkTreeModel *wacmodel;
   GtkTreeIter waciter;
-  gchar *str = g_strdup ("");;
+  char *str = g_strdup ("");;
 
   for (j = 0; j <= MAX_BANDS; j++)
     {
@@ -1015,11 +1015,11 @@ void update_wacscoring (void)
 
 void update_wasscoring (void)
 {
-  gint i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
+  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
   GtkWidget *wastreeview;
   GtkTreeModel *wasmodel;
   GtkTreeIter wasiter;
-  gchar *str = g_strdup ("");;
+  char *str = g_strdup ("");;
 
   for (j = 0; j <= MAX_BANDS; j++)
     {
@@ -1047,11 +1047,11 @@ void update_wasscoring (void)
 
 void update_wazscoring (void)
 {
-  gint i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
+  int i, j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
   GtkWidget *waztreeview;
   GtkTreeModel *wazmodel;
   GtkTreeIter waziter;
-  gchar *str = g_strdup ("");;
+  char *str = g_strdup ("");;
 
   for (j = 0; j <= MAX_BANDS; j++)
     {
@@ -1079,11 +1079,11 @@ void update_wazscoring (void)
 
 void update_iotascoring (void)
 {
-  gint j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
+  int j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
   GtkWidget *iotatreeview;
   GtkTreeModel *iotamodel;
   GtkTreeIter iotaiter;
-  gchar *str = g_strdup ("");;
+  char *str = g_strdup ("");;
 
   for (j = 0; j <= MAX_BANDS; j++)
     {
@@ -1111,7 +1111,7 @@ void update_iotascoring (void)
 #if 0
 static void loc_gh_add (gpointer key, gpointer value, gpointer user_data)
 {
-  gint *p_counter = (gint *)user_data;
+  int *p_counter = (int *)user_data;
 
   if (value && GPOINTER_TO_INT(value))
     (*p_counter) ++;
@@ -1120,11 +1120,11 @@ static void loc_gh_add (gpointer key, gpointer value, gpointer user_data)
 
 void update_locscoring (void)
 {
-  gint j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
+  int j, worked[MAX_BANDS + 1], confirmed[MAX_BANDS + 1];
   GtkWidget *loctreeview;
   GtkTreeModel *locmodel;
   GtkTreeIter lociter;
-  gchar *str = g_strdup ("");;
+  char *str = g_strdup ("");;
 
   for (j = 0; j <= MAX_BANDS; j++)
     {
@@ -1153,7 +1153,7 @@ void update_locscoring (void)
   g_free (str);
 }
 
-void hash_inc(GHashTable *hash_table, const gchar *key)
+void hash_inc(GHashTable *hash_table, const char *key)
 {
   gpointer p, value;
   p = g_hash_table_lookup (hash_table, key);
@@ -1166,7 +1166,7 @@ void hash_inc(GHashTable *hash_table, const gchar *key)
 
 }
 
-void hash_dec(GHashTable *hash_table, const gchar *key)
+void hash_dec(GHashTable *hash_table, const char *key)
 {
   gpointer p, value;
 
@@ -1182,9 +1182,9 @@ void hash_dec(GHashTable *hash_table, const gchar *key)
 
 }
 
-gchar *loc_norm(const gchar *locator)
+char *loc_norm(const char *locator)
 {
-  gchar *loc4;
+  char *loc4;
 
   if (!locator || strlen(locator) < 4)
     return NULL;
@@ -1198,9 +1198,9 @@ gchar *loc_norm(const gchar *locator)
   return loc4;
 }
 
-void loc_new_qso(const gchar *locator, gint f, gboolean qslconfirmed)
+void loc_new_qso(const char *locator, int f, gboolean qslconfirmed)
 {
-  gchar *loc4;
+  char *loc4;
 
   if (!locator || strlen(locator) < 4) return;
   loc4 = loc_norm(locator);
@@ -1218,9 +1218,9 @@ void loc_new_qso(const gchar *locator, gint f, gboolean qslconfirmed)
   g_free(loc4);
 }
 
-void loc_del_qso(const gchar *locator, gint f, gboolean qslconfirmed)
+void loc_del_qso(const char *locator, int f, gboolean qslconfirmed)
 {
-  gchar *loc4;
+  char *loc4;
 
   if (!locator || strlen(locator) < 4) return;
   loc4 = loc_norm(locator);
@@ -1236,9 +1236,9 @@ void loc_del_qso(const gchar *locator, gint f, gboolean qslconfirmed)
     }
 }
 
-void iota_new_qso(guint iota, gint f, gboolean qslconfirmed)
+void iota_new_qso(uint iota, int f, gboolean qslconfirmed)
 {
-  gchar *iotastr;
+  char *iotastr;
 
   iotastr = num_to_iota(iota);
   if (!iotastr)
@@ -1256,9 +1256,9 @@ void iota_new_qso(guint iota, gint f, gboolean qslconfirmed)
   g_free(iotastr);
 }
 
-void iota_del_qso(guint iota, gint f, gboolean qslconfirmed)
+void iota_del_qso(uint iota, int f, gboolean qslconfirmed)
 {
-  gchar *iotastr;
+  char *iotastr;
 
   iotastr = num_to_iota(iota);
   if (!iotastr)
@@ -1276,7 +1276,7 @@ void iota_del_qso(guint iota, gint f, gboolean qslconfirmed)
 
 static void init_scoring (void)
 {
-  gint i, j;
+  int i, j;
 
   for (i = 0; i <= programstate.countries; i++)
     for (j = 0; j <= MAX_BANDS; j++)
@@ -1316,13 +1316,13 @@ static void init_scoring (void)
 
 void fill_scoring_arrays (void)
 {
-  gint i, f;
-  guint st, zone, cont, iota;
+  int i, f;
+  uint st, zone, cont, iota;
   gboolean valid, qslconfirmed;
   logtype *logw;
   GtkTreeModel *logmodel;
   GtkTreeIter logiter;
-  gchar *call, *freq, *qslin, *awstr, *locator;
+  char *call, *freq, *qslin, *awstr, *locator;
   struct info lookup;
 
 
@@ -1340,7 +1340,7 @@ void fill_scoring_arrays (void)
 	  gtk_tree_model_get (logmodel, &logiter, AWARDS, &awstr, -1);
 	  gtk_tree_model_get (logmodel, &logiter, LOCATOR, &locator, -1);
 	  f = freq2enum (freq);
-	  gchar *result = valid_awards_entry (awstr, &st, &zone, &cont, &iota);
+	  char *result = valid_awards_entry (awstr, &st, &zone, &cont, &iota);
 	  if (result)
 	    {
 	      lookup = lookupcountry_by_prefix (result);

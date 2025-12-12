@@ -87,8 +87,8 @@
 
 msgtype msgbuf;
 remotetype remote;
-gint server_sockfd_7311;
-gint server_sockfd_2333;
+int server_sockfd_7311;
+int server_sockfd_2333;
 extern programstatetype programstate;
 extern preferencestype preferences;
 extern glong msgid_7311;
@@ -113,7 +113,7 @@ getargument (gchar * remotestring)
 }
 
 static void
-addtolog_or_qsoframe_7311 (gint type, gchar * entry)
+addtolog_or_qsoframe_7311 (int type, gchar * entry)
 {
 	GtkWidget *bandoptionmenu, *modeoptionmenu,
 		*bandentry, *modeentry, *endhbox, *namehbox, *qthhbox,
@@ -124,7 +124,7 @@ addtolog_or_qsoframe_7311 (gint type, gchar * entry)
 		*remarksvbox, *awardshbox, *awardsentry;
 	GtkTextBuffer *b;
 	gchar *temp, **remoteinfo, *argument = NULL, *remarks, *label;
-	gint i, j = 0, bandindex, modeindex, err = 0;
+	int i, j = 0, bandindex, modeindex, err = 0;
 	logtype *logw;
 	GtkTreeIter iter;
 	GtkListStore *model;
@@ -133,7 +133,7 @@ addtolog_or_qsoframe_7311 (gint type, gchar * entry)
 
 	if (type == 88 && entry && (strlen (entry) > 0))
 	{
-		gint page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
+		int page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 		if (page == -1)
 		{
 			if (!programstate.warning_nologopen)
@@ -172,7 +172,7 @@ addtolog_or_qsoframe_7311 (gint type, gchar * entry)
 		entry = my_strreplace (entry, "\n", " ");
 		entry = my_strreplace (entry, "\t", " ");
 		remoteinfo = g_strsplit (entry, "\1", 0);
-		gint dchk_only = 0;
+		int dchk_only = 0;
 		for (;;)
 		{
 			if (remoteinfo[j] == NULL)
@@ -572,13 +572,13 @@ addtolog_or_qsoframe_2333 (gchar * entry)
 	GtkTextBuffer *b;
 	gchar *temp, **remoteinfo, *remarks, *label;
 	gchar **adif_field_name, *adif_value;
-	gint i, j = 0, bandindex, modeindex, err = 0;
-    gint kms, l, result;
+	int i, j = 0, bandindex, modeindex, err = 0;
+    int kms, l, result;
 	logtype *logw;
 	GtkTreeIter iter;
 	GtkListStore *model;
 	GtkTreePath *path;
-    gint debug = 0;
+    int debug = 0;
 	
 	if (debug) printf("DEBUG: remote.c: addtolog_or_qsoframe_2333(): got here!\n");
 
@@ -586,7 +586,7 @@ addtolog_or_qsoframe_2333 (gchar * entry)
 	{
         if (debug) printf("DEBUG: remote.c: addtolog_or_qsoframe_2333(): ADIF data received = |%s|\n", entry);
 
-		gint page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
+		int page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 		if (page == -1)
 		{
 			if (!programstate.warning_nologopen)
@@ -668,7 +668,7 @@ addtolog_or_qsoframe_2333 (gchar * entry)
 								  if (preferences.units == 1)
 									qso[U1] = g_strdup_printf ("%d km", kms);
 								  else
-									qso[U1] = g_strdup_printf ("%d m", (gint) (kms/1.609));
+									qso[U1] = g_strdup_printf ("%d m", (int) (kms/1.609));
 								}
 							  if (gtk_widget_get_visible (unknown2hbox))
 								{
@@ -898,7 +898,7 @@ addtolog_or_qsoframe_2333 (gchar * entry)
 	if (debug) printf("DEBUG: remote.c: Done adding QSO to log.\n");
 }
 
-gint
+int
 remote_entry_7311 (void)
 {
 	ssize_t status = -1;
@@ -914,7 +914,7 @@ remote_entry_7311 (void)
 }
 
 #ifndef G_OS_WIN32
-static gboolean 
+static bool 
 tcp_client_activity_7311 (GIOChannel *source, GIOCondition cond, gpointer data)
 {
 	gchar buf[1024];
@@ -933,7 +933,7 @@ tcp_client_activity_7311 (GIOChannel *source, GIOCondition cond, gpointer data)
 #endif
 
 #ifndef G_OS_WIN32
-gboolean
+bool
 socket_entry_2333 (GIOChannel * channel, GIOCondition cond, gpointer data)
 {
     gchar buf[1024];
@@ -943,7 +943,7 @@ socket_entry_2333 (GIOChannel * channel, GIOCondition cond, gpointer data)
 	gsize crlf_pos = 0;
 	
 	GIOStatus status;
-    gint debug = 0;
+    int debug = 0;
 	
 	if (cond == G_IO_IN)
 	{
@@ -973,10 +973,10 @@ socket_entry_2333 (GIOChannel * channel, GIOCondition cond, gpointer data)
 #endif
 
 #ifndef G_OS_WIN32
-gboolean
+bool
 socket_entry_7311 (GIOChannel * channel, GIOCondition cond, gpointer data)
 {
-	gint new; /* new socket descriptor */
+	int new; /* new socket descriptor */
 	socklen_t client;
 	GIOChannel  *new_channel;
 	struct sockaddr_in client_addr;
@@ -996,12 +996,12 @@ socket_entry_7311 (GIOChannel * channel, GIOCondition cond, gpointer data)
 #endif
 
 #ifndef G_OS_WIN32
-gint
+int
 remote_socket_setup_2333 (void)
 {
-    gint server_len, result;
+    int server_len, result;
 	struct sockaddr_in server_address;
-    gint debug = 0;
+    int debug = 0;
 
 	if (debug) printf("DEBUG: remote.c: remote_socket_setup_2333(): Got here.\n");
 
@@ -1019,10 +1019,10 @@ remote_socket_setup_2333 (void)
 	return result;
 }
 
-gint
+int
 remote_socket_setup_7311 (void)
 {
-	gint server_len, result, tmp = 1;
+	int server_len, result, tmp = 1;
 	struct sockaddr_in server_address;
 
 	server_sockfd_7311 = socket (AF_INET, SOCK_STREAM, 0);

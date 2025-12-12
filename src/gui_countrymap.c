@@ -31,12 +31,12 @@
 
 GtkWidget *countrymap = NULL;
 static GdkPixmap *pm = NULL;
-static gchar *pxformaps = NULL;
-static gint savew = -1, saveh = -1;
+static char *pxformaps = NULL;
+static int savew = -1, saveh = -1;
 extern GtkWidget *mainwindow;
 extern GPtrArray *dxcc;
 
-static gboolean
+static bool
 map_delete (GtkWidget * widget, GdkEvent *event, gpointer user_data)
 {
 	countrymap = NULL;
@@ -45,7 +45,7 @@ map_delete (GtkWidget * widget, GdkEvent *event, gpointer user_data)
 	return FALSE;
 }
 
-static gboolean
+static bool
 map_expose (GtkWidget *da, GdkEventExpose *event, gpointer data)
 {
 	if (pm) gdk_draw_drawable
@@ -55,7 +55,7 @@ map_expose (GtkWidget *da, GdkEventExpose *event, gpointer data)
 	return FALSE;
 }
 
-static gboolean
+static bool
 map_configure (GtkWidget *da, GdkEventConfigure *event, gpointer data)
 {
 	if (pm)
@@ -69,10 +69,10 @@ map_configure (GtkWidget *da, GdkEventConfigure *event, gpointer data)
 	if (pxformaps)
 	{
 #ifdef G_OS_WIN32
-		gchar *map_location = g_strconcat
+		char *map_location = g_strconcat
 		("maps", G_DIR_SEPARATOR_S, pxformaps, ".png", NULL);
 #else
-		gchar *map_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S,
+		char *map_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S,
 			"maps", G_DIR_SEPARATOR_S, pxformaps, ".png", NULL);
 #endif
 		GdkPixbuf *background = gdk_pixbuf_new_from_file (map_location, NULL);
@@ -96,19 +96,19 @@ map_configure (GtkWidget *da, GdkEventConfigure *event, gpointer data)
 	return TRUE;
 }
 
-void countrymap_refresh (gchar *px)
+void countrymap_refresh (char *px)
 {
 	if (!g_ascii_strcasecmp(px, pxformaps)) return;
 	pxformaps = g_strdup (px);
 #ifdef G_OS_WIN32
-	gchar *map_location = g_strconcat
+	char *map_location = g_strconcat
 		("maps", G_DIR_SEPARATOR_S, px, ".png", NULL);
 	map_location = my_strreplace (map_location, "/", "\\");
 #else
-	gchar *map_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S,
+	char *map_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S,
 		"maps", G_DIR_SEPARATOR_S, px, ".png", NULL);
 #endif
-	gint width, height;
+	int width, height;
 	GdkPixbufFormat *f = gdk_pixbuf_get_file_info (map_location, &width, &height);
 	if (f)
 	{
@@ -153,15 +153,15 @@ void on_countrymap_activate (GtkAction *action, gpointer user_data)
 	GLADE_HOOKUP_OBJECT (countrymap, da, "da");
 	pxformaps = g_strdup ("");
         GtkWidget *awardsentry = lookup_widget (mainwindow, "awardsentry");
-        gchar *str = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
-        guint st, zone, cont, iota;
-        gchar *result = valid_awards_entry (str, &st, &zone, &cont, &iota);
+        char *str = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
+        uint st, zone, cont, iota;
+        char *result = valid_awards_entry (str, &st, &zone, &cont, &iota);
 	gtk_widget_show_all (countrymap);
         if (result) countrymap_refresh (result);
         else
         {
                 GtkWidget *callentry = lookup_widget (mainwindow, "callentry");
-                gchar *str = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
+                char *str = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
                 struct info lookup = lookupcountry_by_callsign (str);
                 if (lookup.country > 0)
                 {

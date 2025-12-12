@@ -43,12 +43,12 @@ extern GtkWidget *mainwindow;
 extern GtkWidget *keyerwindow;
 extern preferencestype preferences;
 extern GtkWidget *preferencesdialog;
-extern gint clocktimer, savetimer;
+extern int clocktimer, savetimer;
 extern GList *logwindowlist;
 
 /* return value for setting widgets */
-gint
-whichhamlibwidgets (gboolean frequency, gboolean smeter)
+int
+whichhamlibwidgets (bool frequency, bool smeter)
 {
 	if (frequency && smeter)
 		return (4);
@@ -62,7 +62,7 @@ whichhamlibwidgets (gboolean frequency, gboolean smeter)
 
 /* check save value, if autosave value larger than 0 start timer */
 void
-set_autosave (gint value, gint saving)
+set_autosave (int value, int saving)
 {
 	if (saving != 1 && preferences.saving == 1)
 	{
@@ -88,7 +88,7 @@ set_autosave (gint value, gint saving)
 
 /* set savepath if changed */
 void
-set_path (gchar * pathstr)
+set_path (char * pathstr)
 {
 	if (strlen (pathstr) > 0)
 	{
@@ -99,7 +99,7 @@ set_path (gchar * pathstr)
 
 /* set backuppath if changed */
 void
-set_backuppath (gchar * pathstr)
+set_backuppath (char * pathstr)
 {
 	if (strlen (pathstr) > 0)
 	{
@@ -110,9 +110,9 @@ set_backuppath (gchar * pathstr)
 
 /* set logs to load if changed */
 void
-set_logstoload (gchar * logs)
+set_logstoload (char * logs)
 {
-	gchar **logsplit;
+	char **logsplit;
 
 	if (g_ascii_strcasecmp (logs, preferences.logstoload) != 0)
 	{
@@ -127,7 +127,7 @@ set_logstoload (gchar * logs)
 
 /* set QTH locator */
 void
-set_qthlocator (gchar * locator)
+set_qthlocator (char * locator)
 {
 	if (g_ascii_strcasecmp (locator, preferences.locator) != 0)
 	{
@@ -139,7 +139,7 @@ set_qthlocator (gchar * locator)
 
 /* set callsign */
 void
-set_callsign (gchar * callsign)
+set_callsign (char * callsign)
 {
 	if (g_ascii_strcasecmp (callsign, preferences.callsign) != 0)
 	{
@@ -151,7 +151,7 @@ set_callsign (gchar * callsign)
 
 /* enable/disable clock */
 void
-set_clock (gboolean on)
+set_clock (bool on)
 {
 	GtkWidget *clockhandlebox;
 
@@ -174,8 +174,8 @@ set_clock (gboolean on)
 }
 
 /* check if hamlib has changed */
-gboolean hamlib_changed (gint hamlibwidgets, gint rigid, gchar *device, 
-	gint polltime, gchar *rigconf)
+bool hamlib_changed (int hamlibwidgets, int rigid, char *device, 
+	int polltime, char *rigconf)
 {
 
 	if (preferences.hamlib != hamlibwidgets)
@@ -198,7 +198,7 @@ void
 on_backupradiobutton_toggled (GtkToggleButton * togglebutton,
 	gpointer user_data)
 {
-	gboolean state;
+	bool state;
 	GtkWidget *backupentry, *backupbutton;
 
 	backupentry = lookup_widget (preferencesdialog, "backupentry");
@@ -267,7 +267,7 @@ void
 on_autosaveradiobutton_toggled (GtkToggleButton * togglebutton,
 				gpointer user_data)
 {
-	gboolean state;
+	bool state;
 	GtkWidget *autosaveframe;
 
 	state = gtk_toggle_button_get_active (togglebutton);
@@ -280,7 +280,7 @@ void
 on_pollingcheckbutton_toggled (GtkToggleButton * togglebutton,
 	gpointer user_data)
 {
-	gboolean state;
+	bool state;
 	GtkWidget *pollingframe;
 
 	state = gtk_toggle_button_get_active (togglebutton);
@@ -294,7 +294,7 @@ on_hamlibcheckbutton_toggled (GtkToggleButton * togglebutton,
 	gpointer user_data)
 {
 	GtkWidget *hamlibframe, *pollingframe, *pollingcheckbutton;
-	gboolean state;
+	bool state;
 
 	hamlibframe = lookup_widget (preferencesdialog, "hamlibframe");
 	state = gtk_toggle_button_get_active (togglebutton);
@@ -316,8 +316,8 @@ on_radiobutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *rigdialog, *riglistdialogvbox, *riglisttreeview,
 		*rigscrolledwindow, *radioentry;
-	gint i, response, numrigs, rigid;
-	gchar *temp;
+	int i, response, numrigs, rigid;
+	char *temp;
 	GtkListStore *rigstore;
 	GtkTreeModel *model;
 	GtkTreeIter rigiter, selected;

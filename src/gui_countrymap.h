@@ -23,4 +23,4 @@
 /* gui_countrymap.h */
 
 void on_countrymap_activate (GtkAction *action, gpointer user_data);
-void countrymap_refresh (gchar *px);
+void countrymap_refresh (char *px);

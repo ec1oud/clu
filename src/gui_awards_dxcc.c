@@ -36,8 +36,8 @@ extern GtkWidget *mainwindow, *scorewindow;
 extern programstatetype programstate;
 extern preferencestype preferences;
 extern GPtrArray *dxcc;
-extern gushort dxcc_w[400][MAX_BANDS + 1];
-extern gushort dxcc_c[400][MAX_BANDS + 1];
+extern ushort dxcc_w[400][MAX_BANDS + 1];
+extern ushort dxcc_c[400][MAX_BANDS + 1];
 
 void on_awards_dxcc_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
@@ -244,7 +244,7 @@ void on_awards_dxcc_activate (GtkMenuItem *menuitem, gpointer user_data)
                 (column, preferences.scoringbands[BAND_SUBMM]);
 
 	GtkTreeIter iter;
-	gint i, j;
+	int i, j;
 	for (i = 1; i < programstate.countries; i++)
 	{
 		dxcc_data *d = g_ptr_array_index (dxcc, i);
@@ -258,7 +258,7 @@ void on_awards_dxcc_activate (GtkMenuItem *menuitem, gpointer user_data)
 			}
 			else if (dxcc_w[i][j] > 0)
 			{
-				gchar *str = g_strdup_printf ("%d", dxcc_w[i][j]);
+				char *str = g_strdup_printf ("%d", dxcc_w[i][j]);
 				gtk_list_store_set (GTK_LIST_STORE (model), &iter, j+1, str, -1);
 				g_free (str);
 			}

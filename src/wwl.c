@@ -47,10 +47,10 @@ extern GtkWidget *scorewindow;
  * returns: 1 on error, 0 on succes
  * 
  * */
-gint
-locatordistance (gchar *my, gchar *dx, gint *dist, gint *bearing)
+int
+locatordistance (gchar *my, gchar *dx, int *dist, int *bearing)
 {
-	gint retcode;
+	int retcode;
 	gdouble latmy, lonmy, latdx, londx, d, b;
      
 	retcode = locator2longlat (&lonmy, &latmy, my);
@@ -80,7 +80,7 @@ updatelocatorframe (gchar * locator)
 {
 	gchar *locatorlabeltext, *framelabeltext;
 	GtkWidget *locatorframe, *framelabel, *locatorlabel;
-	gint p, m, result, l;
+	int p, m, result, l;
 
 	/* initialize */
 	locatorframe = lookup_widget (scorewindow, "locatorframe");
@@ -99,7 +99,7 @@ updatelocatorframe (gchar * locator)
 					("%d km, %d\xc2\xb0", p, l);
 			else
 			{
-				m = (gint) (p / 1.609);
+				m = (int) (p / 1.609);
 				locatorlabeltext = g_strdup_printf
 					("%d m, %d\xc2\xb0", m, l);
 			}

@@ -51,8 +51,8 @@ on_log_select_row (GtkTreeSelection *selection, gpointer user_data)
 		*incheckbutton, *powerentry, *nameentry, *qthentry, *locatorentry,
 		*unknownentry1, *unknownentry2, *modeoptionmenu, *bandoptionmenu,
 		*qsoframe, *framelabel, *awardsentry;
-	gchar *frametext, *entry, *temp;
-	gint i, page, bandenum, modeenum;
+	char *frametext, *entry, *temp;
+	int i, page, bandenum, modeenum;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	logtype *logw;

@@ -32,10 +32,10 @@
 
 extern GtkWidget *mainwindow;
 
-void warningdialog (gchar *title, gchar *warning, gchar *dialogimage)
+void warningdialog (char *title, char *warning, char *dialogimage)
 {
 	GtkWidget *warningdialog, *warninglabel, *vbox, *image, *ok_button;
-	gint response;
+	int response;
 
 	warningdialog = gtk_dialog_new_with_buttons (title,
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, NULL);

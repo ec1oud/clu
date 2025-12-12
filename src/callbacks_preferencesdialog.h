@@ -24,16 +24,16 @@
  * callbacks_preferencesdialog.h
  */
 
-void set_autosave (gint value, gint saving);
-void set_path (gchar * pathstr);
-void set_backuppath (gchar * pathstr);
-void set_logstoload (gchar * logs);
-void set_qthlocator (gchar * locator);
-void set_callsign (gchar * callsign);
-void set_clock (gboolean on);
-gint whichhamlibwidgets (gboolean frequency, gboolean smeter);
-gboolean hamlib_changed (gint hamlibwidgets, gint rigid, gchar *device, 
-	gint polltime, gchar *rigconf);
+void set_autosave (int value, int saving);
+void set_path (char * pathstr);
+void set_backuppath (char * pathstr);
+void set_logstoload (char * logs);
+void set_qthlocator (char * locator);
+void set_callsign (char * callsign);
+void set_clock (bool on);
+int whichhamlibwidgets (bool frequency, bool smeter);
+bool hamlib_changed (int hamlibwidgets, int rigid, char *device, 
+	int polltime, char *rigconf);
 void on_backupradiobutton_toggled (GtkToggleButton * togglebutton,
 	gpointer user_data);
 void on_bandsradiobutton_toggled (GtkToggleButton * togglebutton,

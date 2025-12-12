@@ -79,7 +79,7 @@ void savekeyer (void)
 }
 
 /* delete keyer window and save settings, close connection to cwdaemon */
-static gboolean
+static bool
 on_keyerwindow_delete_event (GtkWidget * widget, GdkEvent * event,
 	gpointer user_data)
 {
@@ -94,8 +94,8 @@ on_keyerwindow_delete_event (GtkWidget * widget, GdkEvent * event,
 void cw (GtkButton *button, gpointer user_data)
 {
 	GtkWidget *entry, *callentry, *count;
-	gchar *entryname, *sendstr, *call, *countstr, *lastmsg;
-	gint i, result = 0, fkey;
+	char *entryname, *sendstr, *call, *countstr, *lastmsg;
+	int i, result = 0, fkey;
 
 	fkey = GPOINTER_TO_INT(user_data);
 	if (fkey < 13)
@@ -163,14 +163,14 @@ void cw (GtkButton *button, gpointer user_data)
 /* stop button clicked */
 static void stop (GtkButton *button, gpointer user_data)
 {
-	gint result;
+	int result;
 
 	result = tonetkeyer (K_ABORT, NULL);
 }
 
 /* catch keys when keyerwindow has focus, so we can use F1-F12, ESC and 
    PgUp, PgDn */
-static gboolean
+static bool
 on_keyerwindow_keypress (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	GtkWidget *stopbutton,
@@ -264,8 +264,8 @@ on_keyerwindow_keypress (GtkWidget *widget, GdkEventKey *event, gpointer data)
 static void
 change_wpm (GtkSpinButton *wpm, gpointer user_data)
 {
-	gint cwspeed, result;
-	gchar *value;
+	int cwspeed, result;
+	char *value;
 
 	cwspeed = gtk_spin_button_get_value (wpm);
 	value = g_strdup_printf ("%d", cwspeed);
@@ -275,10 +275,10 @@ change_wpm (GtkSpinButton *wpm, gpointer user_data)
 
 /* send typed text */
 static void
-send_text (GtkTextBuffer * buffer, GtkTextIter * iter, gchar * text,
-	gint len, gpointer user_data)
+send_text (GtkTextBuffer * buffer, GtkTextIter * iter, char * text,
+	int len, gpointer user_data)
 {
-	gint result;
+	int result;
 
 	result = tonetkeyer (K_MESSAGE, text);
 	if (result < 0) update_statusbar (_("Send to keyer has failed"));
@@ -287,7 +287,7 @@ send_text (GtkTextBuffer * buffer, GtkTextIter * iter, gchar * text,
 static void
 mode_change(GtkComboBox *widget, gpointer user_data)
 {
-	gint active;
+	int active;
 
 	active = gtk_combo_box_get_active (widget);
 	if (active == 0)
@@ -318,8 +318,8 @@ void on_keyer_activate (GtkAction *action, gpointer user_data)
 	GtkObject *wpm_adj, *count_adj;
 	GdkPixbuf *keyer_icon_pixbuf;
 	GtkTextBuffer *buffer;
-	gint result = 0;
-	gchar *speed;
+	int result = 0;
+	char *speed;
 
 	if (keyerwindow)
 	{

@@ -44,12 +44,12 @@
  * note: longitude = E/W, latitude = N/S, N and E are positive
  * 
  */
-gchar *
-gcircle (gint units, gdouble latmy, gdouble lonmy, gdouble latdx, gdouble londx)
+char *
+gcircle (int units, gdouble latmy, gdouble lonmy, gdouble latdx, gdouble londx)
 {
 	gdouble distsp, bsp, distlp, blp;
-	gchar *result, *unitsstr;
-	gint retcode;
+	char *result, *unitsstr;
+	int retcode;
 
 	result = g_strdup ("");
 

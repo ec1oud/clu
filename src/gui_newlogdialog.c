@@ -52,8 +52,8 @@ extern GtkUIManager *ui_manager;
 static void
 on_newlogentry_changed (GtkEditable * editable, gpointer user_data)
 {
-	gchar *entry, *end, *j;
-	gint len, pos;
+	char *entry, *end, *j;
+	int len, pos;
 	
 	entry = gtk_editable_get_chars (editable, 0, -1);
 	if ((len = strlen(entry)) > 0)
@@ -83,11 +83,11 @@ void
 on_menu_new_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
 	GtkWidget *newlogdialog, *vbox, *label, *newlogentry, *clearmenu;
-	gchar *entry, *filename, *xlogbackupfile;
+	char *entry, *filename, *xlogbackupfile;
 	logtype *logwindow = NULL;
-	gint i, response;
+	int i, response;
 	LOGDB *lp;
-	gboolean logopen = FALSE, logexist = FALSE;
+	bool logopen = FALSE, logexist = FALSE;
 
 	newlogdialog = gtk_dialog_new_with_buttons (_("xlog - new log"),
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,

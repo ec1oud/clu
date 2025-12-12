@@ -24,4 +24,4 @@
  * gc.h
  */
 
-gchar *gcircle (gint units, gdouble latmy, gdouble lonmy, gdouble latdx, gdouble londx);
+char *gcircle (int units, gdouble latmy, gdouble lonmy, gdouble latdx, gdouble londx);

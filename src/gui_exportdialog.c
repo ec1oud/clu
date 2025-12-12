@@ -48,15 +48,15 @@ extern preferencestype preferences;
 void
 on_menu_export_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
-	gint index, page, export_response, exportwarning_response;
+	int index, page, export_response, exportwarning_response;
 	GtkWidget *exportdialog, *filemenu, *hbox, 
 		*label, *qsolabel, *lowqsoentry, *highqsoentry, *dash,
 		*exportwarningdialog, *exportwarninglabel;
 	logtype *logwindow;
-	gchar *temp, *selection;
-	gchar *sellog;
-	gint type;
-	gint highqso, lowqso;
+	char *temp, *selection;
+	char *sellog;
+	int type;
+	int highqso, lowqso;
 
 
 	page = gtk_notebook_get_current_page (GTK_NOTEBOOK(mainnotebook));

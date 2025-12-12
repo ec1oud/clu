@@ -30,7 +30,7 @@
 
 #include "awards_enum.h"
 
-guint cont_to_enum (gchar *str)
+uint cont_to_enum (char *str)
 {
 	if (strlen (str) < 2) return 99;
 	switch (str[0])
@@ -52,7 +52,7 @@ guint cont_to_enum (gchar *str)
 	return 99;
 }
 
-gchar *enum_to_cont (guint cont)
+char *enum_to_cont (uint cont)
 {
 	switch (cont)
 	{
@@ -66,7 +66,7 @@ gchar *enum_to_cont (guint cont)
 	return g_strdup("--");
 }
 
-guint state_to_enum (gchar *str)
+uint state_to_enum (char *str)
 {
 	if (strlen (str) < 2) return 99;
 	switch (str[0])
@@ -228,7 +228,7 @@ guint state_to_enum (gchar *str)
 
 
 /* Must be in same order as awards_enum.h */
-static const gchar *usa_states[MAX_STATES] = {
+static const char *usa_states[MAX_STATES] = {
 	"AL",
 	"AK",
 	"AZ",
@@ -281,7 +281,7 @@ static const gchar *usa_states[MAX_STATES] = {
 	"WY"
 };
 
-gchar *enum_to_state (guint st)
+char *enum_to_state (uint st)
 {
 	if (st < MAX_STATES)
 		return g_strdup(usa_states[st]);
@@ -289,9 +289,9 @@ gchar *enum_to_state (guint st)
 	return NULL;
 }
 
-guint iota_to_num (gchar *str)
+uint iota_to_num (char *str)
 {
-	guint cont;
+	uint cont;
 
 	if (!str || strlen (str) < 6 || str[2] != '-') return NOT_AN_IOTA;
 
@@ -316,9 +316,9 @@ guint iota_to_num (gchar *str)
 	return cont*1000 + (atoi(str+3)%1000);
 }
 
-gchar *num_to_iota (guint num)
+char *num_to_iota (uint num)
 {
-	const gchar *cont;
+	const char *cont;
 
 	if (num == NOT_AN_IOTA) return NULL;
 	switch (num/1000)
@@ -336,16 +336,16 @@ gchar *num_to_iota (guint num)
 }
 
 /* locator runs from AA00 to RR99 and returns 010100 to 181899 */
-gint locator_to_num (gchar *str)
+int locator_to_num (char *str)
 {
 	if (!str || strlen (str) < 4) return NOT_A_LOCATOR;
 
-	gint first;
+	int first;
 	if (g_ascii_islower(str[0]))
 		first = str[0] - 96;
 	else
 		first = str[0] - 64;
-	gint second;
+	int second;
 	if (g_ascii_islower(str[1]))
 		second = str[1] - 96;
 	else
@@ -354,15 +354,15 @@ gint locator_to_num (gchar *str)
 	return first*10000 + second*100 + (str[2]-48)*10 + str[3]-48;
 }
 
-gchar *num_to_locator (gint num)
+char *num_to_locator (int num)
 {
-	gchar *locator = g_new0 (gchar, 4);
+	char *locator = g_new0 (char, 4);
 
-	gint first = num/10000;
+	int first = num/10000;
 	num = num - first * 10000;
-	gint second = num/100;
+	int second = num/100;
 	num = num - second * 100;
-	gint third = num/10;
+	int third = num/10;
 	num = num - third * 10;
 
 	locator[0] = first + 96;

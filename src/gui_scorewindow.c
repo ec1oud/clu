@@ -39,7 +39,7 @@ extern preferencestype preferences;
 
 GtkWidget *scorewindow;
 
-static gboolean
+static bool
 on_scorewindow_delete_event (GtkWidget * widget, GdkEvent * event,	gpointer user_data)
 {
 	GtkWidget *score;
@@ -53,7 +53,7 @@ on_scorewindow_delete_event (GtkWidget * widget, GdkEvent * event,	gpointer user
 }
 
 static void
-notebook_remove_awardpage (GtkWidget *scorewindow, GtkWidget *awardsnotebook, const gchar *windowname)
+notebook_remove_awardpage (GtkWidget *scorewindow, GtkWidget *awardsnotebook, const char *windowname)
 {
 	GtkWidget *scrolledwindow = lookup_widget (scorewindow, windowname);
 	gtk_notebook_remove_page (GTK_NOTEBOOK(awardsnotebook),
@@ -61,7 +61,7 @@ notebook_remove_awardpage (GtkWidget *scorewindow, GtkWidget *awardsnotebook, co
 }
 
 static void
-notebook_append_awardpage (GtkWidget *scorewindow, GtkWidget *awardsnotebook, const gchar *treeviewname, const gchar *tabname, const gchar *windowname)
+notebook_append_awardpage (GtkWidget *scorewindow, GtkWidget *awardsnotebook, const char *treeviewname, const char *tabname, const char *windowname)
 {
 	GtkWidget *tablabel, *awardtreeview, *scrolledwindow;
 	GtkListStore *awardmodel;
@@ -392,8 +392,8 @@ create_scorewindow (void)
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
 	GtkTreeIter iter;
-	gchar *temp;
-	gint awardscount, i;
+	char *temp;
+	int awardscount, i;
 
 	scorewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_accept_focus (GTK_WINDOW(scorewindow), FALSE);
@@ -741,7 +741,7 @@ create_scorewindow (void)
 void
 on_scoring_activate (GtkAction *action, gpointer user_data)
 {
-	gboolean status;
+	bool status;
 
 	status = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 	if (status)

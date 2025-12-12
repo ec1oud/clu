@@ -50,8 +50,8 @@ on_mergelogbutton_clicked (GtkButton * button, gpointer user_data)
 {
 	GtkWidget *fileselection, *log1entry, *log2entry;
 	GtkFileFilter *filter;
-	gchar *sellog;
-	gint response;
+	char *sellog;
+	int response;
 
 	fileselection = gtk_file_chooser_dialog_new (_("xlog - select a log"),
     	GTK_WINDOW(mainwindow), GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, 
@@ -89,8 +89,8 @@ on_menu_merge_activate (GtkMenuItem * menuitem, gpointer user_data)
 	GtkWidget *vbox,
 		*label1, *log1entry, *log1hbox, *log1button, *hsep,
 		*label2, *log2entry, *log2hbox, *log2button;
-	gint response;
-	gchar *log1, *log2, *logn, *logn1, *logn2, *temp;
+	int response;
+	char *log1, *log2, *logn, *logn1, *logn2, *temp;
 	LOGDB *lp1, *lp2;
 	logtype *logw;
 

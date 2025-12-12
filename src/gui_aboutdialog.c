@@ -44,7 +44,7 @@ handle_url (GtkAboutDialog *about, const char *link, gpointer data)
 static void
 handle_email (GtkAboutDialog *about, const char *link, gpointer data)
 {
-	gchar *command[] = {"xdg-email", NULL, NULL};
+	char *command[] = {"xdg-email", NULL, NULL};
 
 	command[1] = g_strdup_printf ("mailto:%s", link);
 	g_spawn_async
@@ -55,10 +55,10 @@ handle_email (GtkAboutDialog *about, const char *link, gpointer data)
 void
 on_menu_about_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
-	const gchar *authors[] = { "Andy Stewart KB1OIQ <kb1oiq@arrl.net>",
+	const char *authors[] = { "Andy Stewart KB1OIQ <kb1oiq@arrl.net>",
 		"Joop Stakenborg PG4I <pg4i@amsat.org>",
 		"Stephane Fillod F8CFE <f8cfe@free.fr>", NULL };
-	const gchar *documenters[] = { "Andy Stewart KB1OIQ <kb1oiq@arrl.net>",
+	const char *documenters[] = { "Andy Stewart KB1OIQ <kb1oiq@arrl.net>",
 				       "Joop Stakenborg PG4I <pg4i@amsat.org>",
 				       "Chris Story K6RWJ <ke6rwj@gmail.com>", 
 				       NULL };
@@ -68,8 +68,8 @@ on_menu_about_activate (GtkMenuItem * menuitem, gpointer user_data)
 	gtk_about_dialog_set_url_hook (handle_url, NULL, NULL);
 	gtk_about_dialog_set_email_hook (handle_email, NULL, NULL);
 
-	gint ctyversion = readctyversion ();
-	gchar *str;
+	int ctyversion = readctyversion ();
+	char *str;
 	if (ctyversion > 0)
 		str = g_strdup_printf ("%s\n%s %d", 
 		_("logbook program for amateur radio operators"),

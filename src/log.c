@@ -48,14 +48,14 @@
 extern GtkWidget *mainnotebook;
 extern programstatetype programstate;
 extern preferencestype preferences;
-extern gchar **qso;
+extern char **qso;
 
 /* backup a log */
 void
-backuplog (gchar * filename, gchar * backupfilename)
+backuplog (char * filename, char * backupfilename)
 {
-	gint ch;
-	gchar *msg;
+	int ch;
+	char *msg;
 	FILE *in, *out;
 
 	in = g_fopen (filename, "r");
@@ -80,10 +80,10 @@ backuplog (gchar * filename, gchar * backupfilename)
 }
 
 /* extract name of the log from filename, returned string should be free'd */
-gchar *
-logname (gchar * filename)
+char *
+logname (char * filename)
 {
-	gchar *logname, *basen, **split;
+	char *logname, *basen, **split;
 
 	basen = g_path_get_basename (filename);
 	split = g_strsplit (basen, ".", -1);
@@ -100,16 +100,16 @@ logname (gchar * filename)
  * a warning dialog. Only date, name, QTH, freefield1, freefield2 and the
  * remarks field are checked for locales.
  */
-gint
+int
 fillin_list (LOGDB * handle, qso_t q[], gpointer arg)
 {
 	GtkTreeIter iter;
 	GtkListStore *model;
 	logtype *logw = (logtype *) arg;
-	gchar *date = NULL, *name = NULL, *qth = NULL, *u1 = NULL,
+	char *date = NULL, *name = NULL, *qth = NULL, *u1 = NULL,
 		*u2 = NULL, *remarks = NULL;
 	GError *error;
-	gint i;
+	int i;
 	GtkTreePath *path;
 
 	programstate.qsos++;
@@ -283,7 +283,7 @@ static logtype *
 new_logwindow (void)
 {
 	logtype *newlog;
-	gint i;
+	int i;
 
 	newlog = g_new0 (struct logtype, 1);
 	newlog->scrolledwindow = NULL;
@@ -303,11 +303,11 @@ new_logwindow (void)
 
 /* open a log and return a struct */
 logtype *
-openlogwindow (LOGDB * lp, gchar * name, gint page)
+openlogwindow (LOGDB * lp, char * name, int page)
 {
 	logtype *logwindow;
-	gint i, j;
-	gchar *logn, *labelname;
+	int i, j;
+	char *logn, *labelname;
 	GtkCellRenderer *renderer, *brenderer;
 	GtkTreeViewColumn *column;
 	GObject *selection;
@@ -408,22 +408,22 @@ openlogwindow (LOGDB * lp, gchar * name, gint page)
 
 /* close child process when finished */
 #ifndef G_OS_WIN32
-static gboolean
+static bool
 childcheck (void)
 {
-  gint status, childpid;
+  int status, childpid;
 
   childpid = waitpid (-1, &status, WNOHANG);
   return (WIFEXITED(status) == 0);
 }
 #endif
 
-typedef gchar *item_t[QSO_FIELDS];
+typedef char *item_t[QSO_FIELDS];
 static int savelog_compar_groupbycall(const void *b, const void *a)
 {
-	const gchar **item_a, **item_b;
-	item_a = (const gchar **)a;
-	item_b = (const gchar **)b;
+	const char **item_a, **item_b;
+	item_a = (const char **)a;
+	item_b = (const char **)b;
 
 	return strcmp(item_a[CALL], item_b[CALL]);
 }
@@ -432,10 +432,10 @@ static int savelog_compar_groupbycall(const void *b, const void *a)
 extern GPtrArray *dxcc;
 static int savelog_compar_sortbydxcc(const void *b, const void *a)
 {
-	gint rescmp;
-	gchar **item_a, **item_b;
-	item_a = (gchar **)a;
-	item_b = (gchar **)b;
+	int rescmp;
+	char **item_a, **item_b;
+	item_a = (char **)a;
+	item_b = (char **)b;
 
 	struct info info_a, info_b;
 	info_a = lookupcountry_by_callsign (item_a[CALL]);
@@ -452,14 +452,14 @@ static int savelog_compar_sortbydxcc(const void *b, const void *a)
 
 /* saving of the log */
 void
-savelog (gpointer arg, gchar * logfile, gint type, gint first, gint last)
+savelog (gpointer arg, char * logfile, int type, int first, int last)
 {
 	LOGDB *lp;
-	gint i, j, k, pid, exported;
-	const gchar *label;	
-	gchar *pathstr;
+	int i, j, k, pid, exported;
+	const char *label;	
+	char *pathstr;
 	item_t *sorteditems;
-	gint fields[QSO_FIELDS], widths[QSO_FIELDS];
+	int fields[QSO_FIELDS], widths[QSO_FIELDS];
 	logtype *logw = (logtype *) arg;
 	GtkTreeViewColumn *column;
 	GtkTreeModel *model;
@@ -520,9 +520,9 @@ savelog (gpointer arg, gchar * logfile, gint type, gint first, gint last)
 			if (type == TYPE_LABELS)
 			{
 				if (preferences.tsvsortbydxcc)
-					qsort(sorteditems, exported, sizeof(gchar*)*QSO_FIELDS, &savelog_compar_sortbydxcc);
+					qsort(sorteditems, exported, sizeof(char*)*QSO_FIELDS, &savelog_compar_sortbydxcc);
 				else if (preferences.tsvgroupbycallsign > 1)
-					qsort(sorteditems, exported, sizeof(gchar*)*QSO_FIELDS, &savelog_compar_groupbycall);
+					qsort(sorteditems, exported, sizeof(char*)*QSO_FIELDS, &savelog_compar_groupbycall);
 			}
 	
 			/* QSO's have been sorted (or not), now save them */
@@ -549,16 +549,16 @@ savelog (gpointer arg, gchar * logfile, gint type, gint first, gint last)
 
 /* look for logs in dir */
 GPtrArray*
-getxlogs (gchar *path, gchar *patt)
+getxlogs (char *path, char *patt)
 {
 	GError *error  = NULL;
 
  	GDir *dir = g_dir_open (path, 0, &error);
-	gchar *pattern = g_strdup_printf ("%s.xlog", patt);
+	char *pattern = g_strdup_printf ("%s.xlog", patt);
  	GPtrArray *arr = g_ptr_array_new ();
 	if (!error)
 	{
-		const gchar *dirname = g_dir_read_name (dir);
+		const char *dirname = g_dir_read_name (dir);
 		while (dirname)
 		{
 			if (g_pattern_match_simple (pattern, dirname))

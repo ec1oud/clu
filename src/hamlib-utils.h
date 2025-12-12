@@ -21,11 +21,11 @@
 */
 
 void stop_hamlib (void);
-gboolean start_hamlib (gint rigid, gchar *device, gint debugmode, gint timervalue);
+bool start_hamlib (int rigid, char *device, int debugmode, int timervalue);
 GList *riglist_get_list (void);
 GList *rig_get_list (void);
-gint get_rigid (gchar * rig);
-gchar *rigmode (gint mode);
+int get_rigid (char * rig);
+char *rigmode (int mode);
 void get_powerlevel(void);
 void get_mode(void);
 void get_frequency(void);
@@ -33,9 +33,9 @@ void set_frequency (long long freq);
 void get_ptt(void);
 void get_smeter(void);
 void get_riginfo (void);
-gint poll_riginfo (void);
-void sethamlibwidgets (gint status, gboolean initsmeter);
+int poll_riginfo (void);
+void sethamlibwidgets (int status, bool initsmeter);
 GString *convert_frequency (void);
-gboolean on_smeterdrawingarea_configure_event (GtkWidget * widget, GdkEventConfigure * event, gpointer user_data);
-gboolean on_smeterdrawingarea_expose_event (GtkWidget * widget, GdkEventExpose * event, gpointer user_data);
+bool on_smeterdrawingarea_configure_event (GtkWidget * widget, GdkEventConfigure * event, gpointer user_data);
+bool on_smeterdrawingarea_expose_event (GtkWidget * widget, GdkEventExpose * event, gpointer user_data);
 void on_mainwindow_show (GtkWidget * widget, gpointer user_data);

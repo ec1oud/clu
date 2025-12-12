@@ -39,11 +39,11 @@ extern preferencestype preferences;
 /* configure "Tabs" menu */
 void set_tabs_menu (void)
 {
-	gchar *menupath;
+	char *menupath;
 	GtkWidget *menuitem;
 	GList *children, *cur;
 	logtype *logw;
-	gint i;
+	int i;
 
 	for (i = 1; i < 11; i++)
 	{
@@ -75,7 +75,7 @@ void set_tabs_menu (void)
 
 void unselect_logs (void)
 {
-	gint i;
+	int i;
 	logtype *logw;
 	GtkTreeIter selected;
 	GtkTreeModel *model;
@@ -92,10 +92,10 @@ void unselect_logs (void)
 
 /* set the log font */
 void
-set_font (gchar * font)
+set_font (char * font)
 {
 	PangoFontDescription *font_description;
-	gint i;
+	int i;
 	logtype *logw;
 
 	font_description = pango_font_description_from_string (font);
@@ -110,11 +110,11 @@ set_font (gchar * font)
 
 /* activate an item in a combobox by band enumeration */
 void
-activate_bandoption_by_enum (GtkWidget *combo, gchar *prefs, guint enumband)
+activate_bandoption_by_enum (GtkWidget *combo, char *prefs, uint enumband)
 {
-	gchar **spl = NULL;
-	guint index = 0;
-	gint prefsband;
+	char **spl = NULL;
+	uint index = 0;
+	int prefsband;
 
 	spl = g_strsplit (prefs, ",", 0);
 	for (;;)
@@ -135,10 +135,10 @@ activate_bandoption_by_enum (GtkWidget *combo, gchar *prefs, guint enumband)
 
 /* activate an item in the mode combobox */
 void
-activate_modeoption_by_enum (GtkWidget *combo, gchar *prefs, guint enummode)
+activate_modeoption_by_enum (GtkWidget *combo, char *prefs, uint enummode)
 {
-	gchar **spl = NULL;
-	guint index = 0, prefsmode;
+	char **spl = NULL;
+	uint index = 0, prefsmode;
 
 	spl = g_strsplit (prefs, ",", 0);
 	for (;;)
@@ -162,14 +162,14 @@ activate_modeoption_by_enum (GtkWidget *combo, gchar *prefs, guint enummode)
  * the initial exchange message. In case the mode field is empty return
  * some fallbacks depending on the reportlength
  */
-gchar*
+char*
 get_last_msg (void)
 {
 	GtkTreeIter iter;
-	gchar *rst, *mode, *suffix;
-	gchar *res = preferences.initlastmsg;
+	char *rst, *mode, *suffix;
+	char *res = preferences.initlastmsg;
 
-	guint page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
+	uint page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 	/* check if there is a log open */
 	if (page > -1)
 	{
@@ -181,7 +181,7 @@ get_last_msg (void)
 		gtk_tree_model_get (GTK_TREE_MODEL(model), &iter, MODE, &mode, -1);
 		if (strlen(mode) > 0)
 		{
-			guint modeenum = mode2enum (mode);
+			uint modeenum = mode2enum (mode);
 			suffix = rst + reportlen (modeenum);
 		}
 		else

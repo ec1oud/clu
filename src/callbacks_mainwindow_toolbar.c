@@ -46,18 +46,18 @@
 extern GtkWidget *mainwindow, *scorewindow, *keyerwindow, *locatormap;
 extern GtkWidget *mainnotebook;
 extern preferencestype preferences;
-extern gchar **bandsplit;
-extern gchar **modesplit;
-extern gchar **qso;
+extern char **bandsplit;
+extern char **modesplit;
+extern char **qso;
 extern GList *logwindowlist;
-extern gushort dxcc_w[400][MAX_BANDS + 1];
-extern gushort dxcc_c[400][MAX_BANDS + 1];
-extern gushort wac_w[MAX_CONTINENTS][MAX_BANDS + 1];
-extern gushort wac_c[MAX_CONTINENTS][MAX_BANDS + 1];
-extern gushort was_w[MAX_STATES][MAX_BANDS + 1];
-extern gushort was_c[MAX_STATES][MAX_BANDS + 1];
-extern gushort waz_w[MAX_ZONES][MAX_BANDS + 1];
-extern gushort waz_c[MAX_ZONES][MAX_BANDS + 1];
+extern ushort dxcc_w[400][MAX_BANDS + 1];
+extern ushort dxcc_c[400][MAX_BANDS + 1];
+extern ushort wac_w[MAX_CONTINENTS][MAX_BANDS + 1];
+extern ushort wac_c[MAX_CONTINENTS][MAX_BANDS + 1];
+extern ushort was_w[MAX_STATES][MAX_BANDS + 1];
+extern ushort was_c[MAX_STATES][MAX_BANDS + 1];
+extern ushort waz_w[MAX_ZONES][MAX_BANDS + 1];
+extern ushort waz_c[MAX_ZONES][MAX_BANDS + 1];
 
 /* add a new qso to the log */
 void
@@ -73,9 +73,9 @@ on_abutton_clicked (GtkButton * button, gpointer user_data)
 		*unknown2hbox, *unknownentry2, *qslhbox, *remarksvbox, *framelabel;
 	GtkTextBuffer *b;
 	GtkTextIter start, end;
-	gchar *temp, *label;
-	gint bandindex, modeindex, i = 0, page, f, kms, l, result;
-	guint st, zone, cont, iota;
+	char *temp, *label;
+	int bandindex, modeindex, i = 0, page, f, kms, l, result;
+	uint st, zone, cont, iota;
 	logtype *logw = NULL;
 	GtkTreeIter iter, selected;
 	GtkTreeModel *model;
@@ -244,7 +244,7 @@ on_abutton_clicked (GtkButton * button, gpointer user_data)
 						if (preferences.units == 1)
 							qso[U1] = g_strdup_printf ("%d km", kms);
 						else
-							qso[U1] = g_strdup_printf ("%d m", (gint) (kms/1.609));
+							qso[U1] = g_strdup_printf ("%d m", (int) (kms/1.609));
 					}
 					if (gtk_widget_get_visible (unknown2hbox))
 					{
@@ -286,7 +286,7 @@ on_abutton_clicked (GtkButton * button, gpointer user_data)
 		if (gtk_widget_get_visible(scorewindow))
 		{
 			/* update worked/confirmed array */
-			gchar *result = valid_awards_entry (qso[AWARDS], &st, &zone, &cont, &iota);
+			char *result = valid_awards_entry (qso[AWARDS], &st, &zone, &cont, &iota);
 			if (result)
 			{
 				lookup = lookupcountry_by_prefix (result);
@@ -295,7 +295,7 @@ on_abutton_clicked (GtkButton * button, gpointer user_data)
 			else
 				lookup = lookupcountry_by_callsign (qso[CALL]);
 			f = freq2enum (qso[BAND]);
-			gboolean qslconfirmed = qslreceived (qso[QSLIN]);
+			bool qslconfirmed = qslreceived (qso[QSLIN]);
 			if (preferences.scoringbands[f] == 1)
 			{
 				if (lookup.country > 0)
@@ -371,7 +371,7 @@ on_abutton_clicked (GtkButton * button, gpointer user_data)
 			{
 				if (qso[LOCATOR] && (strlen(qso[LOCATOR]) > 0))
 				{
-					gboolean qslconfirmed = qslreceived (qso[QSLIN]);
+					bool qslconfirmed = qslreceived (qso[QSLIN]);
 					f = freq2enum (qso[BAND]);
 					loc_new_qso(qso[LOCATOR], f, qslconfirmed);
 					if (preferences.awardsloc == 1)
@@ -429,10 +429,10 @@ on_dbutton_clicked (GtkButton * button, gpointer user_data)
 		*nameentry, *qthentry, *unknownentry1, *unknownentry2,
 		*locatorentry, *incheckbutton, *outcheckbutton, *awardsentry;
 	GtkTextBuffer *b;
-	gchar *qsonumber, *label, *call, *freq, *awards, *temp, *locator;
-	gboolean qslin;
-	gint i, page, f;
-	guint st, zone, cont, iota;
+	char *qsonumber, *label, *call, *freq, *awards, *temp, *locator;
+	bool qslin;
+	int i, page, f;
+	uint st, zone, cont, iota;
 	logtype *logw;
 	GtkTreeIter selected, iter;
 	GtkTreeModel *model;
@@ -532,7 +532,7 @@ on_dbutton_clicked (GtkButton * button, gpointer user_data)
 			if (gtk_widget_get_visible(scorewindow))
 			{
 				/* update worked/confirmed array */
-				gchar *result = valid_awards_entry (awards, &st, &zone, &cont, &iota);
+				char *result = valid_awards_entry (awards, &st, &zone, &cont, &iota);
 				if (result)
 				{
 					lookup = lookupcountry_by_prefix (result);
@@ -619,7 +619,7 @@ on_dbutton_clicked (GtkButton * button, gpointer user_data)
 				{
 					if (qso[LOCATOR] && (strlen(qso[LOCATOR]) > 0))
 					{
-						gboolean qslconfirmed = qslreceived (qso[QSLIN]);
+						bool qslconfirmed = qslreceived (qso[QSLIN]);
 						f = freq2enum (qso[BAND]);
 						loc_new_qso(qso[LOCATOR], f, qslconfirmed);
 						if (preferences.awardsloc == 1)
@@ -661,15 +661,15 @@ on_ubutton_clicked (GtkButton * button, gpointer user_data)
 		*framelabel;
 	GtkTextBuffer *b;
 	GtkTextIter start, end;
-	gint bandindex, modeindex, i = 0, page, fr, froption, result, kms, l;
-	guint st, zone, cont, iota;
-	gchar *temp, *label, *logcall, *logfreq, *logqslin, *logawards, *logtime,
+	int bandindex, modeindex, i = 0, page, fr, froption, result, kms, l;
+	uint st, zone, cont, iota;
+	char *temp, *label, *logcall, *logfreq, *logqslin, *logawards, *logtime,
 		*logendtime, *loglocator;
 	logtype *logw;
 	GtkTreeIter selected;
 	GtkTreeModel *model;
 	struct info lookup;
-	gboolean qslconfirmed;
+	bool qslconfirmed;
 
 	page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
 
@@ -870,7 +870,7 @@ on_ubutton_clicked (GtkButton * button, gpointer user_data)
 							if (preferences.units == 1)
 								qso[U1] = g_strdup_printf ("%d km", kms);
 							else
-								qso[U1] = g_strdup_printf ("%d m", (gint) (kms/1.609));
+								qso[U1] = g_strdup_printf ("%d m", (int) (kms/1.609));
 						}
 						if (gtk_widget_get_visible (unknown2hbox))
 						{
@@ -908,7 +908,7 @@ on_ubutton_clicked (GtkButton * button, gpointer user_data)
 
 			if (gtk_widget_get_visible(scorewindow))
 			{ /* first we delete, then we add */
-				gchar *result = valid_awards_entry (logawards, &st, &zone, &cont, &iota);
+				char *result = valid_awards_entry (logawards, &st, &zone, &cont, &iota);
 				if (result)
 				{
 					lookup = lookupcountry_by_prefix (result);
@@ -1044,7 +1044,7 @@ on_ubutton_clicked (GtkButton * button, gpointer user_data)
 				{
 					if (qso[LOCATOR] && (strlen(qso[LOCATOR]) > 0))
 					{
-						gboolean qslconfirmed = qslreceived (logqslin);
+						bool qslconfirmed = qslreceived (logqslin);
 						fr = freq2enum (logfreq);
 						loc_del_qso(loglocator, fr, qslconfirmed);
 						fr = freq2enum (qso[BAND]);

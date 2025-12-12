@@ -28,9 +28,9 @@
 /* struct for remote data state */
 typedef struct
 {
-	gint version;
+	int version;
 	gchar *program;
-	gint nr;
+	int nr;
 }
 remotetype;
 
@@ -41,12 +41,12 @@ typedef struct
 	gchar mtext[1024];
 } msgtype;
 
-gint remote_entry_7311 (void);
+int remote_entry_7311 (void);
 
-gboolean socket_entry_2333 (GIOChannel * channel, GIOCondition cond, gpointer data);
-gboolean socket_entry_7311 (GIOChannel * channel, GIOCondition cond, gpointer data);
+bool socket_entry_2333 (GIOChannel * channel, GIOCondition cond, gpointer data);
+bool socket_entry_7311 (GIOChannel * channel, GIOCondition cond, gpointer data);
 
-gint remote_socket_setup_2333(void);
-gint remote_socket_setup_7311(void);
+int remote_socket_setup_2333(void);
+int remote_socket_setup_7311(void);
 
 gchar *extract_info(gchar *in);

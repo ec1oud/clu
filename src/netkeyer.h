@@ -31,11 +31,11 @@
 /* structure used for keyer state */
 typedef struct
 {
-	gboolean cqmode;
-	gboolean shortnr;
+	bool cqmode;
+	bool shortnr;
 }
 keyerstatetype;
 
-gint tonetkeyer (gint cw_op, gchar *cwmessage);
+int tonetkeyer (int cw_op, gchar *cwmessage);
 void netkeyer_close (void);
-gint netkeyer_init (void);
+int netkeyer_init (void);

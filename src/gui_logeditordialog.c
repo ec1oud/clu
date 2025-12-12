@@ -44,10 +44,10 @@ extern GtkWidget *mainnotebook;
 extern GList *logwindowlist;
 extern preferencestype preferences;
 
-static gint
+static int
 compare_fields (void *f1, void *f2, gpointer user_data)
 {
-	gint *p = f1, *q = f2;
+	int *p = f1, *q = f2;
 	if (*p - *q == *p)
 		return 0;
 	else
@@ -61,9 +61,9 @@ compare_fields (void *f1, void *f2, gpointer user_data)
  * showhide: 1 = hide, 0 = show 
  */
 static void
-update_logfields (const gint column, gint logfields[], const gint showhide)
+update_logfields (const int column, int logfields[], const int showhide)
 {
-	gint i, j;
+	int i, j;
 
 	/*
 	 * Search for the column in the logfields array
@@ -141,8 +141,8 @@ on_menu_logeditor_activate (GtkMenuItem * menuitem, gpointer user_data)
 		*lehbox16, *leentry16, *lecombo16, *lee16,
 		*lehbox17, *lelabel17_1, *lecombo17, *lee17;
 	logtype *logw;
-	gchar *temp;
-	gint i, j, index, page, response, columns, fields[QSO_FIELDS];
+	char *temp;
+	int i, j, index, page, response, columns, fields[QSO_FIELDS];
 	GtkTreeViewColumn *column;
 
 	page = gtk_notebook_get_current_page (GTK_NOTEBOOK (mainnotebook));
@@ -720,7 +720,7 @@ on_menu_logeditor_activate (GtkMenuItem * menuitem, gpointer user_data)
 			}
 
 			/* sort the fields array */
-			g_qsort_with_data (fields, QSO_FIELDS, sizeof (gint),
+			g_qsort_with_data (fields, QSO_FIELDS, sizeof (int),
 				(GCompareDataFunc) compare_fields, NULL);
 
 			/*

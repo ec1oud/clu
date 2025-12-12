@@ -31,7 +31,7 @@
 #include "support.h"
 
 extern GtkWidget *mainwindow;
-extern gchar *xlogdir;
+extern char *xlogdir;
 GList *searchhistory;
 
 /*
@@ -40,7 +40,7 @@ GList *searchhistory;
 void
 loadhistory (void)
 {
-	gchar *historyfile, history[1024], **histsplit = NULL;
+	char *historyfile, history[1024], **histsplit = NULL;
 	FILE *fp;
 
 	historyfile = g_strconcat (xlogdir, G_DIR_SEPARATOR_S, "history", NULL);
@@ -71,10 +71,10 @@ loadhistory (void)
 void
 savehistory (void)
 {
-	gchar *historyfile;
+	char *historyfile;
 	FILE *fp;
-	guint i, n;
-	gchar *search;
+	uint i, n;
+	char *search;
 
 	historyfile = g_strconcat (xlogdir, G_DIR_SEPARATOR_S, "history", NULL);
 	if ((g_list_length (searchhistory) > 0))

@@ -50,13 +50,13 @@
 #endif
 
 struct rig_id {
-	const gint modelnr;
-	const gchar *modelname;
+	const int modelnr;
+	const char *modelname;
 };
 
 typedef struct
 {
-	gchar **xpmdata;
+	char **xpmdata;
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
 }
@@ -78,8 +78,8 @@ typeLevel S[] = {
 extern preferencestype preferences;
 extern programstatetype programstate;
 extern GtkWidget *mainwindow;
-gint svalue[10];
-gint hamlibtimer = -1;
+int svalue[10];
+int hamlibtimer = -1;
 RIG *myrig;
 GdkPixmap *pixmap = NULL;
 GList *rigs = NULL;
@@ -89,7 +89,7 @@ long long setfreq = 0;
 void
 loadsmeter (GtkWidget * widget)
 {
-	gint i = 0;
+	int i = 0;
 
 	while (S[i].xpmdata)
 		{
@@ -102,7 +102,7 @@ loadsmeter (GtkWidget * widget)
 
 /* copy a s-meter pixmap to pixmap depending on the value of smax */
 static void
-draw_smeter (gint value)
+draw_smeter (int value)
 {
 	GtkWidget *drawingarea;
 
@@ -130,10 +130,10 @@ stop_hamlib (void)
 }
 
 /* configure the hamlib port [TODO: add more string checks] */
-static gint set_conf(RIG *my_rig, gchar *parms)
+static int set_conf(RIG *my_rig, char *parms)
 {
-	gchar *p, *q, *n, *conf_parms;
-	gint ret;
+	char *p, *q, *n, *conf_parms;
+	int ret;
 
 	if (! strchr(parms, '=')) return -1;
 
@@ -154,11 +154,11 @@ static gint set_conf(RIG *my_rig, gchar *parms)
 }
 
 /* open rig and report errors, start timer when polling */
-gboolean
-start_hamlib (gint rigid, gchar *device, gint debugmode, gint timervalue)
+bool
+start_hamlib (int rigid, char *device, int debugmode, int timervalue)
 {
-	gint retcode;
-	gchar *temp;
+	int retcode;
+	char *temp;
 	
 	rig_set_debug (debugmode);
 	myrig = rig_init (rigid);
@@ -196,7 +196,7 @@ start_hamlib (gint rigid, gchar *device, gint debugmode, gint timervalue)
 }
 
 /* Append a new entry in the driver list. It is called by rig_list_foreach */
-static gint
+static int
 riglist_make_list (const struct rig_caps *caps, gpointer data)
 {
 	rigs = g_list_append (rigs, (gpointer) caps);
@@ -207,7 +207,7 @@ riglist_make_list (const struct rig_caps *caps, gpointer data)
 GList *
 rig_get_list (void)
 {
-	gint status;
+	int status;
 
 	// Bringing up the "Select a Radio" GUI would work the first time,
 	// but would crash if done twice in succession.  In the file
@@ -223,10 +223,10 @@ rig_get_list (void)
 }
 
 /* return string with mode */
-gchar *
-rigmode (gint mode)
+char *
+rigmode (int mode)
 {
-	gchar *rigmode;
+	char *rigmode;
 
 	switch (mode)
 	{
@@ -284,9 +284,9 @@ rigmode (gint mode)
 }
 
 static void
-hamlib_error (gint code)
+hamlib_error (int code)
 {
-	gchar *message;
+	char *message;
 
 	message = g_strdup_printf (_("Hamlib error %d: %s"), code,
 					 rigerror (code));
@@ -307,7 +307,7 @@ hamlib_error (gint code)
 void
 get_powerlevel (void)
 {
-	gint retcode, status;
+	int retcode, status;
 	value_t val;
 	GtkWidget *powerhbox;
 
@@ -330,7 +330,7 @@ get_powerlevel (void)
 void
 get_mode (void)
 {
-	gint retcode;
+	int retcode;
 	rmode_t rmode;
 	pbwidth_t width;
 
@@ -347,11 +347,11 @@ get_mode (void)
 void
 get_frequency (void)
 {
-	gint retcode;
+	int retcode;
 	freq_t freq;
 	GString *digits = g_string_new ("");
 	GtkWidget *frequencylabel;
-	gchar *temp;
+	char *temp;
 
 	retcode = rig_get_freq (myrig, RIG_VFO_CURR, &freq);
 	if (retcode == RIG_OK)
@@ -389,7 +389,7 @@ set_frequency (long long freq)
 void
 get_ptt (void)
 {
-	gint retcode;
+	int retcode;
 	ptt_t ptt;
 
 	retcode = rig_get_ptt (myrig, RIG_VFO_CURR, &ptt);
@@ -408,7 +408,7 @@ get_ptt (void)
 void
 get_smeter (void)
 {
-  gint retcode, spoint, i, smax = 0;
+  int retcode, spoint, i, smax = 0;
   value_t strength;
 
   retcode = rig_get_level(myrig, RIG_VFO_CURR, RIG_LEVEL_STRENGTH, &strength);
@@ -421,7 +421,7 @@ get_smeter (void)
   if (strength.i >= 0)
 	spoint = 9;
   else
-	spoint = (gint) floor ((strength.i + 54) / 6);
+	spoint = (int) floor ((strength.i + 54) / 6);
 
   svalue[programstate.scounter] = spoint;
   programstate.scounter++;
@@ -460,7 +460,7 @@ get_riginfo (void)
 }
 
 /* poll the rig */
-gint
+int
 poll_riginfo (void)
 {
 	if (setfreq != 0)
@@ -513,7 +513,7 @@ poll_riginfo (void)
 
 /* set appearance of some widgets dependent on preferences.hamlib */
 void
-sethamlibwidgets (gint status, gboolean initsmeter)
+sethamlibwidgets (int status, bool initsmeter)
 {
 	GtkWidget *mhzlabel, *mhzbutton, *bandoptionmenu, *bandentry,
 		*frequencyhandlebox, *modelabel, *modebutton, *drawingarea,
@@ -659,7 +659,7 @@ on_mainwindow_show (GtkWidget * widget, gpointer user_data)
 }
 
 /* create a new backing pixmap for the s-meter whenever the window is resized */
-gboolean
+bool
 on_smeterdrawingarea_configure_event (GtkWidget * widget,
 	GdkEventConfigure * event, gpointer user_data)
 {
@@ -673,7 +673,7 @@ on_smeterdrawingarea_configure_event (GtkWidget * widget,
 }
 
 /* copy the background pixmap to the drawing area for the s-meter */
-gboolean
+bool
 on_smeterdrawingarea_expose_event (GtkWidget * widget,
 	GdkEventExpose * event, gpointer user_data)
 {

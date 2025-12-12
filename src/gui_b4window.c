@@ -53,7 +53,7 @@ GtkWidget *b4window;
 void
 on_menu_worked_activate (GtkAction *action, gpointer user_data)
 {
-	gboolean status;
+	bool status;
 
 	status = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 	if (status)
@@ -73,10 +73,10 @@ on_menu_worked_activate (GtkAction *action, gpointer user_data)
 static void
 on_b4treeview_select_row (GtkTreeSelection * selection, gpointer user_data)
 {
-	gchar *nr, *lognr, *logn;
-	guint i;
+	char *nr, *lognr, *logn;
+	uint i;
 	logtype *logwindow = NULL;
-	gboolean qsofound = FALSE, valid = FALSE;
+	bool qsofound = FALSE, valid = FALSE;
 	GtkTreeModel *model, *logmodel = NULL;
 	GtkTreeIter iter, logiter;
 	GtkTreeSelection *logselection;
@@ -108,7 +108,7 @@ on_b4treeview_select_row (GtkTreeSelection * selection, gpointer user_data)
 		}
 		if (qsofound)
 		{
-			guint st, zone, cont, iota;
+			uint st, zone, cont, iota;
 			GtkWidget *callentry = lookup_widget (mainwindow, "callentry"); 	 
 			GtkWidget *awardsentry = lookup_widget (mainwindow, "awardsentry"); 	 
 			g_signal_handlers_block_by_func (GTK_OBJECT (callentry), on_callentry_changed, user_data);
@@ -119,11 +119,11 @@ on_b4treeview_select_row (GtkTreeSelection * selection, gpointer user_data)
 			gtk_tree_view_set_cursor (GTK_TREE_VIEW(logwindow->treeview), logpath, NULL, FALSE);
 			gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW(logwindow->treeview), logpath, NULL, TRUE, 0.0, 0.0);
 			gtk_tree_path_free (logpath);
-			gchar *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
-			gchar *result = valid_awards_entry (aw, &st, &zone, &cont, &iota);
+			char *aw = gtk_editable_get_chars (GTK_EDITABLE (awardsentry), 0, -1);
+			char *result = valid_awards_entry (aw, &st, &zone, &cont, &iota);
 			if (!result)
 			{
-				gchar *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
+				char *call = gtk_editable_get_chars (GTK_EDITABLE (callentry), 0, -1);
 				updatedxccframe (call, FALSE, st, zone, cont, iota);
 			}
 			else
@@ -135,7 +135,7 @@ on_b4treeview_select_row (GtkTreeSelection * selection, gpointer user_data)
 
 }
 
-static gboolean
+static bool
 on_b4window_delete_event (GtkWidget * widget, GdkEvent * event,
 				gpointer user_data)
 {
@@ -158,7 +158,7 @@ create_b4window (void)
 	GtkListStore *model;
 	GtkCellRenderer *renderer;
 	GObject *selection;
-	gint i, j;
+	int i, j;
 
 	b4window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_accept_focus (GTK_WINDOW(b4window), FALSE);

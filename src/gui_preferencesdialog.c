@@ -53,9 +53,9 @@ static void latlon_changed (GtkWidget *widget, gpointer data);
 static void
 qra_changed (GtkEntry *entry, gpointer data)
 {
-	gint retcode;
+	int retcode;
 	gdouble lat,lon;
-	gchar *temp;
+	char *temp;
 	GtkWidget *qthlocatorentry, *latentry, *longentry, *EWcombo, *NScombo;
 
 	qthlocatorentry = lookup_widget (preferencesdialog, "qthlocatorentry");
@@ -123,9 +123,9 @@ qra_changed (GtkEntry *entry, gpointer data)
 static void
 latlon_changed (GtkWidget *widget, gpointer data)
 {
-	gchar *locator;
+	char *locator;
 	gdouble lat, lon;
-	gint retcode;
+	int retcode;
 	GtkWidget *qthlocatorentry, *latentry, *longentry, *EWcombo, *NScombo;
 
 	locator = g_try_malloc (7);
@@ -197,27 +197,27 @@ on_menu_preferences_activate (GtkMenuItem * menuitem, gpointer user_data)
 		*remoteradiobutton_group = NULL, *backupradiobutton_group = NULL,
 		*saveradiobutton_group = NULL;
 
-	gchar *temp, *font;
-	gboolean toggletrue;
-	gint autosavevalue, saving, response;
+	char *temp, *font;
+	bool toggletrue;
+	int autosavevalue, saving, response;
 	GtkWidget *hamlibcheckbutton, *radiobutton, *hamlibframe, *devicecombo,
 		*frequencycheckbutton, *digitscombo, *smetercheckbutton,
 		*pollingcheckbutton, *rigsetconfentry, *pollcombo;
-	gchar *radio = NULL, *device = NULL, *digits = NULL, *pollstr = NULL,
+	char *radio = NULL, *device = NULL, *digits = NULL, *pollstr = NULL,
 		*rigconf = NULL;
-	gboolean hamlibyes, frequencyyesno, smeteryesno, pollingyes, fccyes,
+	bool hamlibyes, frequencyyesno, smeteryesno, pollingyes, fccyes,
 		hamlibresult;
-	gint hamlibwidgets = 0;
+	int hamlibwidgets = 0;
 
 	GDir *dev_serial_dir = NULL;
-	const gchar *serial_file_dir = "/dev/serial/by-id";
-	const gchar *serial_file_name = NULL;
-	const gchar *absolute_serial_file_name = NULL;
+	const char *serial_file_dir = "/dev/serial/by-id";
+	const char *serial_file_name = NULL;
+	const char *absolute_serial_file_name = NULL;
 
 	GDir *dev_dir = NULL;
-	const gchar *dev_file_dir = "/dev";
-	const gchar *dev_file_name = NULL;
-	const gchar *absolute_dev_file_name = NULL;
+	const char *dev_file_dir = "/dev";
+	const char *dev_file_name = NULL;
+	const char *absolute_dev_file_name = NULL;
 
 	/**************************/
 	/* creation of the dialog */

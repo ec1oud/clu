@@ -42,8 +42,8 @@ GtkWidget *locatormap = NULL;
 
 static void locator_gh_collect (gpointer key, gpointer value, gpointer user_data)
 {
-	guint *locator_list = (guint*)user_data;
-	guint locator;
+	uint *locator_list = (uint*)user_data;
+	uint locator;
 
 	locator = locator_to_num(key);
 	while (*locator_list != NOT_A_LOCATOR)
@@ -57,7 +57,7 @@ static void locator_gh_collect (gpointer key, gpointer value, gpointer user_data
 
 static int num_compar(const void *a, const void *b)
 {
-	return *(guint*)a - *(guint*)b;
+	return *(uint*)a - *(uint*)b;
 }
 
 /* create a boring locator scoring list */
@@ -269,8 +269,8 @@ void on_awards_locator_activate (GtkMenuItem *menuitem, gpointer user_data)
                 (column, preferences.scoringbands[BAND_SUBMM]);
 
 	GtkTreeIter iter;
-	gint i, j, nmemb=0;
-	static guint locator_list[1000];
+	int i, j, nmemb=0;
+	static uint locator_list[1000];
 
 	for (i=0; i<1000; i++)
 		locator_list[i] = NOT_A_LOCATOR;
@@ -283,11 +283,11 @@ void on_awards_locator_activate (GtkMenuItem *menuitem, gpointer user_data)
 	for (i=0; i<1000 && locator_list[i]!=NOT_A_LOCATOR; i++)
 		nmemb++;
 
-	qsort(locator_list, nmemb, sizeof(guint), &num_compar);
+	qsort(locator_list, nmemb, sizeof(uint), &num_compar);
 
 	for (i=0; i<nmemb; i++)
 	{
-		gchar *locatorstr = num_to_locator(locator_list[i]);
+		char *locatorstr = num_to_locator(locator_list[i]);
 		gtk_list_store_append (GTK_LIST_STORE (model), &iter);
 		gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, g_ascii_strup(locatorstr, -1), -1);
 		for (j = 0; j < MAX_BANDS; j++)
@@ -303,7 +303,7 @@ void on_awards_locator_activate (GtkMenuItem *menuitem, gpointer user_data)
 			
 				if (p_locator_w && (GPOINTER_TO_INT(p_locator_w) > 0))
 				{
-					gchar *str = g_strdup_printf ("%d", GPOINTER_TO_INT(p_locator_w));
+					char *str = g_strdup_printf ("%d", GPOINTER_TO_INT(p_locator_w));
 					gtk_list_store_set (GTK_LIST_STORE (model), &iter, j+1, str, -1);
 					g_free (str);
 				}
@@ -319,9 +319,9 @@ void on_awards_locator_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 /* draw locator scoring in a world map */
 static void
-draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
+draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, int band)
 {
-	gint i, j, nmembw=0, nmembc=0;
+	int i, j, nmembw=0, nmembc=0;
 	GdkColor color;
 
 	/* set up colors */
@@ -344,8 +344,8 @@ draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
 	gdk_gc_set_rgb_fg_color (gc3, &color);
 
 	/* collect scoring from worked and confirmed arrays */
-	static guint locatorw_list[32400];
-	static guint locatorc_list[32400];
+	static uint locatorw_list[32400];
+	static uint locatorc_list[32400];
 
 	for (i=0; i<32400; i++)
 		locatorw_list[i] = NOT_A_LOCATOR;
@@ -360,8 +360,8 @@ draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
 	for (i=0; i<32400 && locatorc_list[i]!=NOT_A_LOCATOR; i++)
 		nmembc++;
 
-	qsort(locatorw_list, nmembw, sizeof(guint), &num_compar);
-	qsort(locatorc_list, nmembc, sizeof(guint), &num_compar);
+	qsort(locatorw_list, nmembw, sizeof(uint), &num_compar);
+	qsort(locatorc_list, nmembc, sizeof(uint), &num_compar);
 
 
 	gdouble w = da->allocation.width;
@@ -371,10 +371,10 @@ draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
 
 	/* backing pixmap */
 #ifdef G_OS_WIN32
-	gchar *map_location = g_strconcat
+	char *map_location = g_strconcat
 		("maps", G_DIR_SEPARATOR_S, "worldmap.jpg", NULL);
 #else
-	gchar *map_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S,
+	char *map_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S,
 		"maps", G_DIR_SEPARATOR_S, "worldmap.jpg", NULL);
 #endif
 	GdkPixbuf *background = gdk_pixbuf_new_from_file (map_location, NULL);
@@ -391,7 +391,7 @@ draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
 
 	/* AA-RR grid */
 	PangoLayout *layout;
-	gchar *str = g_new0(gchar, 2);
+	char *str = g_new0(char, 2);
 	for (i=1; i<19; i++) for (j=1; j<19; j++)
 	{
 		str[0]= i+64;
@@ -406,7 +406,7 @@ draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
 	g_free (str);
 
 	/* red (worked) and green (confirmed) squares */
-	gint y, x, x1, y1;
+	int y, x, x1, y1;
 	for (i=0; i<nmembw; i++)
 	{
 		x = locatorw_list[i]/10000;
@@ -441,13 +441,13 @@ draw_locator_scoring (GtkWidget *da, GdkPixmap *pixmap, gint band)
 	g_object_unref (gc3);
 }
 
-static gboolean
+static bool
 map_configure (GtkWidget *da, GdkEventConfigure *event, gpointer data)
 {
 	/* find out which band has been selected */
-	gint band = gtk_combo_box_get_active (data);
-	gint j = 0;
-	gint i;
+	int band = gtk_combo_box_get_active (data);
+	int j = 0;
+	int i;
 	for (i = 0; i < MAX_BANDS; i++)
 	{
 		if (preferences.scoringbands[i] == 1)
@@ -470,7 +470,7 @@ map_configure (GtkWidget *da, GdkEventConfigure *event, gpointer data)
 	return TRUE;
 }
 
-static gboolean
+static bool
 map_expose (GtkWidget *da, GdkEventExpose *event, gpointer data)
 {
 	if (pm) gdk_draw_drawable
@@ -487,7 +487,7 @@ static void combochanged (GtkComboBox *widget, gpointer user_data)
 	map_configure (da, NULL, widget);
 }
 
-static gboolean
+static bool
 map_delete (GtkWidget * widget, GdkEvent *event, gpointer user_data)
 {
 	gtk_widget_destroy (widget);
@@ -501,28 +501,28 @@ static void closeclicked (GtkButton *button, gpointer user_data)
 	locatormap = NULL;
 }
 
-static gchar *xy2locator (const gint x, const gint y, GdkWindow *win)
+static char *xy2locator (const int x, const int y, GdkWindow *win)
 {
-	gint w, h;
-	gchar *locator = g_try_malloc (5);
+	int w, h;
+	char *locator = g_try_malloc (5);
 
 	gdk_drawable_get_size (win, &w, &h);
 	gdouble lat = ((gdouble)y/h-0.5)*-180;
 	gdouble lon = ((gdouble)x/w-0.5)*360;
-	gint retcode = longlat2locator (lon, lat, locator, 2);
+	int retcode = longlat2locator (lon, lat, locator, 2);
 	if (retcode == RIG_OK)
 		return locator;
 	return g_strdup ("");;
 }
 
-static gboolean
+static bool
 motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
 {
-	gint x, y;
+	int x, y;
 	GdkModifierType state;
 
 	gdk_window_get_pointer (event->window, &x, &y, &state);
-	gchar *temp = xy2locator (x, y, event->window);
+	char *temp = xy2locator (x, y, event->window);
     gtk_widget_set_tooltip_text (widget, temp);
     g_free (temp);
 	
@@ -576,7 +576,7 @@ _("You will need to enable locator scoring from the \"windows and dialogs\" dial
 
 
 	/* fill in the combobox and find out what bands we want scoring for */
-	gint i, j = 0; gchar *band;
+	int i, j = 0; char *band;
 	for (i = 0; i < MAX_BANDS; i++)
 	{
 		band = band_enum2char (i);

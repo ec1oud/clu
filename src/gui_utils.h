@@ -26,7 +26,7 @@
 
 void set_tabs_menu (void);
 void unselect_logs (void);
-void set_font (gchar * font);
-void activate_bandoption_by_enum (GtkWidget *combo, gchar *prefs, gint bandenum);
-void activate_modeoption_by_enum (GtkWidget *combo, gchar *prefs, gint modeenum);
-gchar *get_last_msg (void);
+void set_font (char * font);
+void activate_bandoption_by_enum (GtkWidget *combo, char *prefs, int bandenum);
+void activate_modeoption_by_enum (GtkWidget *combo, char *prefs, int modeenum);
+char *get_last_msg (void);

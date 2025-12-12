@@ -32,20 +32,20 @@ typedef struct logtype
 	GtkWidget *scrolledwindow;
 	GtkWidget *treeview;
 	GtkWidget *label;
-	gchar *logname;
-	gchar *filename;
-	gboolean logchanged;
-	gboolean readonly;
-	gint qsos;
-	gint columns;
-	gint logfields[QSO_FIELDS + 1];
+	char *logname;
+	char *filename;
+	bool logchanged;
+	bool readonly;
+	int qsos;
+	int columns;
+	int logfields[QSO_FIELDS + 1];
 }
 logtype;
 
-void backuplog (gchar *filename, gchar *backupfilename);
-gchar *logname (gchar * filename);
-gint fillin_list (LOGDB * handle, qso_t q[], gpointer arg);
-logtype *openlogwindow (LOGDB * lp, gchar * name, gint page);
-void savelog (gpointer arg, gchar * logfile, gint type, gint first, gint last);
-GPtrArray *getxlogs (gchar *path, gchar *patt);
+void backuplog (char *filename, char *backupfilename);
+char *logname (char * filename);
+int fillin_list (LOGDB * handle, qso_t q[], gpointer arg);
+logtype *openlogwindow (LOGDB * lp, char * name, int page);
+void savelog (gpointer arg, char * logfile, int type, int first, int last);
+GPtrArray *getxlogs (char *path, char *patt);
 

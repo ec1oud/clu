@@ -63,10 +63,10 @@ on_menu_dialogs_activate(GtkMenuItem * menuitem, gpointer user_data)
 		*bb20, *bb21, *bb22, *bb23, *bb24, *bb25, *bb26, *bb27, *bb28,
 		*bb29, *bb30, *bb31, *bb32, *bb33, *vbox3,*bwac, *bwas, *bwaz, *biota, *bloc,
 		*countrytreeview, *dxcctreeview;
-	gboolean check;
-	gchar *temp;
+	bool check;
+	char *temp;
 	GtkTreeViewColumn *column;
-	gint i, response;
+	int i, response;
 
 	dialogsdialog = gtk_dialog_new_with_buttons (_("xlog - dialogs and windows"),
 		GTK_WINDOW(mainwindow), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,

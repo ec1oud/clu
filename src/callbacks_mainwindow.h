@@ -24,6 +24,6 @@
  * callbacks_mainwindow.h
  */
 
-gboolean on_mainwindow_delete_event (GtkWidget * widget, GdkEvent * event, gpointer user_data);
-void on_mainnotebook_switch_page (GtkNotebook * notebook, GtkNotebookPage * page, gint page_num, gpointer user_data);
-gboolean on_mainwindow_keypress (GtkWidget *widget, GdkEventKey *event, gpointer data);
+bool on_mainwindow_delete_event (GtkWidget * widget, GdkEvent * event, gpointer user_data);
+void on_mainnotebook_switch_page (GtkNotebook * notebook, GtkNotebookPage * page, int page_num, gpointer user_data);
+bool on_mainwindow_keypress (GtkWidget *widget, GdkEventKey *event, gpointer data);

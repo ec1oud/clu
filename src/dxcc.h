@@ -20,6 +20,9 @@
 
 */
 
+#include <uchar.h>
+#include <glib.h>
+
 /*
  * dxcc.h
  */
@@ -29,48 +32,48 @@
 /* struct for dxcc information from cty.dat */
 typedef struct
 {
-	gchar *countryname;
-	guchar cq;              /* guchar max=255 */
-	guchar itu;
-	guchar continent;
-	gint latitude;
-	gint longitude;
-	gshort timezone;
-	gchar *px;
-	gchar *exceptions;
-	guint worked;
-	guint confirmed;
+	char *countryname;
+	uchar cq;              /* uchar max=255 */
+	uchar itu;
+	uchar continent;
+	int latitude;
+	int longitude;
+	short timezone;
+	char *px;
+	char *exceptions;
+	uint worked;
+	uint confirmed;
 }
 dxcc_data;
 
 /* struct for dxcc information from area.dat */
 typedef struct
 {
-	gchar *countryname;
-	guchar cq;              /* guchar max=255 */
-	guchar itu;
-	gchar *continent;
-	gint latitude;
-	gint longitude;
-	gshort timezone;
-	gchar *px;
+	char *countryname;
+	uchar cq;              /* uchar max=255 */
+	uchar itu;
+	char *continent;
+	int latitude;
+	int longitude;
+	short timezone;
+	char *px;
 }
 area_data;
 
 struct info
 {
-	guint country;
-	guint cq;
-	guint itu;
-	guint continent;
+	uint country;
+	uint cq;
+	uint itu;
+	uint continent;
 };
 
 void cleanup_dxcc (void);
 void cleanup_area (void);
-gint readctyversion (void);
-gint readctydata (void);
-gint readareadata (void);
-void updatedxccframe (gchar * item, gboolean byprefix, gint st, gint zone, gint cont, guint iota);
+int readctyversion (void);
+int readctydata (void);
+int readareadata (void);
+void updatedxccframe (char * item, gboolean byprefix, int st, int zone, int cont, uint iota);
 void update_dxccscoring (void);
 void update_wacscoring (void);
 void update_wasscoring (void);
@@ -78,15 +81,15 @@ void update_wazscoring (void);
 void update_iotascoring (void);
 void update_locscoring (void);
 void fill_scoring_arrays (void);
-struct info lookupcountry_by_callsign (gchar * callsign);
-struct info lookupcountry_by_prefix (gchar * px);
+struct info lookupcountry_by_callsign (char * callsign);
+struct info lookupcountry_by_prefix (char * px);
 
-void hash_inc(GHashTable *hash_table, const gchar *key);
-void hash_dec(GHashTable *hash_table, const gchar *key);
-void iota_new_qso(guint iota, gint f, gboolean qslconfirmed);
-void iota_del_qso(guint iota, gint f, gboolean qslconfirmed);
-void loc_new_qso(const gchar *locator, gint f, gboolean qslconfirmed);
-void loc_del_qso(const gchar *locator, gint f, gboolean qslconfirmed);
-gchar *loc_norm(const gchar *locator);
+void hash_inc(GHashTable *hash_table, const char *key);
+void hash_dec(GHashTable *hash_table, const char *key);
+void iota_new_qso(uint iota, int f, gboolean qslconfirmed);
+void iota_del_qso(uint iota, int f, gboolean qslconfirmed);
+void loc_new_qso(const char *locator, int f, gboolean qslconfirmed);
+void loc_del_qso(const char *locator, int f, gboolean qslconfirmed);
+char *loc_norm(const char *locator);
 
 #endif	/* DXCC_H */
