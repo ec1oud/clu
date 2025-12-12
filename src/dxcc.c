@@ -353,6 +353,8 @@ lookupcountry_by_callsign (gchar * callsign)
   lookup.cq = d -> cq;
   lookup.continent = d -> continent;
 
+  printf("country is %s lat %d lon %d px %s exc %s\n", d->countryname, d->latitude, d->longitude, d->px, d->exceptions);
+
   /* look for CQ/ITU zone exceptions */
   if (strchr(d->exceptions, '(') || strchr(d->exceptions, '['))
     {
@@ -456,18 +458,20 @@ readctydata (void)
   gint i;
   FILE *fp;
 
-#ifdef G_OS_WIN32
-  cty_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
-#else
-  cty_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
-#endif
+//~ #ifdef G_OS_WIN32
+  //~ cty_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
+//~ #else
+  //~ cty_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "cty.dat", NULL);
+//~ #endif
+	cty_location = "/usr/share/xlog/dxcc/cty.dat";
 
   if ((fp = g_fopen (cty_location, "r")) == NULL)
     {
-      g_free (cty_location);
+		printf("didn't find %s\n", cty_location);
+      //~ g_free (cty_location);
       return (1);
     }
-  g_free (cty_location);
+  //~ g_free (cty_location);
 
   dxcc = g_ptr_array_new ();
   prefixes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
@@ -563,14 +567,16 @@ readareadata (void)
   gint ichar = 0, ch = 0;
   FILE *fp;
 
-#ifdef G_OS_WIN32
-  area_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "area.dat", NULL);
-#else
-  area_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "area.dat", NULL);
-#endif
+//~ #ifdef G_OS_WIN32
+  //~ area_location = g_strconcat ("dxcc", G_DIR_SEPARATOR_S, "area.dat", NULL);
+//~ #else
+  //~ area_location = g_strconcat (XLOG_DATADIR, G_DIR_SEPARATOR_S, "dxcc", G_DIR_SEPARATOR_S, "area.dat", NULL);
+//~ #endif
+	area_location = "/usr/share/xlog/dxcc/area.dat";
   if ((fp = g_fopen (area_location, "r")) == NULL)
     {
-      g_free (area_location);
+		printf("failed to find %s\n", area_location);
+      //~ g_free (area_location);
       return (1);
     }
 
@@ -599,7 +605,7 @@ readareadata (void)
       g_strfreev (split);
     }
   fclose (fp);
-  g_free (area_location);
+  //~ g_free (area_location);
   return (0);
 }
 
