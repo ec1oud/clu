@@ -44,9 +44,13 @@ typedef struct
 	short timezone;
 	const char *px;
 	const char *exceptions;
+#ifdef USE_AREA_DAT
+	const char *area; // TODO fill it
+#endif
 }
 dxcc_data;
 
+#ifdef USE_AREA_DAT
 /* struct for dxcc information from area.dat */
 typedef struct
 {
@@ -60,11 +64,13 @@ typedef struct
 	char* px;
 } area_data;
 
-void cleanup_dxcc(void);
+int readareadata(void);
 void cleanup_area(void);
+#endif
+
+void cleanup_dxcc(void);
 int readctyversion(void);
 int readctydata(void);
-int readareadata(void);
 dxcc_data lookupcountry_by_callsign(const char* callsign);
 
 void hash_inc(GHashTable* hash_table, const char* key);

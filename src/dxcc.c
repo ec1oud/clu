@@ -73,7 +73,9 @@
 #include "awards_enum.h"
 
 static const char* cty_location = "/usr/share/xlog/dxcc/cty.dat";
+#ifdef USE_AREA_DAT
 static const char* area_location = "/usr/share/xlog/dxcc/area.dat";
+#endif
 
 typedef struct
 {
@@ -107,6 +109,7 @@ void cleanup_dxcc(void)
 		g_hash_table_destroy(full_callsign_exceptions);
 }
 
+#ifdef USE_AREA_DAT
 /* free memory used by the area array */
 void cleanup_area(void)
 {
@@ -124,6 +127,7 @@ void cleanup_area(void)
 		g_ptr_array_free(area, TRUE);
 	}
 }
+#endif
 
 /*
  * go through exception string and stop when end of prefix
@@ -317,6 +321,7 @@ dxcc_add(char* c, int w, int i, int cont, int lat, int lon,
 	g_ptr_array_add(dxcc, new_dxcc);
 }
 
+#ifdef USE_AREA_DAT
 /* add an item from area.dat to the area array */
 static void
 area_add(char* c, int w, int i, char* cont, int lat, int lon,
@@ -334,6 +339,7 @@ area_add(char* c, int w, int i, char* cont, int lat, int lon,
 	new_area->px = g_strdup(p);
 	g_ptr_array_add(area, new_area);
 }
+#endif
 
 int readctyversion(void)
 {
@@ -460,6 +466,7 @@ int readctydata(void)
 	return (0);
 }
 
+#ifdef USE_AREA_DAT
 /* fill the hashtable with all of the prefixes from area.dat */
 int readareadata(void)
 {
@@ -501,11 +508,15 @@ int readareadata(void)
 	fclose(fp);
 	return (0);
 }
+#endif
 
-/* search a callsign and return the callsign area */
-char lookuparea(char* callsign)
+/*!
+	Search a callsign and return the callsign area (just the number as a character).
+	Note: this does *not* search area.dat.
+*/
+char lookuparea(const char* callsign)
 {
-	char *end, *j, *slash;
+	const char *end, *j, *slash;
 
 	end = callsign + strlen(callsign);
 	if ((slash = strchr(callsign, '/'))) {

@@ -58,8 +58,12 @@ int main(int argc, char* argv[])
 	if (argc < 2)
 		return -1;
 	readctydata();
-	//~ readareadata();
+#ifdef USE_AREA_DAT
+	readareadata();
+#endif
 	dxcc_data ci = lookupcountry_by_callsign(argv[1]);
-	printf("got country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
-		ci.country, ci.countryname, ci.cq, ci.itu, ci.continent, ci.latitude, ci.longitude, ci.px, ci.exceptions);
+#ifdef USE_AREA_DAT
+	cleanup_area();
+#endif
+	cleanup_dxcc();
 }
