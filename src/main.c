@@ -1,5 +1,5 @@
 /*
-   clu - callsign lookup program
+   clu - Callsign Looker Upper
    adapted from xlog - GTK+ logging program for amateur radio operators
    Copyright (C) 2001 - 2008 Joop Stakenborg <pg4i@amsat.org>
    Copyright (C) 2020 Andy Stewart <kb1oiq@arrl.net>
