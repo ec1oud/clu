@@ -39,6 +39,9 @@ parsecommandline (int argc, char *argv[])
 	{
 		switch (p)
 		{
+			case 'v':
+				printf("cty version %d\n", readctyversion());
+				exit (0);
 			case ':':
 			case '?':
 			case 'h':
@@ -57,10 +60,8 @@ main (int argc, char *argv[])
 	parsecommandline(argc, argv);
 	if (argc < 2)
 		return -1;
-	printf("cty version %d\n", readctyversion());
 	readctydata();
 	//~ readareadata();
-	printf("looking up %s\n", argv[1]);
 	struct info ci = lookupcountry_by_callsign(argv[1]);
 	printf("got country %d cq %d itu %d continent %d\n", ci.country, ci.cq, ci.itu, ci.continent);
 }
