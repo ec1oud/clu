@@ -12,8 +12,9 @@ else removed.
 This could be incorporated into something else (like I'm doing).
 But if you need a command-line utility, just build it and then e.g.
 ```
-$ clu LB2JK
-country 197 'Norway' cq 14 itu 18 continent 4 lat 6100 lon -900 prefix LA exceptions: LA,LB,LC,LD,LE,LF,LG,LH,LI,LJ,LK,LL,LM,LN
+$ clu LB2JK K7IHZ
+LB2JK: country 197 'Norway' cq 14 itu 18 continent 4 lat 6100 lon -900
+K7IHZ: country 179 'United States' cq 5 itu 8 continent 0 lat 3760 lon 9187
 ```
 assuming for now that cty.dat is in the same place where xlog would have it
 (e.g. you can install xlog from your system package manager to get that):

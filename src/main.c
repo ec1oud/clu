@@ -29,14 +29,19 @@
 
 #include "dxcc.h"
 
+bool show_prefix = false;
+
 /* command line options */
 static void
 parsecommandline(int argc, char* argv[])
 {
 	int p;
 
-	while ((p = getopt(argc, argv, "hv")) != -1) {
+	while ((p = getopt(argc, argv, "phv")) != -1) {
 		switch (p) {
+		case 'p':
+			show_prefix = true;
+			break;
 		case 'v':
 			printf("cty version %d\n", readctyversion());
 			exit(0);
@@ -44,6 +49,7 @@ parsecommandline(int argc, char* argv[])
 		case '?':
 		case 'h':
 			printf("Usage: clu [option] callsign\n");
+			printf("	-p	Show prefix and exceptions for the country\n");
 			printf("	-h	Display this help and exit\n");
 			printf("	-v	Output version information and exit\n");
 			exit(0);
@@ -61,7 +67,16 @@ int main(int argc, char* argv[])
 #ifdef USE_AREA_DAT
 	readareadata();
 #endif
-	dxcc_data ci = lookupcountry_by_callsign(argv[1]);
+	for (int i = optind; i < argc; ++i) {
+		dxcc_data ci = lookupcountry_by_callsign(argv[i]);
+		if (show_prefix) {
+			printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
+				argv[i], ci.country, ci.countryname, ci.cq, ci.itu, ci.continent, ci.latitude, ci.longitude, ci.px, ci.exceptions);
+		} else {
+			printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d\n",
+				argv[i], ci.country, ci.countryname, ci.cq, ci.itu, ci.continent, ci.latitude, ci.longitude);
+		}
+	}
 #ifdef USE_AREA_DAT
 	cleanup_area();
 #endif
