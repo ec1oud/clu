@@ -76,16 +76,13 @@
  */
 
 
-#include <hamlib/config.h>
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
 
-
-#include <hamlib/rotator.h>
-
+#include "locator.h"
 
 /** \brief Standard definition of a radian. */
 #define RADIAN  (180.0 / M_PI)
@@ -177,7 +174,7 @@ const static int loc_char_range[] = { 18, 10, 24, 10, 24, 10 };
  *
  * \sa dec2dms()
  */
-double HAMLIB_API dms2dec(int degrees, int minutes, double seconds, int sw)
+double dms2dec(int degrees, int minutes, double seconds, int sw)
 {
     double st;
 
@@ -234,7 +231,7 @@ double HAMLIB_API dms2dec(int degrees, int minutes, double seconds, int sw)
  *
  * \sa dec2dmmm()
  */
-double HAMLIB_API dmmm2dec(int degrees, double minutes, double seconds, int sw)
+double dmmm2dec(int degrees, double minutes, double seconds, int sw)
 {
     double st;
 
@@ -294,7 +291,7 @@ double HAMLIB_API dmmm2dec(int degrees, double minutes, double seconds, int sw)
  *
  * \sa dms2dec()
  */
-int HAMLIB_API dec2dms(double dec,
+int dec2dms(double dec,
                        int *degrees,
                        int *minutes,
                        double *seconds,
@@ -392,7 +389,7 @@ int HAMLIB_API dec2dms(double dec,
  *
  * \sa dmmm2dec()
  */
-int HAMLIB_API dec2dmmm(double dec, int *degrees, double *minutes, int *sw)
+int dec2dmmm(double dec, int *degrees, double *minutes, int *sw)
 {
     int r, min;
     double sec;
@@ -448,7 +445,7 @@ int HAMLIB_API dec2dmmm(double dec, int *degrees, double *minutes, int *sw)
  * \sa longlat2locator()
  */
 /* begin dph */
-int HAMLIB_API locator2longlat(double *longitude,
+int locator2longlat(double *longitude,
                                double *latitude,
                                const char *locator)
 {
@@ -542,7 +539,7 @@ int HAMLIB_API locator2longlat(double *longitude,
  * \sa locator2longlat()
  */
 /* begin dph */
-int HAMLIB_API longlat2locator(double longitude,
+int longlat2locator(double longitude,
                                double latitude,
                                char *locator,
                                int pair_count)
@@ -616,7 +613,7 @@ int HAMLIB_API longlat2locator(double longitude,
  *
  * \sa distance_long_path(), azimuth_long_path()
  */
-int HAMLIB_API qrb(double lon1,
+int qrb(double lon1,
                    double lat1,
                    double lon2,
                    double lat2,
@@ -630,16 +627,19 @@ int HAMLIB_API qrb(double lon1,
     /* bail if NULL pointers passed */
     if (!distance || !azimuth)
     {
+		//~ printf("bad dist or az\n");
         return -RIG_EINVAL;
     }
 
     if ((lat1 > 90.0 || lat1 < -90.0) || (lat2 > 90.0 || lat2 < -90.0))
     {
+		//~ printf("bad lat %lf or %lf\n", lat1, lat2);
         return -RIG_EINVAL;
     }
 
     if ((lon1 > 180.0 || lon1 < -180.0) || (lon2 > 180.0 || lon2 < -180.0))
     {
+		//~ printf("bad lon\n");
         return -RIG_EINVAL;
     }
 
@@ -736,7 +736,7 @@ int HAMLIB_API qrb(double lon1,
  *
  * \sa qrb()
  */
-double HAMLIB_API distance_long_path(double distance)
+double distance_long_path(double distance)
 {
     rot_debug(RIG_DEBUG_VERBOSE, "%s called\n", __func__);
 
@@ -756,7 +756,7 @@ double HAMLIB_API distance_long_path(double distance)
  *
  * \sa qrb()
  */
-double HAMLIB_API azimuth_long_path(double azimuth)
+double azimuth_long_path(double azimuth)
 {
     rot_debug(RIG_DEBUG_VERBOSE, "%s called\n", __func__);
 

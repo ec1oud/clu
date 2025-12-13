@@ -28,8 +28,10 @@
 #include <stdio.h>
 
 #include "dxcc.h"
+#include "locator.h"
 
 bool show_prefix = false;
+bool show_distance = false;
 
 /* command line options */
 static void
@@ -37,10 +39,13 @@ parsecommandline(int argc, char* argv[])
 {
 	int p;
 
-	while ((p = getopt(argc, argv, "phv")) != -1) {
+	while ((p = getopt(argc, argv, "pdhv")) != -1) {
 		switch (p) {
 		case 'p':
 			show_prefix = true;
+			break;
+		case 'd':
+			show_distance = true;
 			break;
 		case 'v':
 			printf("cty version %d\n", readctyversion());
@@ -50,6 +55,7 @@ parsecommandline(int argc, char* argv[])
 		case 'h':
 			printf("Usage: clu [option] callsign\n");
 			printf("	-p	Show prefix and exceptions for the country\n");
+			printf("	-d	Show distance between two grids\n");
 			printf("	-h	Display this help and exit\n");
 			printf("	-v	Output version information and exit\n");
 			exit(0);
@@ -75,6 +81,7 @@ int main(int argc, char* argv[])
 	memset(&info, 0, sizeof(info));
 	bool is_gr = is_grid(argv[optind]);
 	char *callsign = 0;
+	float last_lat = 999.0, last_lon = 999.0;
 	for (int i = optind; i < argc; ++i) {
 		bool is_cs = false;
 		bool next_is_gr = i < argc && is_grid(argv[i + 1]);
@@ -110,8 +117,24 @@ int main(int argc, char* argv[])
 			callsign = 0;
 			memset(&info, 0, sizeof(info));
 		} else if (is_gr) {
-			printf("%s: lat %6.2f lon %6.2f\n",
-				argv[i], info.latitude, info.longitude);
+			int ret = RIG_OK - 999;
+			if (show_distance && last_lat < 999.0) {
+				double dist = 0.0, azimuth = 0.0;
+				ret = qrb(last_lon, last_lat, info.longitude, info.latitude, &dist, &azimuth);
+				if (ret == RIG_OK)
+					printf("%s:\t%.2f,%.2f to %.2f,%.2f\t: distance %5.0lf azimuth %3.0lf\n",
+						argv[i], last_lat, last_lon, info.latitude, info.longitude, dist, azimuth);
+				else
+					printf("distance calculation failed\n");
+			}
+			if (ret != RIG_OK) {
+				printf("%s:\t%.2f,%.2f\n",
+					argv[i], info.latitude, info.longitude);
+			}
+		}
+		if (is_gr) {
+			last_lat = info.latitude;
+			last_lon = info.longitude;
 		}
 		is_gr = next_is_gr;
 	}
