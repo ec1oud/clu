@@ -73,6 +73,7 @@
 #include "awards_enum.h"
 
 static const char* cty_location = "/usr/share/xlog/dxcc/cty.dat";
+static const char* abbrev_location = "../data/abbrev.tsv";
 #ifdef USE_AREA_DAT
 static const char* area_location = "/usr/share/xlog/dxcc/area.dat";
 #endif
@@ -84,7 +85,7 @@ typedef struct
 
 programstatetype programstate;
 GPtrArray *dxcc, *area;
-GHashTable *prefixes, *full_callsign_exceptions;
+GHashTable *prefixes, *full_callsign_exceptions, *abbreviations;
 int excitu, exccq;
 
 /* free memory used by the dxcc array */
@@ -107,6 +108,8 @@ void cleanup_dxcc(void)
 		g_hash_table_destroy(prefixes);
 	if (full_callsign_exceptions)
 		g_hash_table_destroy(full_callsign_exceptions);
+	if (abbreviations)
+		g_hash_table_destroy(abbreviations);
 }
 
 #ifdef USE_AREA_DAT
@@ -302,6 +305,13 @@ dxcc_data lookupcountry_by_callsign(const char* callsign)
 	return ret;
 }
 
+const char *abbreviate_country(const char *country)
+{
+	gpointer p = g_hash_table_lookup(abbreviations, country);
+	//~ printf("for '%s' found %p\n", country, p);
+	return p;
+}
+
 /* add an item from cty.dat to the dxcc array */
 static void
 dxcc_add(char* c, int w, int i, int cont, int lat, int lon,
@@ -466,6 +476,39 @@ int readctydata(void)
 	return (0);
 }
 
+int readabbrev(void)
+{
+	char buf[64];
+	FILE* fp;
+	int count = 0;
+
+	if ((fp = g_fopen(abbrev_location, "r")) == NULL) {
+		printf("didn't find %s\n", abbrev_location);
+		return (1);
+	}
+
+	abbreviations = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+
+	while (!feof(fp)) {
+		if (!fgets(buf, sizeof(buf), fp))
+			break;
+		int len = strlen(buf);
+		if (buf[len - 1] == '\n')
+			buf[len - 1] = 0;
+		char *tab = strchr(buf, '\t');
+		if (!tab)
+			break;
+		*tab = 0;
+		//~ printf("insert '%s' : '%s'\n", tab + 1, buf);
+		g_hash_table_insert(abbreviations, g_strdup(tab + 1), g_strdup(buf));
+		++count;
+	}
+
+	fclose(fp);
+	//~ printf("read %d abbreviations\n", count);
+	return (0);
+}
+
 #ifdef USE_AREA_DAT
 /* fill the hashtable with all of the prefixes from area.dat */
 int readareadata(void)
@@ -541,7 +584,11 @@ void list_all_countries()
 	if (dxcc) {
 		for (int i = 0; i < dxcc->len; i++) {
 			dxcc_data* d = g_ptr_array_index(dxcc, i);
-			printf("%s\n", d->countryname);
+			const char *abbrev = abbreviate_country(d->countryname);
+			if (abbrev)
+				printf("%s\t%s\n", abbrev, d->countryname);
+			else
+				printf("\t%s\n", d->countryname);
 		}
 	}
 }

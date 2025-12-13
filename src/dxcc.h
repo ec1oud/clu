@@ -71,8 +71,10 @@ void cleanup_area(void);
 void cleanup_dxcc(void);
 int readctyversion(void);
 int readctydata(void);
+int readabbrev(void);
 bool is_grid(const char* grid);
 dxcc_data lookupcountry_by_callsign(const char* callsign);
+const char *abbreviate_country(const char *country);
 bool set_location_from_grid(dxcc_data* info, const char* grid);
 
 void list_all_countries();

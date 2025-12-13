@@ -50,6 +50,8 @@ parsecommandline(int argc, char* argv[])
 		case 'l':
 			if (readctydata()) // error if not false
 				exit(-2);
+			if (readabbrev())
+				exit(-3);
 			list_all_countries();
 			exit(0);
 		case 'v':
@@ -61,7 +63,7 @@ parsecommandline(int argc, char* argv[])
 			printf("Usage: clu [option] callsign\n");
 			printf("	-p	Show prefix and exceptions for the country\n");
 			printf("	-d	Show distance between two grids\n");
-			printf("	-l	List all known countries and exit\n");
+			printf("	-l	List all known countries and their abbreviations, and exit\n");
 			printf("	-h	Display this help and exit\n");
 			printf("	-v	Output version information and exit\n");
 			exit(0);
@@ -81,6 +83,8 @@ int main(int argc, char* argv[])
 		return -1;
 	if (readctydata()) // error if not false
 		return -2;
+	if (readabbrev())
+		exit(-3);
 #ifdef USE_AREA_DAT
 	readareadata();
 #endif
@@ -104,22 +108,24 @@ int main(int argc, char* argv[])
 		if (!is_cs && is_gr) // refine the callsign's location by grid, if found
 			set_location_from_grid(&info, argv[i]);
 		if (is_gr && callsign) {
+			const char *abbrev = abbreviate_country(info.countryname);
 			if (show_prefix) {
-				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
-					callsign, argv[i], info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
+				printf("%s @ %s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
+					callsign, argv[i], info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
 			} else {
-				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
-					callsign, argv[i], info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
+				printf("%s @ %s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
+					callsign, argv[i], info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
 			}
 			callsign = 0;
 			memset(&info, 0, sizeof(info));
 		} else if (is_cs && !next_is_gr) {
+			const char *abbrev = abbreviate_country(info.countryname);
 			if (show_prefix) {
-				printf("%s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
-					callsign, info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
+				printf("%s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
+					callsign, info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
 			} else {
-				printf("%s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
-					callsign, info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
+				printf("%s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
+					callsign, info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
 			}
 			callsign = 0;
 			memset(&info, 0, sizeof(info));

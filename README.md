@@ -14,9 +14,9 @@ This could be incorporated into something else (like I'm doing).
 But if you need a command-line utility, just build it and then e.g.
 ```
 $ clu CQ AA1BCD CQ LB2JK JO59 73 de K7IHZ DM43 call PM34ab
-AA1BCD: country 179 'United States' cq 5 itu 8 continent 0 lat  37.60 lon -91.87
-LB2JK @ JO59: country 197 'Norway' cq 14 itu 18 continent 4 lat  59.50 lon  11.00
-K7IHZ @ DM43: country 179 'United States' cq 5 itu 8 continent 0 lat  33.50 lon -111.00
+AA1BCD: country 179 USA 'United States' cq 5 itu 8 continent 0 lat  37.60 lon -91.87
+LB2JK @ JO59: country 197 Norway 'Norway' cq 14 itu 18 continent 4 lat  59.50 lon  11.00
+K7IHZ @ DM43: country 179 USA 'United States' cq 5 itu 8 continent 0 lat  33.50 lon -111.00
 PM34ab: 34.06,126.04
 $ clu -d DM43 PM95ab FN55 JO59 MK75
 DM43:   33.50,-111.00
