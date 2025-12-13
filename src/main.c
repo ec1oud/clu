@@ -73,7 +73,8 @@ int main(int argc, char* argv[])
 	parsecommandline(argc, argv);
 	if (optind + 1 >= argc)
 		return -1;
-	readctydata();
+	if (readctydata()) // error if not false
+		return -2;
 #ifdef USE_AREA_DAT
 	readareadata();
 #endif
