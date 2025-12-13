@@ -69,7 +69,7 @@
 #include <glib/gstdio.h>
 
 #include "dxcc.h"
-#include "gc.h"
+#include "locator.h"
 #include "awards_enum.h"
 
 static const char* cty_location = "/usr/share/xlog/dxcc/cty.dat";
@@ -636,127 +636,13 @@ bool set_location_from_grid(dxcc_data* info, const char* grid)
 	if (!info || !grid)
 		return false;
 
-	float lon = -180.0;
-	float lat = -90.0;
-	float lon_step = 20.0;
-	float lat_step = 10.0;
-
-	int pos = 0;
-	int group = 0;
-	while (grid[pos]) {
-		/* longitude character at pos */
-		char c_lon = grid[pos];
-		if (!isalnum(c_lon))
-			return false;
-
-		/* determine expected type for this group */
-		int expect_digit = 0;
-		int expect_18letters = 0;
-		if (group == 0) {
-			expect_18letters = 1;
-			expect_digit = 0;
-		} else {
-			/* group > 0: odd groups are digits, even groups are 24-letters */
-			if (group % 2 == 1)
-				expect_digit = 1;
-			else
-				expect_digit = 0;
-		}
-
-		/* parse longitude char */
-		int val_lon = -1;
-		if (expect_18letters) {
-			/* A-R or a-r */
-			if (c_lon >= 'A' && c_lon <= 'R')
-				val_lon = c_lon - 'A';
-			else if (c_lon >= 'a' && c_lon <= 'r')
-				val_lon = c_lon - 'a';
-			else
-				return false;
-		} else if (expect_digit) {
-			if (c_lon >= '0' && c_lon <= '9')
-				val_lon = c_lon - '0';
-			else
-				return false;
-		} else {
-			/* 24-letter set a-x / A-X */
-			if (c_lon >= 'A' && c_lon <= 'X')
-				val_lon = c_lon - 'A';
-			else if (c_lon >= 'a' && c_lon <= 'x')
-				val_lon = c_lon - 'a';
-			else
-				return false;
-		}
-
-		/* latitude character should be at pos+1 (may not exist) */
-		char c_lat = 0;
-		int val_lat = -1;
-		int pos_lat = pos + 1;
-		/* find next non-space for latitude */
-		while (grid[pos_lat] && (grid[pos_lat] == ' ' || grid[pos_lat] == '\t' || grid[pos_lat] == '\r' || grid[pos_lat] == '\n'))
-			pos_lat++;
-
-		if (grid[pos_lat]) {
-			c_lat = grid[pos_lat];
-			/* parse latitude char using same expectations but with ranges appropriate
-			   for first group letters (0-17) and subsequent groups (digits or 24-letters) */
-			if (expect_18letters) {
-				if (c_lat >= '0' && c_lat <= '9')
-					/* This can happen if the locator is malformed, but historically the
-					   first pair is letters+digit. For robustness, allow only letters here. */
-					return false;
-				if (c_lat >= 'A' && c_lat <= 'R')
-					val_lat = c_lat - 'A';
-				else if (c_lat >= 'a' && c_lat <= 'r')
-					val_lat = c_lat - 'a';
-				else
-					return false;
-			} else if (expect_digit) {
-				/* group >0 and odd -> we expect digits here */
-				if (c_lat >= '0' && c_lat <= '9')
-					val_lat = c_lat - '0';
-				else
-					return false;
-			} else {
-				/* 24-letter set for latitude */
-				if (c_lat >= 'A' && c_lat <= 'X')
-					val_lat = c_lat - 'A';
-				else if (c_lat >= 'a' && c_lat <= 'x')
-					val_lat = c_lat - 'a';
-				else
-					return false;
-			}
-		} else {
-			/* no latitude character available -> malformed locator (odd length) */
-			return false;
-		}
-
-		/* add center offset */
-		lon += (val_lon + 0.5) * lon_step;
-		lat += (val_lat + 0.5) * lat_step;
-
-		/* advance position: we've consumed two characters (pos and pos_lat).
-		   Normally pos_lat == pos+1, so advance by 2. If there were spaces between,
-		   advance to pos_lat+1. */
-		pos = pos_lat + 1;
-
-		/* update steps for next group:
-		   divider sequence after group g: [10,24,10,24,...] (first = 10) */
-		int divider;
-		if (group == 0)
-			divider = 10;
-		else
-			divider = (group % 2 == 1) ? 24 : 10;
-
-		lon_step /= (float)divider;
-		lat_step /= (float)divider;
-
-		group++;
+	double lat, lon;
+	int ret = locator2longlat(&lon, &lat, grid);
+	if (ret == RIG_OK) {
+		info->latitude = lat;
+		info->longitude = lon;
+		return true;
 	}
 
-	/* store in info */
-	info->latitude = lat;
-	info->longitude = lon;
-
-	return true;
+	return false;
 }
