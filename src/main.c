@@ -29,6 +29,7 @@
 
 #include "dxcc.h"
 #include "locator.h"
+#include "awards_enum.h"
 
 bool show_prefix = false;
 bool show_distance = false;
@@ -110,22 +111,26 @@ int main(int argc, char* argv[])
 		if (is_gr && callsign) {
 			const char *abbrev = abbreviate_country(info.countryname);
 			if (show_prefix) {
-				printf("%s @ %s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
-					callsign, argv[i], info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
+				printf("%s @ %s: country %d %s '%s' cq %d itu %d continent %d %s lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
+					callsign, argv[i], info.country, abbrev, info.countryname, info.cq, info.itu,
+					info.continent, enum_to_cont(info.continent), info.latitude, info.longitude, info.px, info.exceptions);
 			} else {
-				printf("%s @ %s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
-					callsign, argv[i], info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
+				printf("%s @ %s: country %d %s '%s' cq %d itu %d continent %d %s lat %6.2f lon %6.2f\n",
+					callsign, argv[i], info.country, abbrev, info.countryname, info.cq, info.itu,
+					info.continent, enum_to_cont(info.continent), info.latitude, info.longitude);
 			}
 			callsign = 0;
 			memset(&info, 0, sizeof(info));
 		} else if (is_cs && !next_is_gr) {
 			const char *abbrev = abbreviate_country(info.countryname);
 			if (show_prefix) {
-				printf("%s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
-					callsign, info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
+				printf("%s: country %d %s '%s' cq %d itu %d continent %d %s lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
+					callsign, info.country, abbrev, info.countryname, info.cq, info.itu,
+					info.continent, enum_to_cont(info.continent), info.latitude, info.longitude, info.px, info.exceptions);
 			} else {
-				printf("%s: country %d %s '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
-					callsign, info.country, abbrev, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
+				printf("%s: country %d %s '%s' cq %d itu %d continent %d %s lat %6.2f lon %6.2f\n",
+					callsign, info.country, abbrev, info.countryname, info.cq, info.itu,
+					info.continent, enum_to_cont(info.continent), info.latitude, info.longitude);
 			}
 			callsign = 0;
 			memset(&info, 0, sizeof(info));
