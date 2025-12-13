@@ -75,6 +75,7 @@ bool is_grid(const char* grid);
 dxcc_data lookupcountry_by_callsign(const char* callsign);
 bool set_location_from_grid(dxcc_data* info, const char* grid);
 
+void list_all_countries();
 void hash_inc(GHashTable* hash_table, const char* key);
 void hash_dec(GHashTable* hash_table, const char* key);
 char* loc_norm(const char* locator);

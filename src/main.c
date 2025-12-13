@@ -39,7 +39,7 @@ parsecommandline(int argc, char* argv[])
 {
 	int p;
 
-	while ((p = getopt(argc, argv, "pdhv")) != -1) {
+	while ((p = getopt(argc, argv, "pdlhv")) != -1) {
 		switch (p) {
 		case 'p':
 			show_prefix = true;
@@ -47,6 +47,11 @@ parsecommandline(int argc, char* argv[])
 		case 'd':
 			show_distance = true;
 			break;
+		case 'l':
+			if (readctydata()) // error if not false
+				exit(-2);
+			list_all_countries();
+			exit(0);
 		case 'v':
 			printf("cty version %d\n", readctyversion());
 			exit(0);
@@ -56,6 +61,7 @@ parsecommandline(int argc, char* argv[])
 			printf("Usage: clu [option] callsign\n");
 			printf("	-p	Show prefix and exceptions for the country\n");
 			printf("	-d	Show distance between two grids\n");
+			printf("	-l	List all known countries and exit\n");
 			printf("	-h	Display this help and exit\n");
 			printf("	-v	Output version information and exit\n");
 			exit(0);

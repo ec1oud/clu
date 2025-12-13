@@ -536,6 +536,16 @@ char lookuparea(const char* callsign)
 	return '?';
 }
 
+void list_all_countries()
+{
+	if (dxcc) {
+		for (int i = 0; i < dxcc->len; i++) {
+			dxcc_data* d = g_ptr_array_index(dxcc, i);
+			printf("%s\n", d->countryname);
+		}
+	}
+}
+
 void hash_inc(GHashTable* hash_table, const char* key)
 {
 	gpointer p, value;
