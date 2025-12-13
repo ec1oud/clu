@@ -19,6 +19,9 @@
 #include "locator.h"
 #include "awards_enum.h"
 
+static const char* cty_location = "/usr/share/xlog/dxcc/cty.dat";
+static const char* abbrev_location = "../data/abbrev.tsv";
+
 bool show_prefix = false;
 bool show_distance = false;
 
@@ -37,14 +40,14 @@ parsecommandline(int argc, char* argv[])
 			show_distance = true;
 			break;
 		case 'l':
-			if (readctydata()) // error if not false
+			if (readctydata(cty_location)) // error if not false
 				exit(-2);
-			if (readabbrev())
+			if (readabbrev(abbrev_location))
 				exit(-3);
 			list_all_countries();
 			exit(0);
 		case 'v':
-			printf("cty version %d\n", readctyversion());
+			printf("cty version %d\n", readctyversion(cty_location));
 			exit(0);
 		case ':':
 		case '?':
@@ -70,9 +73,9 @@ int main(int argc, char* argv[])
 	parsecommandline(argc, argv);
 	if (optind + 1 >= argc)
 		return -1;
-	if (readctydata()) // error if not false
+	if (readctydata(cty_location)) // error if not false
 		return -2;
-	if (readabbrev())
+	if (readabbrev(abbrev_location))
 		exit(-3);
 #ifdef USE_AREA_DAT
 	readareadata();

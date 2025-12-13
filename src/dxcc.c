@@ -60,8 +60,6 @@
 #include "locator.h"
 #include "awards_enum.h"
 
-static const char* cty_location = "/usr/share/xlog/dxcc/cty.dat";
-static const char* abbrev_location = "../data/abbrev.tsv";
 #ifdef USE_AREA_DAT
 static const char* area_location = "/usr/share/xlog/dxcc/area.dat";
 #endif
@@ -339,12 +337,12 @@ area_add(char* c, int w, int i, char* cont, int lat, int lon,
 }
 #endif
 
-int readctyversion(void)
+int readctyversion(const char *cty_dat_path)
 {
 	char buf[256000], *ver, *ch;
 	FILE* fp;
 
-	if ((fp = g_fopen(cty_location, "r")) == NULL)
+	if ((fp = g_fopen(cty_dat_path, "r")) == NULL)
 		return (1);
 	int n = fread(buf, 1, 256000, fp);
 	buf[n] = '\0';
@@ -362,7 +360,7 @@ int readctyversion(void)
 }
 
 /* fill the hashtable with all of the prefixes from cty.dat */
-int readctydata(void)
+int readctydata(const char *cty_dat_path)
 {
 
 	char buf[65536], *pfx, **split, **pfxsplit;
@@ -372,8 +370,8 @@ int readctydata(void)
 	int i;
 	FILE* fp;
 
-	if ((fp = g_fopen(cty_location, "r")) == NULL) {
-		printf("didn't find %s\n", cty_location);
+	if ((fp = g_fopen(cty_dat_path, "r")) == NULL) {
+		printf("didn't find %s\n", cty_dat_path);
 		return (1);
 	}
 
@@ -464,14 +462,14 @@ int readctydata(void)
 	return (0);
 }
 
-int readabbrev(void)
+int readabbrev(const char *abbrev_tsv_path)
 {
 	char buf[64];
 	FILE* fp;
 	int count = 0;
 
-	if ((fp = g_fopen(abbrev_location, "r")) == NULL) {
-		printf("didn't find %s\n", abbrev_location);
+	if ((fp = g_fopen(abbrev_tsv_path, "r")) == NULL) {
+		printf("didn't find %s\n", abbrev_tsv_path);
 		return (1);
 	}
 

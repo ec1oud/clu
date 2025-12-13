@@ -57,9 +57,9 @@ void cleanup_area(void);
 #endif
 
 void cleanup_dxcc(void);
-int readctyversion(void);
-int readctydata(void);
-int readabbrev(void);
+int readctyversion(const char *cty_dat_path);
+int readctydata(const char *cty_dat_path);
+int readabbrev(const char *abbrev_tsv_path);
 bool is_grid(const char* grid);
 dxcc_data lookupcountry_by_callsign(const char* callsign);
 const char *abbreviate_country(const char *country);
