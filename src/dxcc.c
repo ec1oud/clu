@@ -96,9 +96,9 @@ void cleanup_dxcc(void)
 	if (dxcc) {
 		for (i = 0; i < dxcc->len; i++) {
 			dxcc_data* d = g_ptr_array_index(dxcc, i);
-			g_free((char *)d->countryname);
-			g_free((char *)d->px);
-			g_free((char *)d->exceptions);
+			g_free((char*)d->countryname);
+			g_free((char*)d->px);
+			g_free((char*)d->exceptions);
 			g_free(d);
 		}
 		g_ptr_array_free(dxcc, TRUE);
@@ -247,11 +247,11 @@ findexc(char* exception)
 }
 
 /*!
-	Look up information related to the given \a callsign.
-	Note: strings in the returned struct are static constants;
-	copy them if you need to keep them independently.
+    Look up information related to the given \a callsign.
+    Note: strings in the returned struct are static constants;
+    copy them if you need to keep them independently.
  */
-dxcc_data lookupcountry_by_callsign(const char * callsign)
+dxcc_data lookupcountry_by_callsign(const char* callsign)
 {
 	int ipx, iexc;
 	char* px;
@@ -313,8 +313,8 @@ dxcc_add(char* c, int w, int i, int cont, int lat, int lon,
 	new_dxcc->cq = w;
 	new_dxcc->itu = i;
 	new_dxcc->continent = cont;
-	new_dxcc->latitude = lat;
-	new_dxcc->longitude = -lon;
+	new_dxcc->latitude = lat / 100.0;
+	new_dxcc->longitude = lon / -100.0;
 	new_dxcc->timezone = tz;
 	new_dxcc->px = g_strdup(p);
 	new_dxcc->exceptions = g_strdup(e);
@@ -511,8 +511,8 @@ int readareadata(void)
 #endif
 
 /*!
-	Search a callsign and return the callsign area (just the number as a character).
-	Note: this does *not* search area.dat.
+    Search a callsign and return the callsign area (just the number as a character).
+    Note: this does *not* search area.dat.
 */
 char lookuparea(const char* callsign)
 {
@@ -754,19 +754,9 @@ bool set_location_from_grid(dxcc_data* info, const char* grid)
 		group++;
 	}
 
-	/* store in info: integer degrees * 100, round to nearest */
-	int ilat, ilon;
-	if (lat >= 0)
-		ilat = (int)(lat * 100.0 + 0.5);
-	else
-		ilat = (int)(lat * 100.0 - 0.5);
-	if (lon >= 0)
-		ilon = (int)(lon * 100.0 + 0.5);
-	else
-		ilon = (int)(lon * 100.0 - 0.5);
-
-	info->latitude = ilat;
-	info->longitude = ilon;
+	/* store in info */
+	info->latitude = lat;
+	info->longitude = lon;
 
 	return true;
 }

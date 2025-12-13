@@ -39,8 +39,8 @@ typedef struct
 	uchar cq; /* uchar max=255 */
 	uchar itu;
 	uchar continent;
-	int latitude;
-	int longitude;
+	float latitude;
+	float longitude;
 	short timezone;
 	const char *px;
 	const char *exceptions;

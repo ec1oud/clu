@@ -91,26 +91,26 @@ int main(int argc, char* argv[])
 			set_location_from_grid(&info, argv[i]);
 		if (is_gr && callsign) {
 			if (show_prefix) {
-				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
+				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
 					callsign, argv[i], info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
 			} else {
-				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %d lon %d\n",
+				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
 					callsign, argv[i], info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
 			}
 			callsign = 0;
 			memset(&info, 0, sizeof(info));
 		} else if (is_cs && !next_is_gr) {
 			if (show_prefix) {
-				printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
+				printf("%s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f prefix %s exceptions: %s\n",
 					callsign, info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
 			} else {
-				printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d\n",
+				printf("%s: country %d '%s' cq %d itu %d continent %d lat %6.2f lon %6.2f\n",
 					callsign, info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
 			}
 			callsign = 0;
 			memset(&info, 0, sizeof(info));
 		} else if (is_gr) {
-			printf("%s: lat %d lon %d\n",
+			printf("%s: lat %6.2f lon %6.2f\n",
 				argv[i], info.latitude, info.longitude);
 		}
 		is_gr = next_is_gr;
