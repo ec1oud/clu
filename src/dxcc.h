@@ -72,6 +72,7 @@ void cleanup_dxcc(void);
 int readctyversion(void);
 int readctydata(void);
 dxcc_data lookupcountry_by_callsign(const char* callsign);
+bool set_location_from_grid(dxcc_data* info, const char* grid);
 
 void hash_inc(GHashTable* hash_table, const char* key);
 void hash_dec(GHashTable* hash_table, const char* key);

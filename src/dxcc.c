@@ -578,3 +578,172 @@ char* loc_norm(const char* locator)
 
 	return loc4;
 }
+
+/*!
+	Set latitude and longitude from Maidenhead locator \a grid.
+
+	Algorithm:
+	- Start at lon = -180, lat = -90
+	- Initial steps: lon_step = 20.0, lat_step = 10.0
+	- For group g (pair index: 0 = first pair, 1 = second pair, ...):
+		- character at pos 2*g contributes to longitude
+		- character at pos 2*g+1 contributes to latitude
+		- character types:
+			g == 0 : letters A-R (18 values)  -> next divider = 10
+			g  > 0 : if g is odd -> digits 0-9  -> next divider = 24
+					 if g is even -> letters a-x (24) -> next divider = 10
+		- add (value + 0.5) * step to get the center of the cell
+
+	Returns true on success (info updated), false on invalid input.
+*/
+bool set_location_from_grid(dxcc_data* info, const char* grid)
+{
+	if (!info || !grid)
+		return false;
+
+	/* copy and strip spaces (we'll just skip spaces while parsing) */
+	int len = strlen(grid);
+	if (len < 2)
+		return false;
+
+	double lon = -180.0;
+	double lat = -90.0;
+	double lon_step = 20.0;
+	double lat_step = 10.0;
+
+	int pos = 0;
+	int group = 0;
+	while (pos < len) {
+		/* longitude character at pos */
+		char c_lon = grid[pos];
+		/* skip whitespace */
+		if (c_lon == ' ' || c_lon == '\t' || c_lon == '\r' || c_lon == '\n') {
+			pos++;
+			continue;
+		}
+
+		/* determine expected type for this group */
+		int expect_digit = 0;
+		int expect_18letters = 0;
+		if (group == 0) {
+			expect_18letters = 1;
+			expect_digit = 0;
+		} else {
+			/* group > 0: odd groups are digits, even groups are 24-letters */
+			if (group % 2 == 1)
+				expect_digit = 1;
+			else
+				expect_digit = 0;
+		}
+
+		/* parse longitude char */
+		int val_lon = -1;
+		if (expect_18letters) {
+			/* A-R or a-r */
+			if (c_lon >= 'A' && c_lon <= 'R')
+				val_lon = c_lon - 'A';
+			else if (c_lon >= 'a' && c_lon <= 'r')
+				val_lon = c_lon - 'a';
+			else
+				return false;
+		} else if (expect_digit) {
+			if (c_lon >= '0' && c_lon <= '9')
+				val_lon = c_lon - '0';
+			else
+				return false;
+		} else {
+			/* 24-letter set a-x / A-X */
+			if (c_lon >= 'A' && c_lon <= 'X')
+				val_lon = c_lon - 'A';
+			else if (c_lon >= 'a' && c_lon <= 'x')
+				val_lon = c_lon - 'a';
+			else
+				return false;
+		}
+
+		/* latitude character should be at pos+1 (may not exist) */
+		char c_lat = 0;
+		int val_lat = -1;
+		int pos_lat = pos + 1;
+		/* find next non-space for latitude */
+		while (pos_lat < len && (grid[pos_lat] == ' ' || grid[pos_lat] == '\t' || grid[pos_lat] == '\r' || grid[pos_lat] == '\n'))
+			pos_lat++;
+
+		if (pos_lat < len) {
+			c_lat = grid[pos_lat];
+			/* parse latitude char using same expectations but with ranges appropriate
+			 * for first group letters (0-17) and subsequent groups (digits or 24-letters)
+			 */
+			if (expect_18letters) {
+				if (c_lat >= '0' && c_lat <= '9')
+					/* This can happen if the locator is malformed, but historically the
+					 * first pair is letters+digit. For robustness, allow only letters here. */
+					return false;
+				if (c_lat >= 'A' && c_lat <= 'R')
+					val_lat = c_lat - 'A';
+				else if (c_lat >= 'a' && c_lat <= 'r')
+					val_lat = c_lat - 'a';
+				else
+					return false;
+			} else if (expect_digit) {
+				/* group >0 and odd -> we expect digits here */
+				if (c_lat >= '0' && c_lat <= '9')
+					val_lat = c_lat - '0';
+				else
+					return false;
+			} else {
+				/* 24-letter set for latitude */
+				if (c_lat >= 'A' && c_lat <= 'X')
+					val_lat = c_lat - 'A';
+				else if (c_lat >= 'a' && c_lat <= 'x')
+					val_lat = c_lat - 'a';
+				else
+					return false;
+			}
+		} else {
+			/* no latitude character available -> malformed locator (odd length) */
+			return false;
+		}
+
+		/* add center offset */
+		lon += (val_lon + 0.5) * lon_step;
+		lat += (val_lat + 0.5) * lat_step;
+
+		/* advance position: we've consumed two characters (pos and pos_lat).
+		 * Normally pos_lat == pos+1, so advance by 2. If there were spaces between,
+		 * advance to pos_lat+1.
+		 */
+		pos = pos_lat + 1;
+
+		/* update steps for next group:
+		 * divider sequence after group g: [10,24,10,24,...] (first = 10)
+		 */
+		int divider;
+		if (group == 0)
+			divider = 10;
+		else
+			divider = (group % 2 == 1) ? 24 : 10;
+
+		lon_step /= (double)divider;
+		lat_step /= (double)divider;
+
+		group++;
+	}
+
+	/* store in info: fields are stored as integer degrees * 100 in the rest of code */
+	/* round to nearest */
+	int ilat, ilon;
+	if (lat >= 0)
+		ilat = (int)(lat * 100.0 + 0.5);
+	else
+		ilat = (int)(lat * 100.0 - 0.5);
+	if (lon >= 0)
+		ilon = (int)(lon * 100.0 + 0.5);
+	else
+		ilon = (int)(lon * 100.0 - 0.5);
+
+	info->latitude = ilat;
+	info->longitude = ilon;
+
+	return true;
+}
