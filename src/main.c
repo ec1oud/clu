@@ -57,25 +57,63 @@ parsecommandline(int argc, char* argv[])
 	}
 }
 
-/* the fun starts here */
+/*!
+	Expect a series of callsigns, alternating callsigns and grids,
+	FT8 messages, etc. Detect the callsigns and grids and
+	look up their countries and coordinates.
+*/
 int main(int argc, char* argv[])
 {
 	parsecommandline(argc, argv);
-	if (argc < 2)
+	if (optind + 1 >= argc)
 		return -1;
 	readctydata();
 #ifdef USE_AREA_DAT
 	readareadata();
 #endif
+	dxcc_data info;
+	memset(&info, 0, sizeof(info));
+	bool is_gr = is_grid(argv[optind]);
+	char *callsign = 0;
 	for (int i = optind; i < argc; ++i) {
-		dxcc_data ci = lookupcountry_by_callsign(argv[i]);
-		if (show_prefix) {
-			printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
-				argv[i], ci.country, ci.countryname, ci.cq, ci.itu, ci.continent, ci.latitude, ci.longitude, ci.px, ci.exceptions);
-		} else {
-			printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d\n",
-				argv[i], ci.country, ci.countryname, ci.cq, ci.itu, ci.continent, ci.latitude, ci.longitude);
+		bool is_cs = false;
+		bool next_is_gr = i < argc && is_grid(argv[i + 1]);
+		if (!is_gr) {
+			info = lookupcountry_by_callsign(argv[i]);
+			if (info.country && strlen(argv[i]) > strlen(info.px)) {
+				// country was found and the candidate is longer than its prefix: must be a callsign
+				is_cs = true;
+				callsign = argv[i];
+			}
 		}
+		//~ printf("    %s: cs? %d gr? %d\n", argv[i], is_cs, is_gr);
+		if (!is_cs && is_gr) // refine the callsign's location by grid, if found
+			set_location_from_grid(&info, argv[i]);
+		if (is_gr && callsign) {
+			if (show_prefix) {
+				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
+					callsign, argv[i], info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
+			} else {
+				printf("%s @ %s: country %d '%s' cq %d itu %d continent %d lat %d lon %d\n",
+					callsign, argv[i], info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
+			}
+			callsign = 0;
+			memset(&info, 0, sizeof(info));
+		} else if (is_cs && !next_is_gr) {
+			if (show_prefix) {
+				printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d prefix %s exceptions: %s\n",
+					callsign, info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude, info.px, info.exceptions);
+			} else {
+				printf("%s: country %d '%s' cq %d itu %d continent %d lat %d lon %d\n",
+					callsign, info.country, info.countryname, info.cq, info.itu, info.continent, info.latitude, info.longitude);
+			}
+			callsign = 0;
+			memset(&info, 0, sizeof(info));
+		} else if (is_gr) {
+			printf("%s: lat %d lon %d\n",
+				argv[i], info.latitude, info.longitude);
+		}
+		is_gr = next_is_gr;
 	}
 #ifdef USE_AREA_DAT
 	cleanup_area();

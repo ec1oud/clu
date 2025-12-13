@@ -314,7 +314,7 @@ dxcc_add(char* c, int w, int i, int cont, int lat, int lon,
 	new_dxcc->itu = i;
 	new_dxcc->continent = cont;
 	new_dxcc->latitude = lat;
-	new_dxcc->longitude = lon;
+	new_dxcc->longitude = -lon;
 	new_dxcc->timezone = tz;
 	new_dxcc->px = g_strdup(p);
 	new_dxcc->exceptions = g_strdup(e);
@@ -579,8 +579,43 @@ char* loc_norm(const char* locator)
 	return loc4;
 }
 
+bool is_grid(const char* grid)
+{
+	if (!grid)
+		return false;
+    const int len = strlen(grid);
+	if (!grid || len < 4 || len % 2 != 0)
+		return false;
+
+	for (int i = 0; i < len; i++) {
+		// First square is base-18 and traditionally uses uppercase
+		if (i < 2) {
+			if (!(grid[i] >= 'A' && grid[i] <= 'R'))
+				return false;
+			continue;
+		}
+		// Subsequently, letter pairs are base-24 (upper or lowercase),
+		// and digit pairs are in 00..99 range
+		if (i % 4 < 2) {
+			//~ printf("        %d %c: subsquare?\n", i, grid[i]);
+			if (!((grid[i] >= 'A' && grid[i] <= 'X') || (grid[i] >= 'a' && grid[i] <= 'x')))
+				return false;
+		} else {
+			//~ printf("        %d %c: digit?\n", i, grid[i]);
+			if (grid[i] < '0' || grid[i] > '9')
+				return false;
+		}
+	}
+
+	return true;
+}
+
 /*!
 	Set latitude and longitude from Maidenhead locator \a grid.
+
+	Expect a Maidenhead locator like "FN31pr" (can be 2,4,6,... chars).
+	Probably is_grid() has already verified that it's a grid, so just
+	dive in and try to make sense of the letters and digits.
 
 	Algorithm:
 	- Start at lon = -180, lat = -90
@@ -601,26 +636,18 @@ bool set_location_from_grid(dxcc_data* info, const char* grid)
 	if (!info || !grid)
 		return false;
 
-	/* copy and strip spaces (we'll just skip spaces while parsing) */
-	int len = strlen(grid);
-	if (len < 2)
-		return false;
-
-	double lon = -180.0;
-	double lat = -90.0;
-	double lon_step = 20.0;
-	double lat_step = 10.0;
+	float lon = -180.0;
+	float lat = -90.0;
+	float lon_step = 20.0;
+	float lat_step = 10.0;
 
 	int pos = 0;
 	int group = 0;
-	while (pos < len) {
+	while (grid[pos]) {
 		/* longitude character at pos */
 		char c_lon = grid[pos];
-		/* skip whitespace */
-		if (c_lon == ' ' || c_lon == '\t' || c_lon == '\r' || c_lon == '\n') {
-			pos++;
-			continue;
-		}
+		if (!isalnum(c_lon))
+			return false;
 
 		/* determine expected type for this group */
 		int expect_digit = 0;
@@ -666,18 +693,17 @@ bool set_location_from_grid(dxcc_data* info, const char* grid)
 		int val_lat = -1;
 		int pos_lat = pos + 1;
 		/* find next non-space for latitude */
-		while (pos_lat < len && (grid[pos_lat] == ' ' || grid[pos_lat] == '\t' || grid[pos_lat] == '\r' || grid[pos_lat] == '\n'))
+		while (grid[pos_lat] && (grid[pos_lat] == ' ' || grid[pos_lat] == '\t' || grid[pos_lat] == '\r' || grid[pos_lat] == '\n'))
 			pos_lat++;
 
-		if (pos_lat < len) {
+		if (grid[pos_lat]) {
 			c_lat = grid[pos_lat];
 			/* parse latitude char using same expectations but with ranges appropriate
-			 * for first group letters (0-17) and subsequent groups (digits or 24-letters)
-			 */
+			   for first group letters (0-17) and subsequent groups (digits or 24-letters) */
 			if (expect_18letters) {
 				if (c_lat >= '0' && c_lat <= '9')
 					/* This can happen if the locator is malformed, but historically the
-					 * first pair is letters+digit. For robustness, allow only letters here. */
+					   first pair is letters+digit. For robustness, allow only letters here. */
 					return false;
 				if (c_lat >= 'A' && c_lat <= 'R')
 					val_lat = c_lat - 'A';
@@ -710,28 +736,25 @@ bool set_location_from_grid(dxcc_data* info, const char* grid)
 		lat += (val_lat + 0.5) * lat_step;
 
 		/* advance position: we've consumed two characters (pos and pos_lat).
-		 * Normally pos_lat == pos+1, so advance by 2. If there were spaces between,
-		 * advance to pos_lat+1.
-		 */
+		   Normally pos_lat == pos+1, so advance by 2. If there were spaces between,
+		   advance to pos_lat+1. */
 		pos = pos_lat + 1;
 
 		/* update steps for next group:
-		 * divider sequence after group g: [10,24,10,24,...] (first = 10)
-		 */
+		   divider sequence after group g: [10,24,10,24,...] (first = 10) */
 		int divider;
 		if (group == 0)
 			divider = 10;
 		else
 			divider = (group % 2 == 1) ? 24 : 10;
 
-		lon_step /= (double)divider;
-		lat_step /= (double)divider;
+		lon_step /= (float)divider;
+		lat_step /= (float)divider;
 
 		group++;
 	}
 
-	/* store in info: fields are stored as integer degrees * 100 in the rest of code */
-	/* round to nearest */
+	/* store in info: integer degrees * 100, round to nearest */
 	int ilat, ilon;
 	if (lat >= 0)
 		ilat = (int)(lat * 100.0 + 0.5);
