@@ -8,6 +8,7 @@
 */
 
 #include <glib.h>
+#include <stdbool.h>
 
 #ifndef uchar
 #define uchar unsigned char

@@ -363,7 +363,7 @@ int readctyversion(const char *cty_dat_path)
 int readctydata(const char *cty_dat_path)
 {
 
-	char buf[65536], *pfx, **split, **pfxsplit;
+	char buf[131072], *pfx, **split, **pfxsplit;
 	int ichar = 0, dxccitem = 0, ipfx = 0, ch = 0;
 	gboolean firstcolon = FALSE;
 	char tmp[20];
@@ -399,6 +399,10 @@ int readctydata(const char *cty_dat_path)
 				continue;
 			if (ch == ';')
 				continue;
+			if (ichar >= sizeof(buf)) {
+				printf("buffer not big enough for cty.dat\n");
+				return 2;
+			}
 			buf[ichar++] = ch;
 		}
 		if (ch == EOF)
