@@ -134,12 +134,12 @@ JuanNova	Juan de Nova, Europa
 Tromelin	Tromelin Island
 Crozet	Crozet Island
 Kergueln	Kerguelen Islands
-AmstSP	Amsterdam & St. Paul Is.
-WallisF	Wallis & Futuna Islands
+Amst&SP	Amsterdam & St. Paul Is.
+Wallis&F	Wallis & Futuna Islands
 FrGuiana	French Guiana
 England	England
 IOMan	Isle of Man
-NIreland	Northern Ireland
+N.Irelnd	Northern Ireland
 Jersey	Jersey
 Scotland	Scotland
 Guernsey	Guernsey
@@ -214,7 +214,7 @@ Faroe	Faroe Islands
 Denmark	Denmark
 PapuaNG	Papua New Guinea
 Aruba	Aruba
-NKorea	DPR of Korea
+N.Korea	DPR of Korea
 Nethrld	Netherlands
 Curacao	Curacao
 Bonaire	Bonaire
@@ -222,13 +222,13 @@ Saba&Eus	Saba & St. Eustatius
 SintMrt	Sint Maarten
 Brazil	Brazil
 Fernando	Fernando de Noronha
-SPtr&Pl	St. Peter & St. Paul
+Ptr&Paul	St. Peter & St. Paul
 Trdad&Mar	Trindade & Martim Vaz
 Suriname	Suriname
 FranzJL	Franz Josef Land
-WSahara	Western Sahara
-Bangladesh	Bangladesh
-Slovnia	Slovenia
+W.Sahara	Western Sahara
+Bangldsh	Bangladesh
+Slovenia	Slovenia
 Seychls	Seychelles
 SaoT&Pr	Sao Tome & Principe
 Sweden	Sweden
@@ -251,10 +251,10 @@ AsTurk	Asiatic Turkey
 Iceland	Iceland
 Guatemala	Guatemala
 CostaR	Costa Rica
-CocosIs	Cocos Island
+Cocos	Cocos Island
 Cameroon	Cameroon
 Corsica	Corsica
-CAfrR	Central African Republic
+C.AfrRep	Central African Republic
 Congo	Republic of the Congo
 Gabon	Gabon
 Chad	Chad
@@ -276,7 +276,7 @@ Marshall	Marshall Islands
 Brunei	Brunei Darussalam
 Canada	Canada
 Australia	Australia
-HeardIs	Heard Island
+Heard	Heard Island
 Macquarie	Macquarie Island
 CocosK	Cocos (Keeling) Islands
 LordHowe	Lord Howe Island
@@ -286,8 +286,8 @@ Willis	Willis Island
 Christmas	Christmas Island
 Anguilla	Anguilla
 Montserrat	Montserrat
-BrVirIs	British Virgin Islands
-Turks&Ca	Turks & Caicos Islands
+BrVirgin	British Virgin Islands
+Turks&Cai	Turks & Caicos Islands
 Pitcairn	Pitcairn Island
 Ducie	Ducie Island
 Falklands	Falkland Islands
@@ -319,7 +319,7 @@ Romania	Romania
 ElSalv	El Salvador
 Serbia	Serbia
 Venezuela	Venezuela
-AvesIs	Aves Island
+Aves	Aves Island
 Zimbabwe	Zimbabwe
 N.Maced	North Macedonia
 Kosovo	Republic of Kosovo
@@ -332,7 +332,7 @@ Ascension	Ascension Island
 Tristan	Tristan da Cunha & Gough
 Cayman	Cayman Islands
 Tokelau	Tokelau Islands
-NZ	New Zealand
+NewZlnd	New Zealand
 Chatham	Chatham Islands
 Kermadec	Kermadec Islands
 NZSubAnt	N.Z. Subantarctic Is.
