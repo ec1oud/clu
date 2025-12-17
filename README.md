@@ -1,5 +1,7 @@
 # clu
 
+*Callsign and Location Utility*
+aka
 *Callsign (and grid) Looker Upper*
 
 I was looking for a cty.dat parser, preferably in C,
@@ -25,9 +27,7 @@ FN55:   35.06,138.04 to 45.50,-69.00    : distance 10654 azimuth  19
 JO59:   45.50,-69.00 to 59.50,11.00     : distance  5276 azimuth  43
 MK75:   59.50,11.00 to 15.50,75.00      : distance  7072 azimuth 105
 ```
-assuming for now that cty.dat is in the same place where xlog would have it
-(e.g. you can install xlog from your system package manager to get that):
-/usr/share/xlog/dxcc/cty.dat
-This repo also includes a cty.dat but I don't promise to keep it updated;
-so if you need to download it separately, get the latest from country-files.com
+assuming for now that cty.dat is data/cty.dat
+
+Run `update-cty.sh` at the top level to download it.
 
