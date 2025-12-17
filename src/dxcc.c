@@ -55,6 +55,7 @@
 #include <string.h>
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <unistd.h>
 
 #include "dxcc.h"
 #include "locator.h"
@@ -337,12 +338,24 @@ area_add(char* c, int w, int i, char* cont, int lat, int lon,
 }
 #endif
 
+int set_data_path_relative(char *buf, int buflen, const char *relpath)
+{
+	readlink("/proc/self/exe", buf, buflen);
+	char *last_slash = strrchr(buf, '/');
+	int pfx_len = last_slash - buf;
+	//~ printf("executable is %s, tail %s, as fit into buflen %d\n", buf, last_slash, buflen);
+	char *end = stpncpy(last_slash + 1, relpath, buflen - pfx_len - 1);
+	//~ printf("so we'll look for %s\n", buf);
+	return end - buf;
+}
+
 int readctyversion(const char *cty_dat_path)
 {
 	char buf[256000], *ver, *ch;
 	FILE* fp;
 
-	if ((fp = g_fopen(cty_dat_path, "r")) == NULL)
+	set_data_path_relative(buf, sizeof(buf), cty_dat_path);
+	if ((fp = g_fopen(buf, "r")) == NULL)
 		return (1);
 	int n = fread(buf, 1, 256000, fp);
 	buf[n] = '\0';
@@ -362,7 +375,6 @@ int readctyversion(const char *cty_dat_path)
 /* fill the hashtable with all of the prefixes from cty.dat */
 int readctydata(const char *cty_dat_path)
 {
-
 	char buf[131072], *pfx, **split, **pfxsplit;
 	int ichar = 0, dxccitem = 0, ipfx = 0, ch = 0;
 	gboolean firstcolon = FALSE;
@@ -370,8 +382,10 @@ int readctydata(const char *cty_dat_path)
 	int i;
 	FILE* fp;
 
-	if ((fp = g_fopen(cty_dat_path, "r")) == NULL) {
-		printf("didn't find %s\n", cty_dat_path);
+	set_data_path_relative(buf, sizeof(buf), cty_dat_path);
+
+	if ((fp = g_fopen(buf, "r")) == NULL) {
+		printf("didn't find %s\n", buf);
 		return (1);
 	}
 
@@ -468,12 +482,14 @@ int readctydata(const char *cty_dat_path)
 
 int readabbrev(const char *abbrev_tsv_path)
 {
-	char buf[64];
+	char buf[128];
 	FILE* fp;
 	int count = 0;
 
-	if ((fp = g_fopen(abbrev_tsv_path, "r")) == NULL) {
-		printf("didn't find %s\n", abbrev_tsv_path);
+	set_data_path_relative(buf, sizeof(buf), abbrev_tsv_path);
+
+	if ((fp = g_fopen(buf, "r")) == NULL) {
+		printf("didn't find %s\n", buf);
 		return (1);
 	}
 

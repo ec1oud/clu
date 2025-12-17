@@ -27,7 +27,7 @@ FN55:   35.06,138.04 to 45.50,-69.00    : distance 10654 azimuth  19
 JO59:   45.50,-69.00 to 59.50,11.00     : distance  5276 azimuth  43
 MK75:   59.50,11.00 to 15.50,75.00      : distance  7072 azimuth 105
 ```
-assuming for now that cty.dat is data/cty.dat
+assuming that cty.dat is share/clu/cty.dat
 
 Run `update-cty.sh` at the top level to download it.
 
